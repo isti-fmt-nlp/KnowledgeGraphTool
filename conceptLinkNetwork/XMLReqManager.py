@@ -3,6 +3,7 @@ from xml.dom.minidom import *
 import nltk
 import numpy
 import sys
+
 import xml.dom.minidom
 
 REQ_TAG = 'req'
