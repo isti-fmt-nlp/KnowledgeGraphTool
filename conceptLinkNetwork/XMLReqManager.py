@@ -1,7 +1,7 @@
 from nltk.stem.porter import PorterStemmer
 from xml.dom.minidom import *
 import nltk
-#import numpy
+import numpy
 import sys
 import xml.dom.minidom
 
