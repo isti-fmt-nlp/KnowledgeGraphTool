@@ -2,8 +2,7 @@ from nltk.stem.porter import PorterStemmer
 from xml.dom.minidom import *
 import nltk
 import numpy
-import sys
-
+#import sys
 import xml.dom.minidom
 
 REQ_TAG = 'req'
