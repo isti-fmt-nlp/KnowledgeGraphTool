@@ -33,7 +33,7 @@ class SentenceNetCreator(object):
 
     def __init__(self):
         self.gr = digraph()
-        self.sentences = []
+        #self.sentences = []
         self.edge_start_weight = EDGE_START_WEIGHT
         self.start_occurrences_num = START_OCCURRENCES_NUM 
 
@@ -49,18 +49,26 @@ class SentenceNetCreator(object):
         @param sentence_file_list: the list of paths (string)  to the files
         """
         
-        text_filter = TextFilter()
+        
         sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
         #first we have to get the sentences from the files
+        sentences = []
+        
         for f in sentences_file_list:
             input_file = f
             fp = open(input_file, 'r')
             text = fp.read()
-            self.sentences.extend(sent_tokenizer.tokenize(text))
+            sentences.extend(sent_tokenizer.tokenize(text))
             fp.close()
         
+        self.createNetFromSentences(sentences)
+       
+            
+    def createNetFromSentences(self, sentences):
+        "This function creates the network starting from a set of sentences"
         
-        for sentence in self.sentences:
+        text_filter = TextFilter()
+        for sentence in sentences:
             filtered_sentence = text_filter.filter_all(sentence)
             
             
@@ -83,8 +91,8 @@ class SentenceNetCreator(object):
                         new_number_of_occurrences = number_of_occurrences + 1
                         self.gr.set_edge_label(edge, new_number_of_occurrences)
                         self.gr.set_edge_weight(edge, wt = 1.0/new_number_of_occurrences)
-            
-                
+       
+                    
             
     def write_graph(self, dest_file_name):
         dot = write(self.gr, True)
