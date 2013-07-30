@@ -10,9 +10,4 @@ class HTMLDocParser(object):
     and parses its content to extract the text
     '''
 
-
-    def __init__(selfparams):
-        '''
-        Constructor
-        '''
         
