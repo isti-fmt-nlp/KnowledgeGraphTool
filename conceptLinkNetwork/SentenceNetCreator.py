@@ -38,6 +38,8 @@ class SentenceNetCreator(object):
         self.edge_start_weight = EDGE_START_WEIGHT
         self.start_occurrences_num = START_OCCURRENCES_NUM 
             
+    def get_net(self):
+        return self.gr
 
     def get_edge_start_weight(self):
         return self.edge_start_weight
@@ -125,6 +127,7 @@ class SentenceNetCreator(object):
                         self.gr.set_edge_label(edge, new_number_of_occurrences)
                         self.gr.set_edge_weight(edge, wt = 1.0/new_number_of_occurrences)
        
+    
                     
             
     def write_graph(self, dest_file_name):
@@ -133,7 +136,48 @@ class SentenceNetCreator(object):
         out_file.write(dot)
         out_file.close()
         
-
+    def get_subgraph(self, nodes):
+        """"
+        The function takes a set of nodes and returns a graph 
+        that contain all such nodes together with the edges
+        of the current graph that connect those nodes.
+        The function returns -1 if one of the nodes does not belong
+        to the current graph.
+        """
+        
+        for node in nodes:
+            if node not in self.gr.nodes():
+                return -1
+        
+        subgraph = digraph()
+        
+        for node in nodes:
+            subgraph.add_node(node)
+        
+        for edge in self.gr.edges():
+            if edge[0] in nodes and edge[1] in nodes:
+                edge_weight = self.gr.edge_weight(edge)
+                subgraph.add_edge(edge, wt=edge_weight, label=str(edge_weight))
+                
+        return subgraph
+            
+        
+    def get_merged_subgraph(self, g1, g2):
+        """
+        The function takes the two graphs @param g1 and @param g2 and 
+        returns the subgraph of the original graph that
+        contains the nodes of the two subgraphs , otgether with the weigthed edges of the original graph.
+        The function returns -1 if the get_subgraph function returns -1
+        """
+        nodes = list(set(g1.nodes()) | set(g2.nodes()))
+        
+        merged_subgraph = self.get_subgraph(nodes)
+        
+        if merged_subgraph != -1:
+            return merged_subgraph
+        else:
+            return -1 
+        
         
     def get_connected_subgraph(self, node):
         """
@@ -153,8 +197,7 @@ class SentenceNetCreator(object):
 
         return subgraph
 
-    def get_net(self):
-        return self.gr
+
     
     def evaluate_jaccard(self, path1, path2, filtered_sent):
         """
