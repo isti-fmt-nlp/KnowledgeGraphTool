@@ -106,6 +106,28 @@ class SentenceNetCreator(object):
         out_file.write(dot)
         out_file.close()
         
+    def merge_graphs(self, g1, g2):
+        """
+        This function merges two graphs. Merging the two graphs
+        implies adding to the first graph all nodes and edges 
+        of the second graph, if these do not exist.
+        """
+        subgraph = digraph()
+        subgraph.add_nodes(g1.nodes())
+        
+        for edge in g1.edges():
+            subgraph.add_edge(edge)
+        
+        for node in g2.nodes():
+            if node not in subgraph.nodes():
+                subgraph.add_node(node)
+                
+        for edge in g2.edges():
+            if edge not in subgraph.edges():
+                subgraph.add_edge(edge)
+
+        return subgraph
+        
     def get_subgraph(self, node):
         """
         Given a @param node extracts the subgraph connected to the node
