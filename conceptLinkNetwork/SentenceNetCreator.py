@@ -26,6 +26,7 @@ OCCURRENCES_VALUE_POS = 1 # the value of the number of occurrences is in positio
 START_OCCURRENCES_NUM = 1 # the starting value for the number of occurrences, which will be placed in the node label
 
 class SentenceNetCreator(object):
+    
     '''
     classdocs
     '''
@@ -36,12 +37,44 @@ class SentenceNetCreator(object):
         #self.sentences = []
         self.edge_start_weight = EDGE_START_WEIGHT
         self.start_occurrences_num = START_OCCURRENCES_NUM 
+            
 
     def get_edge_start_weight(self):
         return self.edge_start_weight
 
     def get_start_occurrences_num(self):
         return self.start_occurrences_num
+
+    @staticmethod    
+    def write_subgraph(dest_file_name, subgraph):
+        dot = write(subgraph, True)
+        out_file = open(dest_file_name, "w")
+        out_file.write(dot)
+        out_file.close()
+    
+    @staticmethod    
+    def merge_graphs(g1, g2):
+        """
+        This function merges two graphs. Merging the two graphs
+        implies adding to the first graph all nodes and edges 
+        of the second graph, if these do not exist.
+        """
+        subgraph = digraph()
+        subgraph.add_nodes(g1.nodes())
+        
+        for edge in g1.edges():
+            subgraph.add_edge(edge)
+        
+        for node in g2.nodes():
+            if node not in subgraph.nodes():
+                subgraph.add_node(node)
+                
+        for edge in g2.edges():
+            if edge not in subgraph.edges():
+                subgraph.add_edge(edge)
+
+        return subgraph
+
 
     def createNet(self, sentences_file_list):
         """
@@ -100,35 +133,9 @@ class SentenceNetCreator(object):
         out_file.write(dot)
         out_file.close()
         
-    def write_subgraph(self, dest_file_name, subgraph):
-        dot = write(subgraph, True)
-        out_file = open(dest_file_name, "w")
-        out_file.write(dot)
-        out_file.close()
-        
-    def merge_graphs(self, g1, g2):
-        """
-        This function merges two graphs. Merging the two graphs
-        implies adding to the first graph all nodes and edges 
-        of the second graph, if these do not exist.
-        """
-        subgraph = digraph()
-        subgraph.add_nodes(g1.nodes())
-        
-        for edge in g1.edges():
-            subgraph.add_edge(edge)
-        
-        for node in g2.nodes():
-            if node not in subgraph.nodes():
-                subgraph.add_node(node)
-                
-        for edge in g2.edges():
-            if edge not in subgraph.edges():
-                subgraph.add_edge(edge)
 
-        return subgraph
         
-    def get_subgraph(self, node):
+    def get_connected_subgraph(self, node):
         """
         Given a @param node extracts the subgraph connected to the node
         if the weigth is lower than 1
