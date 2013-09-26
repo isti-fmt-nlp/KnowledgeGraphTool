@@ -1,0 +1,1 @@
+Questa cartella contiene il progetto del tool KnowledgeGraphTool

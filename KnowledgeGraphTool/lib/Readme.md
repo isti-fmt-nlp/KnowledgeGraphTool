@@ -1,0 +1,1 @@
+Questa cartella contiene le librerie del tool KnowledgeGraphTool
