@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**Classe che contiene le funzioni per la gestione
- * dei Progetti
+ * di un Progetto
  *
  * @author Lipari
  */
