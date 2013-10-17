@@ -1,18 +1,15 @@
 package Controllori;
 
+import KgtUtility.KgtXml;
+import KgtUtility.KgtFile;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+
+import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -23,6 +20,8 @@ import org.xml.sax.SAXException;
  */
 public class ControlloreProgetto {
     private String root=null;
+    private final String DOM1="dominio_1";
+    private final String DOM2="dominio_2";
     /**Costruttore 
      
     */
@@ -46,7 +45,7 @@ public class ControlloreProgetto {
         new File(root+"/Dominio2").mkdir();
         new File(root+"/Requisiti").mkdir();
         new File(root+"/Risultati").mkdir();
-        creaXML(root,nomeProgetto);
+        KgtXml.creaProjectXML(root,nomeProgetto);
        
         return root;
     }
@@ -83,49 +82,7 @@ public class ControlloreProgetto {
         else
             return "progetto_inesistente";
    }
-    /**
-     * Crea un file xml idenficativo del progetto
-     * @param pathProgetto directory dove verrà salvato l'xml
-     */
-    private void creaXML(String pathProgetto,String nomeProgetto){
-        try {
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-	    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            // root elements
-	Document doc = docBuilder.newDocument();
-	Element rootElement = doc.createElement("project");
-		doc.appendChild(rootElement);
-                // data elements
-		Element data = doc.createElement("data");
-		rootElement.appendChild(data);
- 
-		// nome elements
-		Element nome = doc.createElement("nome");
-		data.appendChild(nome);
-                nome.setTextContent(nomeProgetto);
-                
-                // root elements
-		Element path = doc.createElement("root");
-		path.setTextContent(root);
-                data.appendChild(path);
- 
-		// write the content into xml file
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes"); 
-		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File(pathProgetto+"/"+".kgtproject.xml").getPath());
-                transformer.transform(source, result);
- 
-		System.out.println("File saved!");
-                
- 
-	  } catch (ParserConfigurationException pce) {
-		pce.printStackTrace();
-	  } catch (TransformerException tfe) {
-		tfe.printStackTrace();
-	  }
-	}    
+       
 
     public String getSource() {
         return root;
@@ -134,21 +91,63 @@ public class ControlloreProgetto {
     public void chiudiProgetto() {
         root=null;
     }
+
+
+    public boolean aggiungiDocumento(String dom,String path){
+        try {
+             if(dom.equals(DOM1)){
+                return KgtFile.copiaFile(path,root+"/Dominio1");
+            }
+            if(dom.equals(DOM2)){
+                 return KgtFile.copiaFile(path,root+"/Dominio2");
+            }
+        } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);}
+        return false;
+    }
+    public boolean aggiungiRisultato(String path){
+            try {
+            return KgtFile.copiaFile(path,root+"/Risultati");
+            } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+            }
+            return false;
+    }
+   public boolean aggiungiRequisito(String path){
+        File req=new File(root+"/Requisiti");
+        if(req.listFiles().length!=0)
+            return false;
+        else
+            try {
+            return KgtFile.copiaFile(path,req.getPath());
+            } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+            }
+        return false;
+    } public boolean eliminaDocumento(String dom,String name){
+        boolean ok=false;
+        if(name.length()==0)
+            return false;
+        if(dom.equals(DOM1))
+            ok=new File(root+"/Dominio1/"+name).delete();
+        if(dom.equals(DOM2))
+            ok=new File(root+"/Dominio2/"+name).delete();
+        return ok;
+    }
+    public boolean eliminaRisultato(String name){
+    File ris=new File(root+"/Risultati");
+    for(File f: ris.listFiles())
+        if(f.getName().equals(name))
+               return f.delete();
+    return false;
+    }
+    public boolean eliminaRequisito(){
+        File req=new File(root+"/Requisiti");    
+        return req.listFiles()[0].delete();
+    }
     //TODO
     public void aggiungiConf(){}
     //TODO
-    public void aggiungiDocumento(String dom,String path){}
-    //TODO
-    public void aggiungiRisultato(String path){}
-    //TODO
-    public void aggiungiRequisito(){}
-    //TODO
     public void eliminaConf(){}
-    //TODO
-    public void eliminaDocumento(String dom,String name){}
-    //TODO
-    public void eliminaRisultato(String name){}
-    //TODO
-    public void eliminaRequisito(){}
 }
 
