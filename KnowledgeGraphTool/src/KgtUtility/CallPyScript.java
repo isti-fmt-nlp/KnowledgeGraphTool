@@ -3,18 +3,20 @@
  * and open the template in the editor.
  */
 package KgtUtility;
+import Controllori.ControlloreProgetto;
 import java.io.*;
 /**
  *
  * @author Lipari
  */
-public class CallScript {
+public class CallPyScript {
     
-    static public void analisi(String pathScript) throws InterruptedException{
+    static public void analisi(String pathScript){
         try
         {
+          ControlloreProgetto cp=ControlloreProgetto.getIstance();
           File pathLib=new File("..\\conceptLinkNetwork");
-          String pathRoot="C:\\Users\\Lipari\\Documents\\Prova\\Progetto1";
+          String pathRoot=cp.getSource();
           Runtime rt = Runtime.getRuntime();
           Process pr = rt.exec("cmd /c python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
           BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));

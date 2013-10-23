@@ -12,7 +12,6 @@ pathdom2=sys.argv[1] + '\\Dominio2\\'
 fp1 = [ (pathdom1 + f) for f in listdir(pathdom1) if isfile(join(pathdom1,f)) ]
 fp2 = [ (pathdom2 + f) for f in listdir(pathdom2) if isfile(join(pathdom2,f)) ]
 
-print fp1 + fp2
 
 EDGE_START_WEIGHT = 1.0
 OCCURRENCES_POS = 0 # the tuple representing the number of occurrences is the first attribute (position 0) for each edge
@@ -30,5 +29,5 @@ n2 = s1.get_net()
 v2 = SentenceNetVisitor(n1, EDGE_START_WEIGHT, START_OCCURRENCES_NUM)
 
 
-s1.write_graph("C:\Users\Lipari\Documents\Prova\prova1.gv")
-s2.write_graph("C:\Users\Lipari\Documents\Prova\prova2.gv")
+s1.write_graph(sys.argv[1] + '\\Risultati\\dom1.gv')
+s2.write_graph(sys.argv[1] + '\\Risultati\\dom2.gv')

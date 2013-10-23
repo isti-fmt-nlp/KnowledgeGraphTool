@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package Test;
-import KgtUtility.CallScript;
+import Controllori.ControlloreProgetto;
+import KgtUtility.CallPyScript;
 import java.io.File;
 import java.io.IOException;
 import org.openide.util.Exceptions;
@@ -13,6 +14,8 @@ import org.openide.util.Exceptions;
  */
 public class TestControllorePython {
     public static void main(String[] args) {
+        ControlloreProgetto cP=ControlloreProgetto.getIstance();
+        cP.apriProgetto("C:\\Users\\Lipari\\Documents\\Prova\\Progetto1");
         File f=new File(".\\src\\py\\Analisi.py");
         String pathScript="";
         try {
@@ -20,7 +23,6 @@ public class TestControllorePython {
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        CallScript.analisi(pathScript);
-        
+        CallPyScript.analisi(pathScript);
     }
 }
