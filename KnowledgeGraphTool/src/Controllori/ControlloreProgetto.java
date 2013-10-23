@@ -20,13 +20,20 @@ import org.xml.sax.SAXException;
  */
 public class ControlloreProgetto {
     private String root=null;
-    private final String DOM1="dominio_1";
+    private static ControlloreProgetto cP=null; //riferimento all' istanza
+private final String DOM1="dominio_1";
     private final String DOM2="dominio_2";
     /**Costruttore 
      
     */
     public ControlloreProgetto(){
     }
+    public static ControlloreProgetto getIstance(){
+            if(cP==null)
+                        cP = new ControlloreProgetto();
+             return cP;
+        }
+   
     /**
      * Crea un nuovo progetto all'interno della directory passata come argomento
      * 

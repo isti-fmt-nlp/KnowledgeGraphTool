@@ -18,7 +18,7 @@ public class CallPyScript {
           File pathLib=new File("..\\conceptLinkNetwork");
           String pathRoot=cp.getSource();
           Runtime rt = Runtime.getRuntime();
-          Process pr = rt.exec("cmd /c python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+          Process pr = rt.exec("cmd /c cd ..\\conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
           BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
           String line=null;
           while((line=input.readLine()) != null) {
