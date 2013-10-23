@@ -9,5 +9,5 @@ package Controllori;
  * @author Lipari
  */
 public class ControllorePython {
-    
-}
+   static public void analisi(){}
+   }

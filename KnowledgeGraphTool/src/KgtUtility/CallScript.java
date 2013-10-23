@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package KgtUtility;
-import java.awt.Desktop;
 import java.io.*;
 /**
  *
@@ -11,15 +10,24 @@ import java.io.*;
  */
 public class CallScript {
     
-    static public void analisi(String pathScript){
-    try
-      {
-         Desktop.getDesktop().open(new File(pathScript));
-      }
-      catch(IOException e)
-      {
-         System.err.println("Error on exec() method");
-         e.printStackTrace();
-      }
+    static public void analisi(String pathScript) throws InterruptedException{
+        try
+        {
+          File pathLib=new File("..\\conceptLinkNetwork");
+          String pathRoot="C:\\Users\\Lipari\\Documents\\Prova\\Progetto1";
+          Runtime rt = Runtime.getRuntime();
+          Process pr = rt.exec("cmd /c python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+          BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+          String line=null;
+          while((line=input.readLine()) != null) {
+                System.out.println(line);
+            }
+            int exitVal = pr.waitFor();
+            System.out.println("Exited with error code "+exitVal);
+
+        } catch(Exception e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
     }
 }
