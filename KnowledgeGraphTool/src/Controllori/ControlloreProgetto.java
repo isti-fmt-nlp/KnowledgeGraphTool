@@ -21,12 +21,12 @@ import org.xml.sax.SAXException;
 public class ControlloreProgetto {
     private String root=null;
     private static ControlloreProgetto cP=null; //riferimento all' istanza
-private final String DOM1="dominio_1";
+    private final String DOM1="dominio_1";
     private final String DOM2="dominio_2";
     /**Costruttore 
      
     */
-    public ControlloreProgetto(){
+    private ControlloreProgetto(){
     }
     public static ControlloreProgetto getIstance(){
             if(cP==null)
