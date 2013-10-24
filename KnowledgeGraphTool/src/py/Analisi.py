@@ -1,3 +1,8 @@
+'''
+
+@author: lipari
+'''
+
 import sys
 sys.path.insert(1, sys.argv[2])
 
@@ -9,6 +14,9 @@ from os.path import isfile, join
 
 pathdom1=sys.argv[1] + '\\Dominio1\\'
 pathdom2=sys.argv[1] + '\\Dominio2\\'
+pathreq=sys.argv[1] + '\\Requisiti\\'
+pathres=sys.argv[1] + '\\Risultati\\'
+
 fp1 = [ (pathdom1 + f) for f in listdir(pathdom1) if isfile(join(pathdom1,f)) ]
 fp2 = [ (pathdom2 + f) for f in listdir(pathdom2) if isfile(join(pathdom2,f)) ]
 
@@ -27,6 +35,7 @@ s2 = SentenceNetCreator()
 s2.createNet(fp2)
 n2 = s1.get_net()
 v2 = SentenceNetVisitor(n1, EDGE_START_WEIGHT, START_OCCURRENCES_NUM)
+
 
 
 s1.write_graph(sys.argv[1] + '\\Risultati\\dom1.gv')

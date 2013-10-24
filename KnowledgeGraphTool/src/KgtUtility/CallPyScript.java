@@ -24,10 +24,12 @@ public class CallPyScript {
                 if(os.indexOf("win")>=0){
                      System.out.println(os);
                      pr = rt.exec("cmd /c cd ..\\conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());                }
+                //da provare
                 if(os.indexOf("mac")>=0){
                     System.out.println(os);
                      pr = rt.exec("cd ..\\conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
                 }
+                //Da provare
                 if(os.indexOf("nix")>=0){
                     System.out.println(os);
                      pr = rt.exec("cd ..\\conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
