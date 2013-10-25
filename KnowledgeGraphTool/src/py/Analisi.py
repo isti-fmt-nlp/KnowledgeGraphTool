@@ -1,26 +1,26 @@
 '''
-
-@author: lipari
+@author: Giuseppe Lipari
 '''
-
+import nltk
 import sys
+from pygraph.classes.digraph import digraph
 sys.path.insert(1, sys.argv[2])
-
+sys.path.insert(1, sys.argv[2]+'irutils')
+from irutils.TextFilter import TextFilter
 from SentenceNetCreator import SentenceNetCreator
 from SentenceNetVisitor import SentenceNetVisitor
-
 from os import listdir
 from os.path import isfile, join
 
-pathdom1=sys.argv[1] + '\\Dominio1\\'
-pathdom2=sys.argv[1] + '\\Dominio2\\'
-pathreq=sys.argv[1] + '\\Requisiti\\'
-pathres=sys.argv[1] + '\\Risultati\\'
+pathdom1=sys.argv[1] + '/Dominio1/'
+pathdom2=sys.argv[1] + '/Dominio2/'
+pathreq=sys.argv[1] + '/Requisiti/'
+pathres=sys.argv[1] + '/Risultati/'
 
 fp1 = [ (pathdom1 + f) for f in listdir(pathdom1) if isfile(join(pathdom1,f)) ]
 fp2 = [ (pathdom2 + f) for f in listdir(pathdom2) if isfile(join(pathdom2,f)) ]
 
-
+terms_filter = TextFilter()
 EDGE_START_WEIGHT = 1.0
 OCCURRENCES_POS = 0 # the tuple representing the number of occurrences is the first attribute (position 0) for each edge
 OCCURRENCES_VALUE_POS = 1 # the value of the number of occurrences is in position 1 in the tuple ('occurrences', <occurrences_number>)
@@ -36,7 +36,41 @@ s2.createNet(fp2)
 n2 = s1.get_net()
 v2 = SentenceNetVisitor(n1, EDGE_START_WEIGHT, START_OCCURRENCES_NUM)
 
+#Apro il file dei requisiti ed associo un requisito ad ogni riga
+path_file_req=pathreq + listdir(pathreq)[0]
+#print path_file_req
+req_file=open(path_file_req,"r")
+reqs= req_file.readlines()
+req_file.close()
+#print reqs
 
+ind=1
+jac=0
 
-s1.write_graph(sys.argv[1] + '\\Risultati\\dom1.gv')
-s2.write_graph(sys.argv[1] + '\\Risultati\\dom2.gv')
+#Ciclo creazione e salvataggio sotto grafi cammini + jaccard
+for req in reqs:
+	#print 'Req:' + req
+	filtered_sent = terms_filter.filter_all(req)
+	#print 'Filter: ' + filtered_sent
+	path1, path_weight1 = v1.search_A_star(filtered_sent)
+	path2, path_weight2 = v2.search_A_star(filtered_sent)
+	path1_tokens = nltk.word_tokenize(path1)
+	path2_tokens = nltk.word_tokenize(path2)
+	current_subgraph = digraph()
+	current_subgraph2 = digraph()
+	for index, term in enumerate(path1_tokens):
+   		subgraph_req = s1.get_connected_subgraph(term)
+   		current_subgraph = s1.get_merged_subgraph(current_subgraph, subgraph_req)
+	SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:6] + '-dom1.gv', current_subgraph)
+	for index, term in enumerate(path2_tokens):
+   		subgraph_req2 = s2.get_connected_subgraph(term)
+   		current_subgraph2 = s2.get_merged_subgraph(current_subgraph2, subgraph_req2)
+	SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:6] + '-dom2.gv', current_subgraph2)
+	path_subgraph1=' '.join(current_subgraph.nodes())
+	path_subgraph2=' '.join(current_subgraph2.nodes())
+	jac= SentenceNetCreator.evaluate_jaccard(s1,path_subgraph1,path_subgraph2,filtered_sent)
+	print 'R%d: %f'%(ind,jac)
+	ind+=1
+	
+s1.write_graph(pathres + 'Graph-dom1.gv')
+s2.write_graph(pathres + 'Graph-dom2.gv')
