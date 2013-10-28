@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
  * @author Lipari
  */
 public class ControlloreProgetto {
-    private String root=null;
+    private String root=new File(".").getAbsolutePath();
     private static ControlloreProgetto cP=null; //riferimento all' istanza
     private final String DOM1="dominio_1";
     private final String DOM2="dominio_2";

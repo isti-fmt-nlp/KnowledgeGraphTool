@@ -35,6 +35,19 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
     private void initComponents() {
 
         jScegliDir = new javax.swing.JFileChooser();
+        jSalvaDir = new javax.swing.JFileChooser();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree2 = new javax.swing.JTree();
+        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jSlider1 = new javax.swing.JSlider();
+        jPanel3 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jProj = new javax.swing.JMenu();
         apriItem = new javax.swing.JMenuItem();
@@ -47,8 +60,109 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         jScegliDir.setDialogTitle(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jScegliDir.dialogTitle")); // NOI18N
         jScegliDir.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
+        jSalvaDir.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jSalvaDir.setApproveButtonText(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jSalvaDir.approveButtonText_1")); // NOI18N
+        jSalvaDir.setDialogTitle(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jSalvaDir.dialogTitle")); // NOI18N
+        jSalvaDir.setFileFilter(null);
+        jSalvaDir.setFileHidingEnabled(true);
+        jSalvaDir.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jSalvaDir.setToolTipText(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jSalvaDir.toolTipText")); // NOI18N
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.title")); // NOI18N
+
+        ControlloreProgetto cp= ControlloreProgetto.getIstance();
+        jTree2.setModel(new MioProjectTree(cp.getSource()));
+        jScrollPane1.setViewportView(jTree2);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jButton1.text")); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
+
+        jSlider1.setPaintLabels(true);
+        jSlider1.setName("Jaccard Range"); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3)
+            .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 245, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 473, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
+
+        jTextField1.setEditable(false);
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField1.setText(org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jTextField1.text")); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 524, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         org.openide.awt.Mnemonics.setLocalizedText(jProj, org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.jProj.text")); // NOI18N
 
@@ -72,6 +186,11 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
 
         chiudiItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         org.openide.awt.Mnemonics.setLocalizedText(chiudiItem, org.openide.util.NbBundle.getMessage(MainFrame.class, "MainFrame.chiudiItem.text")); // NOI18N
+        chiudiItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chiudiItemActionPerformed(evt);
+            }
+        });
         jProj.add(chiudiItem);
 
         jMenuBar1.add(jProj);
@@ -94,11 +213,30 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTabbedPane1)
+                    .addComponent(jTextField1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         pack();
@@ -121,11 +259,12 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
 
     private void nuovoitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuovoitemActionPerformed
         ControlloreProgetto cp=ControlloreProgetto.getIstance();
-        int returnVal = jScegliDir.showOpenDialog(this);
-        if (returnVal == jScegliDir.APPROVE_OPTION) {
-          File file = jScegliDir.getSelectedFile();
+        String input = JOptionPane.showInputDialog( "Inserisci nome progetto");
+        int returnVal = jSalvaDir.showOpenDialog(this);
+        if (returnVal == jSalvaDir.APPROVE_OPTION) {
+          File file = jSalvaDir.getSelectedFile();
           try {
-            cp.creaProgetto(file.getCanonicalPath(),"progetto");
+            cp.creaProgetto(file.getCanonicalPath(),input);
            } catch (IOException ex) {
             System.out.println("problem accessing file"+file.getAbsolutePath());
             }
@@ -133,6 +272,15 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_nuovoitemActionPerformed
+
+    private void chiudiItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chiudiItemActionPerformed
+        ControlloreProgetto cp=ControlloreProgetto.getIstance();
+        cp.chiudiProgetto();
+    }//GEN-LAST:event_chiudiItemActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,10 +319,23 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem apriItem;
     private javax.swing.JMenuItem chiudiItem;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JMenu jProj;
     private javax.swing.JMenu jSalva;
+    private javax.swing.JFileChooser jSalvaDir;
     private javax.swing.JFileChooser jScegliDir;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSlider jSlider1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTree jTree2;
     private javax.swing.JMenuItem nuovoitem;
     private javax.swing.JMenuItem reqItem;
     private javax.swing.JMenuItem salvaGrafo;
