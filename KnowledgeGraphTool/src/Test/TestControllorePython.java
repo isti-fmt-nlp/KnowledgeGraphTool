@@ -15,14 +15,16 @@ import org.openide.util.Exceptions;
 public class TestControllorePython {
     public static void main(String[] args) {
         ControlloreProgetto cP=ControlloreProgetto.getIstance();
-        cP.apriProgetto("C:\\Users\\Lipari\\Documents\\Prova\\Progetto1");
-        File f=new File(".\\src\\py\\Analisi.py");
+        cP.apriProgetto("C:/Users/Lipari/Documents/Prova/Progetto1");
+        File f=new File("./src/py/Analisi.py");
         String pathScript="";
         try {
             pathScript = f.getCanonicalPath();
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
+            System.out.println(pathScript);
+
         CallPyScript.analisi(pathScript);
     }
 }

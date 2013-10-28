@@ -16,23 +16,25 @@ public class CallPyScript {
             try
             {
                 ControlloreProgetto cp=ControlloreProgetto.getIstance();
-                File pathLib=new File("..\\conceptLinkNetwork");
+                File pathLib=new File("../conceptLinkNetwork");
                 String pathRoot=cp.getSource();
                 Runtime rt = Runtime.getRuntime();
                 Process pr=null;
                 BufferedReader input=null;
                 if(os.indexOf("win")>=0){
                      System.out.println(os);
-                     pr = rt.exec("cmd /c cd ..\\conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());                }
+                     pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());                
+                     System.out.println(("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()));
+                }
                 //da provare
                 if(os.indexOf("mac")>=0){
                     System.out.println(os);
-                     pr = rt.exec("cd ..\\conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+                     pr = rt.exec("cd ../conceptLinkNetwork && python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
                 }
                 //Da provare
                 if(os.indexOf("nix")>=0){
                     System.out.println(os);
-                     pr = rt.exec("cd ..\\conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+                     pr = rt.exec("cd ../conceptLinkNetwork && python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
                 }
                 input=new BufferedReader(new InputStreamReader(pr.getInputStream()));
                 String line=null;

@@ -47,7 +47,6 @@ public class ControlloreProgetto {
         f=new File(path+"/"+nomeProgetto);
         f.mkdir();
         root=f.getPath();
-        new File(root+"/conf").mkdir();
         new File(root+"/Dominio1").mkdir();
         new File(root+"/Dominio2").mkdir();
         new File(root+"/Requisiti").mkdir();
@@ -152,9 +151,4 @@ public class ControlloreProgetto {
         File req=new File(root+"/Requisiti");    
         return req.listFiles()[0].delete();
     }
-    //TODO
-    public void aggiungiConf(){}
-    //TODO
-    public void eliminaConf(){}
 }
-

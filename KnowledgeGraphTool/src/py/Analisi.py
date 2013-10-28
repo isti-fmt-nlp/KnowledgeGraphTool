@@ -33,8 +33,8 @@ v1 = SentenceNetVisitor(n1, EDGE_START_WEIGHT, START_OCCURRENCES_NUM)
 
 s2 = SentenceNetCreator()
 s2.createNet(fp2)
-n2 = s1.get_net()
-v2 = SentenceNetVisitor(n1, EDGE_START_WEIGHT, START_OCCURRENCES_NUM)
+n2 = s2.get_net()
+v2 = SentenceNetVisitor(n2, EDGE_START_WEIGHT, START_OCCURRENCES_NUM)
 
 #Apro il file dei requisiti ed associo un requisito ad ogni riga
 path_file_req=pathreq + listdir(pathreq)[0]
@@ -46,6 +46,7 @@ req_file.close()
 
 ind=1
 jac=0
+jac_file = open(pathres+"jaccard.txt","w")
 
 #Ciclo creazione e salvataggio sotto grafi cammini + jaccard
 for req in reqs:
@@ -58,7 +59,8 @@ for req in reqs:
 	path2_tokens = nltk.word_tokenize(path2)
 	current_subgraph = digraph()
 	current_subgraph2 = digraph()
-	for index, term in enumerate(path1_tokens):
+
+        for index, term in enumerate(path1_tokens):
    		subgraph_req = s1.get_connected_subgraph(term)
    		current_subgraph = s1.get_merged_subgraph(current_subgraph, subgraph_req)
 	SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:6] + '-dom1.gv', current_subgraph)
@@ -69,8 +71,9 @@ for req in reqs:
 	path_subgraph1=' '.join(current_subgraph.nodes())
 	path_subgraph2=' '.join(current_subgraph2.nodes())
 	jac= SentenceNetCreator.evaluate_jaccard(s1,path_subgraph1,path_subgraph2,filtered_sent)
-	print 'R%d: %f'%(ind,jac)
-	ind+=1
-	
+        r='R%d jaccard\n%.10f\n'%(ind,jac)
+        jac_file.write(r)
+        ind+=1
+jac_file.close()
 s1.write_graph(pathres + 'Graph-dom1.gv')
 s2.write_graph(pathres + 'Graph-dom2.gv')
