@@ -1,10 +1,11 @@
 package gui;
 
+import guiComponents.FileTree;
 import javax.swing.JPanel;
-import javax.swing.JTree;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
+import javax.swing.JTree;
 
 public class ProjectTree extends JPanel{
 	private JTree tree = null;
@@ -22,10 +23,9 @@ public class ProjectTree extends JPanel{
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
 		);
-		
-		tree = new JTree();
+                tree=new JTree();
 		tree.setModel(null);
-		scrollPane.setViewportView(tree);
+                scrollPane.setViewportView(tree);
 		setLayout(groupLayout);
 	}
 	public JTree getTree(){

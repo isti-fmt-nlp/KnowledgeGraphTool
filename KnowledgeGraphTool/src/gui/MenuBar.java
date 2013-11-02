@@ -1,6 +1,9 @@
 package gui;
 
+import guiComponents.ApriProgetto;
+import guiComponents.ChiudiProgetto;
 import guiComponents.FloatSlider;
+import guiComponents.NuovoProgetto;
 
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
@@ -21,13 +24,16 @@ import java.awt.Dimension;
 public class MenuBar extends JPanel {
 	private JMenuItem mntmNuovoProgetto;
 	private FloatSlider floatSlider;
+        private ApriProgetto apriAction=new ApriProgetto();
+        private NuovoProgetto nuovoAction=new NuovoProgetto();
+        private ChiudiProgetto chiudiAction=new ChiudiProgetto();
 	/**
 	 * Create the panel.
 	 */
 	public MenuBar() {
 		setSize(new Dimension(700, 22));
-		setPreferredSize(new Dimension(900, 22));
-		setMinimumSize(new Dimension(550, 22));
+		setPreferredSize(new Dimension(900, 25));
+		setMinimumSize(new Dimension(550, 25));
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		
@@ -38,17 +44,20 @@ public class MenuBar extends JPanel {
 		menuBar.add(mnProgetto);
 		
 		mntmNuovoProgetto = new JMenuItem("Nuovo Progetto");
+                mntmNuovoProgetto.addActionListener(nuovoAction);
 		mnProgetto.add(mntmNuovoProgetto);
 		mntmNuovoProgetto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
 
 		
 		JMenuItem mntmApriProgetto = new JMenuItem("Apri Progetto");
+                mntmApriProgetto.addActionListener(apriAction);
 		mnProgetto.add(mntmApriProgetto);
 		mntmApriProgetto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
 		
 		JMenuItem mntmChiudiProgetto = new JMenuItem("Chiudi Progetto");
-		mnProgetto.add(mntmChiudiProgetto);
-		mntmChiudiProgetto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+		mntmChiudiProgetto.addActionListener(chiudiAction);
+                mnProgetto.add(mntmChiudiProgetto);
+                mntmChiudiProgetto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
 
 		JMenu mnSalva = new JMenu("Salva");
 		menuBar.add(mnSalva);
@@ -97,7 +106,8 @@ public class MenuBar extends JPanel {
 		setLayout(groupLayout);
 	}
 	
-	public Observable getObservable(){
-		return (Observable)floatSlider.getChangeListener();
+	public Observable [] getObservable(){
+                Observable [] obs={(Observable)floatSlider.getChangeListener() , (Observable)apriAction,chiudiAction,nuovoAction};
+                return obs;
 	}
 }

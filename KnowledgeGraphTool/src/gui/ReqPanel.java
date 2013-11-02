@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import data.Requirements;
+import guiComponents.VisualizzaRequisito;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -15,6 +16,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 
 import java.awt.Dimension;
+import java.util.Observable;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
@@ -28,7 +30,8 @@ public class ReqPanel extends JPanel{
 	private ModelloTabella tm=new ModelloTabella();
 	private JTable table;
 	private RendererCelleTabella rc=new RendererCelleTabella();
-	
+	private VisualizzaRequisito vr;
+        
 	public ReqPanel() {
 		setPreferredSize(new Dimension(300, 400));
 		setMinimumSize(new Dimension(300, 400));
@@ -49,6 +52,8 @@ public class ReqPanel extends JPanel{
 		table.setColumnSelectionAllowed(false);
 		table.setRowSelectionAllowed(false);
 		scrollPane.setViewportView(table);
+                vr=new VisualizzaRequisito(reqs);
+                table.getSelectionModel().addListSelectionListener(vr);
 		setLayout(groupLayout);
 	}
 	public void loadReqs(String path){
@@ -72,5 +77,8 @@ public class ReqPanel extends JPanel{
 	}
 	public JTable getTable(){
 		return table;
-	}
+        }
+        public Observable getObservable(){
+            return vr;
+        }
 }

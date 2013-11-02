@@ -4,17 +4,39 @@
  */
 package knowledgegraphtool;
 
+import Controllori.ControlloreProgetto;
+import guiComponents.ApriProgetto;
+import guiComponents.ChiudiProgetto;
+import guiComponents.RendererCelleTabella;
+import guiComponents.ThresholdChange;
+import guiComponents.VisualizzaRequisito;
+import guiComponents.FileSystemModelTree;
+import guiComponents.FileTree;
+import guiComponents.NuovoProgetto;
+import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.JTable;
+import javax.swing.JTree;
+
 /**
  *
  * @author Lipari
  */
-public class ProveFrame extends javax.swing.JFrame {
+public class ProveFrame extends javax.swing.JFrame implements Observer {
 
     /**
      * Creates new form ProveFrame
      */
     public ProveFrame() {
         initComponents();
+        /*Initializie Observer*/
+        Observable[] obs=menuBar1.getObservable();
+        for(Observable ob:obs){
+          ob.addObserver(this);
+        }
+        reqPanel1.getObservable().addObserver(this);
+        
     }
 
     /**
@@ -26,17 +48,38 @@ public class ProveFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuBar1 = new gui.MenuBar();
+        reqPanel1 = new gui.ReqPanel();
+        reqBox1 = new gui.ReqBox();
+        projectTree1 = new gui.ProjectTree();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 1212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(reqBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(projectTree1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(reqPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(menuBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(projectTree1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                    .addComponent(reqPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(reqBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -77,5 +120,35 @@ public class ProveFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private gui.MenuBar menuBar1;
+    private gui.ProjectTree projectTree1;
+    private gui.ReqBox reqBox1;
+    private gui.ReqPanel reqPanel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object o1) {
+            ControlloreProgetto cp=ControlloreProgetto.getIstance();
+            if(o.getClass().equals(VisualizzaRequisito.class))
+                reqBox1.getTextBox().setText((String)o1);
+            if(o.getClass().equals(ThresholdChange.class)){
+			JTable t=reqPanel1.getTable();
+			RendererCelleTabella rc=(RendererCelleTabella)t.getCellRenderer(0, 0);
+			for(int i=0;i<t.getRowCount();i++){
+				if((Double)t.getValueAt(i, 1)<=(Double)o1)
+					rc.setAlert(i);
+				else
+					rc.removeAlert(i);
+				t.repaint();
+				}
+            }
+            if(o.getClass().equals(ApriProgetto.class)||o.getClass().equals(NuovoProgetto.class)){
+                FileSystemModelTree fm=new FileSystemModelTree(cp.getSource());
+                projectTree1.getTree().setModel(fm);
+            
+            }
+            if(o.getClass().equals(ChiudiProgetto.class)){
+                projectTree1.getTree().setModel(null);
+            }
+        }
 }

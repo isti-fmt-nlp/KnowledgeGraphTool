@@ -9,7 +9,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-class FileSystemModelTree implements TreeModel {
+public class FileSystemModelTree implements TreeModel {
 	  private String root; // The root identifier
 
 	  private Vector listeners; // Declare the listeners vector

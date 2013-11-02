@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
  * @author Lipari
  */
 public class ControlloreProgetto {
-    private String root=new File(".").getAbsolutePath();
+    private String root=null;
     private static ControlloreProgetto cP=null; //riferimento all' istanza
     private final String DOM1="dominio_1";
     private final String DOM2="dominio_2";
@@ -78,7 +78,7 @@ public class ControlloreProgetto {
                       nodeLst = doc.getElementsByTagName("root");
                      if((nodeLst.item(0).getTextContent()).equals((f.getPath()))) {
                         } else {return "progetto_inesistente";}
-                    }catch(ParserConfigurationException | SAXException | IOException pce){
+                    }catch(Exception pce){
                             return pce.getMessage();}
                 }
             }
@@ -150,5 +150,11 @@ public class ControlloreProgetto {
     public boolean eliminaRequisito(){
         File req=new File(root+"/Requisiti");    
         return req.listFiles()[0].delete();
+    }
+    public boolean isOpen(){
+        if(root!=null)
+            return true;
+        else
+            return false;
     }
 }
