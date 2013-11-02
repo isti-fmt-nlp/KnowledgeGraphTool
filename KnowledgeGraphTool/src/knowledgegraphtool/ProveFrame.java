@@ -7,18 +7,15 @@ package knowledgegraphtool;
 import Controllori.ControlloreProgetto;
 import guiComponents.ApriProgetto;
 import guiComponents.ChiudiProgetto;
+import guiComponents.FileSelectorModel;
 import guiComponents.RendererCelleTabella;
 import guiComponents.ThresholdChange;
 import guiComponents.VisualizzaRequisito;
-import guiComponents.FileSystemModelTree;
-import guiComponents.FileTree;
+
 import guiComponents.NuovoProgetto;
-import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JTable;
-import javax.swing.JTree;
-
 /**
  *
  * @author Lipari
@@ -60,15 +57,16 @@ public class ProveFrame extends javax.swing.JFrame implements Observer {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menuBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 1212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(reqBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(projectTree1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(reqPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(menuBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 1212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 37, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(reqBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(projectTree1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(reqPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(744, 744, 744))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,9 +141,8 @@ public class ProveFrame extends javax.swing.JFrame implements Observer {
 				}
             }
             if(o.getClass().equals(ApriProgetto.class)||o.getClass().equals(NuovoProgetto.class)){
-                FileSystemModelTree fm=new FileSystemModelTree(cp.getSource());
-                projectTree1.getTree().setModel(fm);
-            
+                FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+                projectTree1.getTree().setModel(fs);
             }
             if(o.getClass().equals(ChiudiProgetto.class)){
                 projectTree1.getTree().setModel(null);
