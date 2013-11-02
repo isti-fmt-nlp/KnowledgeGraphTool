@@ -5,7 +5,10 @@
 package knowledgegraphtool;
 
 import Controllori.ControlloreProgetto;
+import guiComponents.AggiungiDominio;
+import guiComponents.AggiungiRequisiti;
 import guiComponents.ApriProgetto;
+import guiComponents.AvviaAnalisi;
 import guiComponents.ChiudiProgetto;
 import guiComponents.FileSelectorModel;
 import guiComponents.RendererCelleTabella;
@@ -13,6 +16,7 @@ import guiComponents.ThresholdChange;
 import guiComponents.VisualizzaRequisito;
 
 import guiComponents.NuovoProgetto;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JTable;
@@ -21,7 +25,6 @@ import javax.swing.JTable;
  * @author Lipari
  */
 public class ProveFrame extends javax.swing.JFrame implements Observer {
-
     /**
      * Creates new form ProveFrame
      */
@@ -143,9 +146,23 @@ public class ProveFrame extends javax.swing.JFrame implements Observer {
             if(o.getClass().equals(ApriProgetto.class)||o.getClass().equals(NuovoProgetto.class)){
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());
                 projectTree1.getTree().setModel(fs);
+                menuBar1.setMenuItemsEnable(true);
+                menuBar1.enableAnalisi(cp.isReady());
+
             }
             if(o.getClass().equals(ChiudiProgetto.class)){
                 projectTree1.getTree().setModel(null);
+                menuBar1.setMenuItemsEnable(false);
+
             }
+             if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(AggiungiRequisiti.class)){
+                FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+                projectTree1.getTree().setModel(fs);
+                menuBar1.enableAnalisi(cp.isReady());
+                    
+             }
+             if(o.getClass().equals(AvviaAnalisi.class))
+                 reqPanel1.viewReqs(cp.getSource());
+                 
         }
 }

@@ -23,6 +23,7 @@ public class ProjectTree extends JPanel{
 				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
 		);
                 tree=new JTree();
+                tree.setRootVisible(true);
 		tree.setModel(null);
                 scrollPane.setViewportView(tree);
 		setLayout(groupLayout);

@@ -29,7 +29,7 @@ public class KgtFile {
             return false;
         }
         if (orig.isFile()){ 
-          dest=new File(destinazione+"\\"+orig.getName());
+          dest=new File(destinazione+File.separator+orig.getName());
            int letti = 0;
            long tot = 0;
           // inizializzo uno buffer di 4Kb

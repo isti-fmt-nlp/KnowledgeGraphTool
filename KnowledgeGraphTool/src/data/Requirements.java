@@ -14,9 +14,9 @@ public class Requirements {
 	public void loadReqs(String root){
 		BufferedReader readerL;
 		BufferedReader readerJ;
-		String pathReq=new File(root+"/Requisiti").listFiles()[0].getAbsolutePath();
+		String pathReq=new File(root+File.separator+"Requisiti").listFiles()[0].getAbsolutePath();
 		String pathjac="";
-		File[] files=new File(root+"/Risultati").listFiles();
+		File[] files=new File(root+File.separator+"Risultati").listFiles();
 		String[]pathGraph=new String[files.length-1];
 		int ind=0;
 		for(File file : files){

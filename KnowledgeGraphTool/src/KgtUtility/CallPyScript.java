@@ -11,7 +11,7 @@ import java.io.*;
  */
 public class CallPyScript {
     
-    static public void analisi(String pathScript){
+    static public int analisi(String pathScript){
        String os=System.getProperty("os.name").toLowerCase();
             try
             {
@@ -26,10 +26,10 @@ public class CallPyScript {
                      pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());                
                      System.out.println(("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()));
                 }
-                //da provare
                 if(os.indexOf("mac")>=0){
                     System.out.println(os);
-                     pr = rt.exec("cd ../conceptLinkNetwork && python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+                     pr = rt.exec("cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+                     System.out.println("cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
                 }
                 //Da provare
                 if(os.indexOf("nix")>=0){
@@ -43,10 +43,12 @@ public class CallPyScript {
             }
             int exitVal = pr.waitFor();
             System.out.println("Exited with error code "+exitVal);
+            return exitVal;
 
         } catch(Exception e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }
+            return 1;
     }
 }

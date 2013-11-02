@@ -27,11 +27,11 @@ public class TestControlloreProgetto {
          System.out.println("Aggiungo DovumentoPathVuoto:"+cp.aggiungiDocumento("dominio_2", ""));
         System.out.println("Eliminazione Documento1: "+cp.eliminaDocumento("dominio_1", "build.xml"));
         System.out.println("Eliminazione Documento con path vuoto: "+cp.eliminaDocumento("dominio_1", ""));
-        System.out.println("Aggiungo PrimoReq: "+cp.aggiungiRequisito(pathR1));
-        System.out.println("Aggiungo SecondoReq:"+cp.aggiungiRequisito(pathR2));
+        System.out.println("Aggiungo PrimoReq: "+cp.aggiungiRequisiti(pathR1));
+        System.out.println("Aggiungo SecondoReq:"+cp.aggiungiRequisiti(pathR2));
         System.out.println("Eliminazione R1: "+cp.eliminaRequisito());
-        System.out.println("Aggiungo SecondoReq:"+cp.aggiungiRequisito(pathR2));
-        System.out.println("Aggiungo SecondoReqVuoto:"+cp.aggiungiRequisito(""));
+        System.out.println("Aggiungo SecondoReq:"+cp.aggiungiRequisiti(pathR2));
+        System.out.println("Aggiungo SecondoReqVuoto:"+cp.aggiungiRequisiti(""));
         System.out.println("Aggiungo Risultato1:"+cp.aggiungiRisultato(pathR1));
         System.out.println("Aggiungo Risultato2:"+cp.aggiungiRisultato(pathR2));
         System.out.println("Aggiungo RisutltatoVuoto:"+cp.aggiungiRisultato(""));

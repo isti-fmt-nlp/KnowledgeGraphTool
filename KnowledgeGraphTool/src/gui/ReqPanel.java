@@ -51,22 +51,23 @@ public class ReqPanel extends JPanel{
 		table.setFillsViewportHeight(true);
 		table.setColumnSelectionAllowed(false);
 		table.setRowSelectionAllowed(false);
+                table.setModel(tm);
+		tm.addColumn("requisito");
+		tm.addColumn("jaccard");
+		table.getColumnModel().getColumn(0).setCellRenderer(rc);
+		table.getColumnModel().getColumn(1).setCellRenderer(rc);
 		scrollPane.setViewportView(table);
                 vr=new VisualizzaRequisito(reqs);
                 table.getSelectionModel().addListSelectionListener(vr);
 		setLayout(groupLayout);
 	}
-	public void loadReqs(String path){
-		table.setModel(tm);
-		tm.addColumn("requisito");
-		tm.addColumn("jaccard");
-		reqs.loadReqs(path);
-		table.getColumnModel().getColumn(0).setCellRenderer(rc);
-		table.getColumnModel().getColumn(1).setCellRenderer(rc);
-		String txt;
+	public void viewReqs(String path){
+		for(int i=0;i<tm.getRowCount();i++)
+                    tm.removeRow(i);
+                reqs.loadReqs(path);
+                String txt;
 		Double jac;
-		
-		for(int i=0;i<reqs.getSize();i++){
+                for(int i=0;i<reqs.getSize();i++){
 			txt=reqs.getReq(i).getReq();
 			jac=reqs.getReq(i).getVal();
 			tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,jac});

@@ -20,9 +20,13 @@ import org.xml.sax.SAXException;
  */
 public class ControlloreProgetto {
     private String root=null;
+    private String dom1=null;
+    private String dom2=null;
+    private String reqs=null;
+    private String res=null;
     private static ControlloreProgetto cP=null; //riferimento all' istanza
-    private final String DOM1="dominio_1";
-    private final String DOM2="dominio_2";
+    public final String DOM1="dominio_1";
+    public final String DOM2="dominio_2";
     /**Costruttore 
      
     */
@@ -47,12 +51,16 @@ public class ControlloreProgetto {
         f=new File(path+"/"+nomeProgetto);
         f.mkdir();
         root=f.getPath();
-        new File(root+"/Dominio1").mkdir();
-        new File(root+"/Dominio2").mkdir();
-        new File(root+"/Requisiti").mkdir();
-        new File(root+"/Risultati").mkdir();
+        new File(root+File.separator+"Dominio1").mkdir();
+        new File(root+File.separator+"Dominio2").mkdir();
+        new File(root+File.separator+"Requisiti").mkdir();
+        new File(root+File.separator+"Risultati").mkdir();
         KgtXml.creaProjectXML(root,nomeProgetto);
-       
+        dom1=root+File.separator+"Dominio1";
+        dom2=root+File.separator+"Dominio2";
+        reqs=root+File.separator+"Requisiti";
+        res=root+File.separator+"Risultati";
+
         return root;
     }
     public String apriProgetto(String path){
@@ -84,6 +92,11 @@ public class ControlloreProgetto {
             }
         if(exist==true){
             root=path;
+            dom1=root+File.separator+"Dominio1";
+            dom2=root+File.separator+"Dominio2";
+            reqs=root+File.separator+"Requisiti";
+            res=root+File.separator+"Risultati";
+
             return "progetto_aperto";}
         else
             return "progetto_inesistente";
@@ -101,32 +114,33 @@ public class ControlloreProgetto {
 
     public boolean aggiungiDocumento(String dom,String path){
         try {
-             if(dom.equals(DOM1)){
-                return KgtFile.copiaFile(path,root+"/Dominio1");
-            }
-            if(dom.equals(DOM2)){
-                 return KgtFile.copiaFile(path,root+"/Dominio2");
-            }
-        } catch (IOException ex) {
+             if(dom.equals(DOM1))
+                return KgtFile.copiaFile(path,dom1);
+
+            if(dom.equals(DOM2))
+                return KgtFile.copiaFile(path,dom2);
+            
+            } catch (IOException ex) {
                 Exceptions.printStackTrace(ex);}
         return false;
     }
     public boolean aggiungiRisultato(String path){
             try {
-            return KgtFile.copiaFile(path,root+"/Risultati");
+            return KgtFile.copiaFile(path,res);
             } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
             }
             return false;
     }
-   public boolean aggiungiRequisito(String path){
-        File req=new File(root+"/Requisiti");
+   public boolean aggiungiRequisiti(String path){
+        File req=new File(reqs);
+        System.out.println(req.getPath());
         if(req.listFiles().length!=0)
             return false;
         else
             try {
             return KgtFile.copiaFile(path,req.getPath());
-            } catch (IOException ex) {
+                } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
             }
         return false;
@@ -135,20 +149,20 @@ public class ControlloreProgetto {
         if(name.length()==0)
             return false;
         if(dom.equals(DOM1))
-            ok=new File(root+"/Dominio1/"+name).delete();
+            ok=new File(dom1+File.separator+name).delete();
         if(dom.equals(DOM2))
-            ok=new File(root+"/Dominio2/"+name).delete();
+            ok=new File(dom2+File.separator+name).delete();
         return ok;
     }
     public boolean eliminaRisultato(String name){
-    File ris=new File(root+"/Risultati");
+    File ris=new File(res);
     for(File f: ris.listFiles())
         if(f.getName().equals(name))
                return f.delete();
     return false;
     }
     public boolean eliminaRequisito(){
-        File req=new File(root+"/Requisiti");    
+        File req=new File(reqs);    
         return req.listFiles()[0].delete();
     }
     public boolean isOpen(){
@@ -156,5 +170,14 @@ public class ControlloreProgetto {
             return true;
         else
             return false;
+    }
+    public boolean isReady(){
+        if(new File(dom1).listFiles().length==0)
+            return false;
+        if(new File(dom2).listFiles().length==0)
+                    return false;
+        if(new File(reqs).listFiles().length!=1)
+                    return false;
+        return true;
     }
 }
