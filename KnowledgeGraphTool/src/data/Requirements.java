@@ -11,8 +11,9 @@ public class Requirements {
 	public Requirements(){
 		
 	}
-	public void loadReqs(String root){
-		BufferedReader readerL;
+	public int loadReqs(String root){
+		int nreq=0;
+                BufferedReader readerL;
 		BufferedReader readerJ;
 		String pathReq=new File(root+File.separator+"Requisiti").listFiles()[0].getAbsolutePath();
 		String pathjac="";
@@ -39,11 +40,13 @@ public class Requirements {
 				jac=readerJ.readLine();
 				reqList.add(new Requirement(line,pathGraph[ind++],pathGraph[ind++],Double.parseDouble(jac)));
 				jac=readerJ.readLine();
+                                nreq++;
 				line = readerL.readLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+                return nreq;
 	}
 	
 	public void clearReq(){

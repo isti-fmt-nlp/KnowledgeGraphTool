@@ -21,6 +21,7 @@ public class CallPyScript {
                 Runtime rt = Runtime.getRuntime();
                 Process pr=null;
                 BufferedReader input=null;
+
                 if(os.indexOf("win")>=0){
                      System.out.println(os);
                      pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());                
@@ -28,7 +29,7 @@ public class CallPyScript {
                 }
                 if(os.indexOf("mac")>=0){
                     System.out.println(os);
-                     pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
+                    pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
                 //Da provare
                 if(os.indexOf("nix")>=0){
@@ -39,7 +40,7 @@ public class CallPyScript {
                 String line=null;
                 while((line=input.readLine()) != null) {
                     System.out.println(line);
-            }
+                }
             int exitVal = pr.waitFor();
             System.out.println("Exited with error code "+exitVal);
             return exitVal;

@@ -1,29 +1,17 @@
 package gui;
 
+import Controllori.ControlloreProgetto;
 import guiComponents.ModelloTabella;
 import guiComponents.RendererCelleTabella;
-
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
-
 import data.Requirements;
 import guiComponents.VisualizzaRequisito;
-
-import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-
 import java.awt.Dimension;
 import java.util.Observable;
-
 import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class ReqPanel extends JPanel{
 	private Requirements reqs;
@@ -64,7 +52,7 @@ public class ReqPanel extends JPanel{
 	public void viewReqs(String path){
 		for(int i=0;i<tm.getRowCount();i++)
                     tm.removeRow(i);
-                reqs.loadReqs(path);
+                ControlloreProgetto.getIstance().setNReqs(reqs.loadReqs(path));
                 String txt;
 		Double jac;
                 for(int i=0;i<reqs.getSize();i++){

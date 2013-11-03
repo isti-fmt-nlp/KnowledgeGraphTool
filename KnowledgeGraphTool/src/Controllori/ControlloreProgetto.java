@@ -24,6 +24,7 @@ public class ControlloreProgetto {
     private String dom2=null;
     private String reqs=null;
     private String res=null;
+    private int nreq=0;
     private static ControlloreProgetto cP=null; //riferimento all' istanza
     public final String DOM1="dominio_1";
     public final String DOM2="dominio_2";
@@ -179,5 +180,11 @@ public class ControlloreProgetto {
         if(new File(reqs).listFiles().length!=1)
                     return false;
         return true;
+    }
+    public void setNReqs(int n){
+        nreq=n;
+    }
+    public int getNReqs(){
+        return nreq;
     }
 }
