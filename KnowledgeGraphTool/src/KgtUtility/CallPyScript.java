@@ -28,13 +28,12 @@ public class CallPyScript {
                 }
                 if(os.indexOf("mac")>=0){
                     System.out.println(os);
-                     pr = rt.exec("cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
-                     System.out.println("cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+                     pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
                 //Da provare
                 if(os.indexOf("nix")>=0){
                     System.out.println(os);
-                     pr = rt.exec("cd ../conceptLinkNetwork && python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());
+                     pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
                 input=new BufferedReader(new InputStreamReader(pr.getInputStream()));
                 String line=null;
