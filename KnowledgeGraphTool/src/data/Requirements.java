@@ -2,22 +2,45 @@ package data;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.openide.util.Exceptions;
 
 public class Requirements {
 	private ArrayList<Requirement> reqList=new ArrayList<Requirement>();
 	public Requirements(){
 		
 	}
-	public int loadReqs(String root){
-		int nreq=0;
-                BufferedReader readerL;
+        public int loadReqs(String root){
+            int nreq=0;
+            reqList.clear();
+            BufferedReader readerL;
+            String pathReq=new File(root+File.separator+"Requirements").listFiles()[0].getAbsolutePath();
+            String line;
+            try {
+                readerL = new BufferedReader(new FileReader(pathReq));
+                try {
+                    line = readerL.readLine();
+                    while(line!=null) {
+                        reqList.add(new Requirement(line));
+                        nreq++;
+                        line = readerL.readLine();
+                    }
+                }catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                } 
+            }catch (FileNotFoundException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+            return nreq;
+        }
+        public void loadAnalysis(String root){
 		BufferedReader readerJ;
-		String pathReq=new File(root+File.separator+"Requisiti").listFiles()[0].getAbsolutePath();
-		String pathjac="";
-		File[] files=new File(root+File.separator+"Risultati").listFiles();
+		int n;
+                String pathjac="";
+		File[] files=new File(root+File.separator+"Result").listFiles();
 		String[]pathGraph=new String[files.length-1];
 		int ind=0;
 		for(File file : files){
@@ -25,34 +48,29 @@ public class Requirements {
 				pathjac=file.getAbsolutePath();
 			if(file.getName().startsWith("R")){
 				pathGraph[ind++]=file.getAbsolutePath();
-				}
-			
+                    }
 		}
-		String line;
 		String jac;
 		try {
-			readerL = new BufferedReader(new FileReader(pathReq));
-			readerJ = new BufferedReader(new FileReader(pathjac));
-			line = readerL.readLine();
-			jac=readerJ.readLine();
-			ind=0;
-			while(line!=null && jac!=null) {
-				jac=readerJ.readLine();
-				reqList.add(new Requirement(line,pathGraph[ind++],pathGraph[ind++],Double.parseDouble(jac)));
-				jac=readerJ.readLine();
-                                nreq++;
-				line = readerL.readLine();
-			}
+                    readerJ = new BufferedReader(new FileReader(pathjac));
+                    jac=readerJ.readLine();
+                    ind=0;
+                    n=reqList.size();
+                    for(int i=0;i<n;i++) {
+                        if(jac!=null){
+                        jac=readerJ.readLine();
+                        reqList.get(i).fill(pathGraph[ind++],pathGraph[ind++],Float.parseFloat(jac));
+                        jac=readerJ.readLine();
+                        }
+                    }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-                return nreq;
 	}
 	
 	public void clearReq(){
-		reqList.clear();
+            reqList.clear();
 	}
-	
 	public Requirement getReq(int n){
 		if(n>=reqList.size())
 			return null;
@@ -61,6 +79,4 @@ public class Requirements {
 	public int  getSize(){
 		return reqList.size();
 	}
-	
-	
 }

@@ -6,24 +6,24 @@ import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**Classe che contiene le funzioni per la gestione
  * di un Progetto
  *
  * @author Lipari
  */
-public class ControlloreProgetto {
+public class ControlloreProgetto{
     private String root=null;
     private String dom1=null;
     private String dom2=null;
     private String reqs=null;
     private String res=null;
+    private String oldRes=null;
+    private boolean analysis=false;
     private int nreq=0;
     private static ControlloreProgetto cP=null; //riferimento all' istanza
     public final String DOM1="dominio_1";
@@ -52,15 +52,18 @@ public class ControlloreProgetto {
         f=new File(path+"/"+nomeProgetto);
         f.mkdir();
         root=f.getPath();
-        new File(root+File.separator+"Dominio1").mkdir();
-        new File(root+File.separator+"Dominio2").mkdir();
-        new File(root+File.separator+"Requisiti").mkdir();
-        new File(root+File.separator+"Risultati").mkdir();
+        new File(root+File.separator+"Domain1").mkdir();
+        new File(root+File.separator+"Domain2").mkdir();
+        new File(root+File.separator+"Requirements").mkdir();
+        new File(root+File.separator+"Result").mkdir();
+        new File(root+File.separator+"Old Result").mkdir();
+        
         KgtXml.creaProjectXML(root,nomeProgetto);
-        dom1=root+File.separator+"Dominio1";
-        dom2=root+File.separator+"Dominio2";
-        reqs=root+File.separator+"Requisiti";
-        res=root+File.separator+"Risultati";
+        dom1=root+File.separator+"Domain1";
+        dom2=root+File.separator+"Domain2";
+        reqs=root+File.separator+"Requirements";
+        res=root+File.separator+"Result";
+        oldRes=root+File.separator+"Old Result";
 
         return root;
     }
@@ -74,7 +77,8 @@ public class ControlloreProgetto {
         boolean exist=false;
         if(f.isDirectory())
            for(File p: f.listFiles()){
-               if(p.getName().equals(".kgtproject.xml")){
+               String name=p.getName();
+               if(name.equals(".kgtproject.xml")){
                     try{
                       exist=true;
                       DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -90,16 +94,40 @@ public class ControlloreProgetto {
                     }catch(Exception pce){
                             return pce.getMessage();}
                 }
-            }
+               root=path;
+               if(name.equals("Domain1"))
+                   dom1=root+File.separator+"Domain1";
+               if(name.equals("Domain2"))
+                   dom2=root+File.separator+"Domain2";
+               if(name.equals("Result"))
+                   res=root+File.separator+"Result";
+               if(name.equals("Requirements"))
+                   reqs=root+File.separator+"Requirements";
+               if(name.equals("Old Result"))
+                   oldRes=root+File.separator+"Old Result";
+           }
         if(exist==true){
-            root=path;
-            dom1=root+File.separator+"Dominio1";
-            dom2=root+File.separator+"Dominio2";
-            reqs=root+File.separator+"Requisiti";
-            res=root+File.separator+"Risultati";
-
-            return "progetto_aperto";}
+            if(dom1==null){
+               new File(root+File.separator+"Domain1").mkdir();
+               dom1=root+File.separator+"Domain1";}
+            if(dom2==null){
+                new File(root+File.separator+"Domain2").mkdir();
+                dom2=root+File.separator+"Domain2";}
+            if(res==null){
+                new File(root+File.separator+"Result").mkdir();
+                res=root+File.separator+"Result";}
+            if(reqs==null){
+                new File(root+File.separator+"Requirements").mkdir();
+                reqs=root+File.separator+"Requirements";}
+            if(oldRes==null){
+                new File(root+File.separator+"Old Result").mkdir();
+                oldRes=root+File.separator+"Old Result";}
+            if(new File(res).listFiles().length!=0)
+                analysis=true;
+            return "progetto_aperto";
+        }
         else
+            chiudiProgetto();
             return "progetto_inesistente";
    }
        
@@ -110,6 +138,11 @@ public class ControlloreProgetto {
 
     public void chiudiProgetto() {
         root=null;
+        dom1=null;
+        dom2=null;
+        reqs=null;
+        res=null;
+        oldRes=null;
     }
 
 
@@ -140,12 +173,16 @@ public class ControlloreProgetto {
             return false;
         else
             try {
-            return KgtFile.copiaFile(path,req.getPath());
-                } catch (IOException ex) {
+                if(KgtFile.copiaFile(path,req.getPath())){
+                    return true;
+                }
+            } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
-            }
+        }
         return false;
-    } public boolean eliminaDocumento(String dom,String name){
+    } 
+   
+   public boolean eliminaDocumento(String dom,String name){
         boolean ok=false;
         if(name.length()==0)
             return false;
@@ -155,16 +192,43 @@ public class ControlloreProgetto {
             ok=new File(dom2+File.separator+name).delete();
         return ok;
     }
-    public boolean eliminaRisultato(String name){
+    public void eliminaRisultati(){
     File ris=new File(res);
     for(File f: ris.listFiles())
-        if(f.getName().equals(name))
-               return f.delete();
-    return false;
+        f.delete();
+    }
+    
+    public void salvaCancRisultati(String dirName){
+         File ris=new File(res);
+         File oldris=new File(oldRes+File.separator+dirName);
+         oldris.mkdir();
+         for(File f: ris.listFiles()){
+            try {
+                KgtFile.copiaFile(f.getAbsolutePath(),oldris.getAbsolutePath());
+                f.delete();
+            } catch (IOException ex) {
+             Exceptions.printStackTrace(ex);
+            }
+         }
+    }
+     public void salvaRisultati(String dirName){
+         File ris=new File(res);
+         File oldris=new File(oldRes+File.separator+dirName);
+         oldris.mkdir();
+         for(File f: ris.listFiles()){
+            try {
+                KgtFile.copiaFile(f.getAbsolutePath(),oldris.getAbsolutePath());
+            } catch (IOException ex) {
+             Exceptions.printStackTrace(ex);
+            }
+         }
     }
     public boolean eliminaRequisito(){
         File req=new File(reqs);    
-        return req.listFiles()[0].delete();
+        if(req.listFiles()[0].delete()){
+            return true;
+        }
+        return false;
     }
     public boolean isOpen(){
         if(root!=null)
@@ -180,6 +244,12 @@ public class ControlloreProgetto {
         if(new File(reqs).listFiles().length!=1)
                     return false;
         return true;
+    }
+    public void setAnalysis(boolean t){
+        analysis=t;
+    }
+    public boolean AnalysisCompleted(){
+        return analysis;
     }
     public void setNReqs(int n){
         nreq=n;

@@ -5,9 +5,7 @@
 package guiComponents;
 
 import data.Requirements;
-import data.Requirement;
 import java.util.Observable;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;

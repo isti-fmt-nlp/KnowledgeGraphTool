@@ -32,7 +32,7 @@ public class FloatSlider extends JPanel {
          sliderLabel.setMinimumSize(new Dimension(75, 22));
          sliderLabel.setSize(new Dimension(75, 22));
                 
-         sliderLabel.setText("Soglia Jaccard:");
+         sliderLabel.setText("Jaccard Threshold:");
          sliderValue.setMaximumSize(new Dimension(60, 22));
          sliderValue.setMinimumSize(new Dimension(60, 22));
          sliderValue.setPreferredSize(new Dimension(60, 22));

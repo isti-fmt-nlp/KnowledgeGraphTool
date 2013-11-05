@@ -99,27 +99,27 @@ public class PannelloFiltri extends javax.swing.JPanel {
         checkDegree = new javax.swing.JCheckBox();
         btnApplica = new javax.swing.JButton();
 
-        jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.jLayeredPane1.border.title_1"))); // NOI18N
+        jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.jLayeredPane1.border.title"))); // NOI18N
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jLayeredPane1, org.jdesktop.beansbinding.ObjectProperty.create(), jLayeredPane1, org.jdesktop.beansbinding.BeanProperty.create("border"), "Informazioni Grafo");
         bindingGroup.addBinding(binding);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.jLabel1.text")); // NOI18N
-        jLabel1.setBounds(10, 20, 34, 16);
+        jLabel1.setBounds(10, 20, 40, 14);
         jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.jLabel2.text")); // NOI18N
-        jLabel2.setBounds(10, 50, 37, 16);
+        jLabel2.setBounds(10, 50, 28, 14);
         jLayeredPane1.add(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         lblnodi.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         org.openide.awt.Mnemonics.setLocalizedText(lblnodi, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.lblnodi.text")); // NOI18N
-        lblnodi.setBounds(60, 20, 70, 16);
+        lblnodi.setBounds(60, 20, 70, 14);
         jLayeredPane1.add(lblnodi, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         lblarchi.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         org.openide.awt.Mnemonics.setLocalizedText(lblarchi, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.lblarchi.text")); // NOI18N
-        lblarchi.setBounds(80, 50, 50, 16);
+        lblarchi.setBounds(80, 50, 50, 14);
         jLayeredPane1.add(lblarchi, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         org.openide.awt.Mnemonics.setLocalizedText(btnVista, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.btnVista.text")); // NOI18N
@@ -144,7 +144,6 @@ public class PannelloFiltri extends javax.swing.JPanel {
 
         lblminDegree.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         org.openide.awt.Mnemonics.setLocalizedText(lblminDegree, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.lblminDegree.text")); // NOI18N
-        lblminDegree.setSize(new java.awt.Dimension(50, 16));
 
         org.openide.awt.Mnemonics.setLocalizedText(lblMassimo1, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.lblMassimo1.text")); // NOI18N
 
@@ -172,10 +171,20 @@ public class PannelloFiltri extends javax.swing.JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(lblmaxEdge, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.lblmaxEdge.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(checkEdge, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.checkEdge.text")); // NOI18N
+        checkEdge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkEdgeActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(checkInDegree, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.checkInDegree.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(checkDegree, org.openide.util.NbBundle.getMessage(PannelloFiltri.class, "PannelloFiltri.checkDegree.text")); // NOI18N
+        checkDegree.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkDegreeActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -233,6 +242,7 @@ public class PannelloFiltri extends javax.swing.JPanel {
                         .add(lblMassimo1)
                         .add(lblmaxDegree)))
                 .add(degreeSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, 0)
                 .add(checkInDegree)
                 .add(0, 0, 0)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -264,39 +274,46 @@ public class PannelloFiltri extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .add(layout.createSequentialGroup()
                 .add(jLayeredPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 140, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(btnVista)
                         .add(0, 0, Short.MAX_VALUE)
-                        .add(btnApplica, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 81, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(btnVista)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(btnApplica, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(btnMostra, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jLayeredPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 73, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, btnVista)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                .add(btnApplica)
-                                .add(1, 1, 1)))
-                        .add(0, 0, 0)
-                        .add(btnMostra)))
-                .add(0, 0, Short.MAX_VALUE)
+                        .add(0, 0, Short.MAX_VALUE)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(btnVista, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(btnApplica))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(btnMostra)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(layout.createSequentialGroup()
+                        .add(jLayeredPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 84, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .add(0, 0, 0))
         );
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void checkDegreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDegreeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkDegreeActionPerformed
+
+    private void checkEdgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkEdgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkEdgeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApplica;

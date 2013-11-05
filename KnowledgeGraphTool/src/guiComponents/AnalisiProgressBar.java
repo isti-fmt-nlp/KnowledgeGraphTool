@@ -4,7 +4,6 @@
  */
 package guiComponents;
 
-import Controllori.ControlloreProgetto;
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
@@ -21,37 +20,37 @@ import javax.swing.SwingWorker;
  */
 public class AnalisiProgressBar extends JPanel implements PropertyChangeListener {
     private Task task;
-    private ControlloreProgetto cp;
+    private int nreq;
+    private String root;
+
     class Task extends SwingWorker<Void, Void> {
+        
         /*
          * Main task. Executed in background thread.
          */
         @Override
         public Void doInBackground() {
-            cp=ControlloreProgetto.getIstance();
-            int progress = 0;
-            int nreq=cp.getNReqs();
-            File resDir=new File(cp.getSource()+File.separator+"Risultati");
-            long lastmodified=resDir.lastModified();
-            boolean analisi=true;
+            File resDir=new File(root+File.separator+"Result");
+            double n=0;
+            int progress=0;
            //Initialize progress property.
             setProgress(0);
-            while (analisi) {
+            while (progress<100) {
                 //Sleep for up to one second.
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException ignore) {}
-                //Make random progress.
-              if(lastmodified<resDir.lastModified()){
-                 lastmodified=resDir.lastModified();
-                 progress++;
-                 setProgress((progress/nreq)*100);
+              if(n<resDir.listFiles().length){
+                 n=resDir.listFiles().length;
+                 progress=(int)((n/nreq)*100);
+                 System.out.println(n+" "+progress);
+                 setProgress(progress);
               }
-              if(progress==nreq)
-                  analisi=false;
+              if(progress==nreq){
+                  setProgress(100);
+              }
             }
             return null;
-            
         }
 
         /*
@@ -62,20 +61,26 @@ public class AnalisiProgressBar extends JPanel implements PropertyChangeListener
             Toolkit.getDefaultToolkit().beep();
             setCursor(null); //turn off the wait cursor
             taskOutput.append("Finito!\n");
+            
             }
     }
     /**
      * Creates new form AnalisiProgressBar
      */
-    public AnalisiProgressBar() {
+    public AnalisiProgressBar(int nreq,String root) {
+        this.nreq=nreq*2+2;
+        this.root=root;
         initComponents();
+     }
+    
+    public void startbar() {       
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        try {
-                    Thread.sleep(50);
-        } catch (InterruptedException ignore) {}
         task = new Task();
         task.addPropertyChangeListener(this);
         task.execute();
+    }
+    public boolean finish(){
+        return task.isDone();
     }
 
     /**
@@ -97,6 +102,7 @@ public class AnalisiProgressBar extends JPanel implements PropertyChangeListener
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(AnalisiProgressBar.class, "AnalisiProgressBar.jLabel1.text")); // NOI18N
 
+        taskOutput.setEditable(false);
         taskOutput.setColumns(20);
         taskOutput.setRows(5);
         jScrollPane1.setViewportView(taskOutput);
@@ -105,24 +111,21 @@ public class AnalisiProgressBar extends JPanel implements PropertyChangeListener
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(0, 0, 0)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-            .add(layout.createSequentialGroup()
-                .add(19, 19, 19)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(progressBar, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                    .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+            .add(jScrollPane1)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, progressBar, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(65, Short.MAX_VALUE)
+                .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 146, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(65, 65, 65))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(progressBar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(progressBar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 84, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -137,27 +140,24 @@ public class AnalisiProgressBar extends JPanel implements PropertyChangeListener
         if ("progress".equals(evt.getPropertyName())) {
             int progress = (Integer) evt.getNewValue();
             progressBar.setValue(progress);
-            taskOutput.append(String.format("Completati %d%% dei Requisiti;\n", task.getProgress()));
+            taskOutput.append(String.format("Completed Analysis %d%%\n", task.getProgress()));
         }
      
     }
-     /**
-     * Create the GUI and show it. As with all GUI code, this must run
-     * on the event-dispatching thread.
-     */
-    public static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Progresso Analisi");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JComponent newContentPane = new AnalisiProgressBar();
-        //Create and set up the content pane.
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
-   }
-    
-}
+    /**
+   * Create the GUI and show it. As with all GUI code, this must run on the
+   * event-dispatching thread.
+   */
+  public static void createAndShowGUI(AnalisiProgressBar apb) {
+    // Create and set up the window.
+    JFrame frame = new JFrame("Progresso Analisi");
+    // Create and set up the content pane.
+    JComponent newContentPane=apb;
+    newContentPane.setOpaque(true); // content panes must be opaque
+    frame.setContentPane(newContentPane);
+    frame.setResizable(false);
+    frame.setVisible(true);
+    // Display the window.
+    frame.pack();
+    }
+  }

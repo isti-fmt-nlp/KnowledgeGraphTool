@@ -12,10 +12,10 @@ from SentenceNetVisitor import SentenceNetVisitor
 from os import listdir
 from os.path import isfile, join
 
-pathdom1=sys.argv[1] + '/Dominio1/'
-pathdom2=sys.argv[1] + '/Dominio2/'
-pathreq=sys.argv[1] + '/Requisiti/'
-pathres=sys.argv[1] + '/Risultati/'
+pathdom1=sys.argv[1] + '/Domain1/'
+pathdom2=sys.argv[1] + '/Domain2/'
+pathreq=sys.argv[1] + '/Requirements/'
+pathres=sys.argv[1] + '/Result/'
 
 fp1 = [ (pathdom1 + f) for f in listdir(pathdom1) if isfile(join(pathdom1,f)) ]
 fp2 = [ (pathdom2 + f) for f in listdir(pathdom2) if isfile(join(pathdom2,f)) ]

@@ -1,20 +1,29 @@
 package data;
 
 public class Requirement {
-	private double val;
+	private float val;
 	private String pathGraphD1;
 	private String pathGraphD2;
-	private String all;
-	public Requirement(String req,String pathD1,String pathD2, double val){
-		all=req;
+	private String req;
+        public Requirement(String req){
+		this.req=req;
+                val=-1;
+	}
+	public Requirement(String req,String pathD1,String pathD2, float val){
+		this.req=req;
 		this.val=val;
 		pathGraphD1=pathD1;
 		pathGraphD2=pathD2;
 	}
-	public void setVal(double val){
+        public void fill(String pathD1,String pathD2, float val){
+		this.val=val;
+		pathGraphD1=pathD1;
+		pathGraphD2=pathD2;
+	}
+	public void setVal(float val){
 		this.val=val;
 	}
-	public double getVal(){
+	public float getVal(){
 		return val;
 	}
 	public void setPath(String pathd1,String pathd2){
@@ -28,9 +37,9 @@ public class Requirement {
 		return pathGraphD2;
 	}
 	public void setReq(String req){
-		all=req;
+		this.req=req;
 	}
 	public String getReq(){
-		return all;
+		return req;
 	}
 }

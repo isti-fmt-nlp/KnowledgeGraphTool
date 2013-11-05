@@ -35,6 +35,5 @@ public class TestControlloreProgetto {
         System.out.println("Aggiungo Risultato1:"+cp.aggiungiRisultato(pathR1));
         System.out.println("Aggiungo Risultato2:"+cp.aggiungiRisultato(pathR2));
         System.out.println("Aggiungo RisutltatoVuoto:"+cp.aggiungiRisultato(""));
-        System.out.println("Elimina Risutltato1:"+cp.eliminaRisultato("297749RevF.doc"));
     }
 }

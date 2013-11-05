@@ -40,8 +40,8 @@ public class ReqPanel extends JPanel{
 		table.setColumnSelectionAllowed(false);
 		table.setRowSelectionAllowed(false);
                 table.setModel(tm);
-		tm.addColumn("requisito");
-		tm.addColumn("jaccard");
+		tm.addColumn("Requirments");
+		tm.addColumn("Jaccards");
 		table.getColumnModel().getColumn(0).setCellRenderer(rc);
 		table.getColumnModel().getColumn(1).setCellRenderer(rc);
 		scrollPane.setViewportView(table);
@@ -49,16 +49,26 @@ public class ReqPanel extends JPanel{
                 table.getSelectionModel().addListSelectionListener(vr);
 		setLayout(groupLayout);
 	}
+        public void clearRows(){
+            int n=tm.getRowCount();
+         for(int i=0;i<n;i++){
+             tm.removeRow(0);
+         }
+        }
 	public void viewReqs(String path){
-		for(int i=0;i<tm.getRowCount();i++)
-                    tm.removeRow(i);
+                clearRows();
                 ControlloreProgetto.getIstance().setNReqs(reqs.loadReqs(path));
+                if(ControlloreProgetto.getIstance().AnalysisCompleted())
+                    reqs.loadAnalysis(path);
                 String txt;
-		Double jac;
+		float jac;
                 for(int i=0;i<reqs.getSize();i++){
 			txt=reqs.getReq(i).getReq();
-			jac=reqs.getReq(i).getVal();
-			tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,jac});
+                        jac=reqs.getReq(i).getVal();
+                        if(jac>=0)
+                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,jac});
+                        else
+                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt});
 		}
 	}
 	public Requirements getRequirements(){

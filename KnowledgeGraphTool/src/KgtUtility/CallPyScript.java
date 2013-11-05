@@ -10,6 +10,7 @@ import java.io.*;
  * @author Lipari
  */
 public class CallPyScript {
+    private static BufferedReader input;
     
     static public int analisi(String pathScript){
        String os=System.getProperty("os.name").toLowerCase();
@@ -20,14 +21,13 @@ public class CallPyScript {
                 String pathRoot=cp.getSource();
                 Runtime rt = Runtime.getRuntime();
                 Process pr=null;
-                BufferedReader input=null;
-
                 if(os.indexOf("win")>=0){
                      System.out.println(os);
                      pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());                
                      System.out.println(("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()));
                 }
-                if(os.indexOf("mac")>=0){
+                
+                 if(os.indexOf("mac")>=0){
                     System.out.println(os);
                     pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
@@ -36,16 +36,18 @@ public class CallPyScript {
                     System.out.println(os);
                      pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
-                input=new BufferedReader(new InputStreamReader(pr.getInputStream()));
+              
+            /*input=new BufferedReader(new InputStreamReader(pr.getInputStream()));
                 String line=null;
                 while((line=input.readLine()) != null) {
                     System.out.println(line);
                 }
             int exitVal = pr.waitFor();
+                
             System.out.println("Exited with error code "+exitVal);
             return exitVal;
-
-        } catch(Exception e) {
+           */return 0;
+            } catch(Exception e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }

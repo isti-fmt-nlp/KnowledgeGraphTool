@@ -17,9 +17,9 @@ public class ThresholdChange extends Observable implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		 JSlider slider = (JSlider) e.getSource();
-         l.setText(""+(double)slider.getValue()/n);
+         l.setText(""+(float)slider.getValue()/n);
          this.setChanged();
-         this.notifyObservers((double)slider.getValue()/n);
+         this.notifyObservers((float)slider.getValue()/n);
 	}
 
 }
