@@ -37,7 +37,7 @@ public class CallPyScript {
                      pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
               
-            /*input=new BufferedReader(new InputStreamReader(pr.getInputStream()));
+           input=new BufferedReader(new InputStreamReader(pr.getInputStream()));
                 String line=null;
                 while((line=input.readLine()) != null) {
                     System.out.println(line);
@@ -46,7 +46,6 @@ public class CallPyScript {
                 
             System.out.println("Exited with error code "+exitVal);
             return exitVal;
-           */return 0;
             } catch(Exception e) {
             System.out.println(e.toString());
             e.printStackTrace();

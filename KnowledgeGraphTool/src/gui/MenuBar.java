@@ -127,7 +127,7 @@ public class MenuBar extends JPanel {
 					.addGap(1)
 					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addGap(2)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addGap(2)
 					.addComponent(floatSlider, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
 					.addGap(2))

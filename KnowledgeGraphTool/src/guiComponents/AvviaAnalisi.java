@@ -48,21 +48,16 @@ public class AvviaAnalisi extends Observable implements ActionListener{
                 }
             }
             cp.setAnalysis(false);
-            System.out.println(cp.getNReqs());
-            AnalisiProgressBar apb=new AnalisiProgressBar(cp.getNReqs(),cp.getSource());
-            apb.createAndShowGUI(apb);
         if(CallPyScript.analisi(pathScript)==0){
-            apb.startbar();
-            while(!apb.finish()){
-            System.out.println("QUIIII");}
             cp.setAnalysis(true);
             this.setChanged();
             this.notifyObservers();
         }
         else
             JOptionPane.showMessageDialog(null, "Analysis Fail");
-        
-    }
+            this.setChanged();
+            this.notifyObservers("fail");
+     }
 }
     
 

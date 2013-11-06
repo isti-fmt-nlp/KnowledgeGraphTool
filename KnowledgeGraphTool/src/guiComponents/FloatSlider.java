@@ -7,6 +7,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class FloatSlider extends JPanel {
 	private JLabel sliderLabel = new JLabel();
@@ -45,24 +46,24 @@ public class FloatSlider extends JPanel {
          	groupLayout.createParallelGroup(Alignment.TRAILING)
          		.addGroup(groupLayout.createSequentialGroup()
          			.addGap(1)
-         			.addComponent(jSlider, GroupLayout.PREFERRED_SIZE, 309, Short.MAX_VALUE)
+         			.addComponent(jSlider, GroupLayout.PREFERRED_SIZE, 290, Short.MAX_VALUE)
          			.addGap(1)
-         			.addComponent(sliderLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-         			.addGap(4)
+         			.addComponent(sliderLabel, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+         			.addPreferredGap(ComponentPlacement.RELATED)
          			.addComponent(sliderValue, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
          );
          groupLayout.setVerticalGroup(
          	groupLayout.createParallelGroup(Alignment.LEADING)
          		.addGroup(groupLayout.createSequentialGroup()
-         			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-         				.addGroup(groupLayout.createSequentialGroup()
-         					.addGap(1)
-         					.addComponent(sliderLabel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+         			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
          				.addGroup(groupLayout.createSequentialGroup()
          					.addGap(1)
          					.addComponent(sliderValue, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-         				.addComponent(jSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-         			.addContainerGap())
+         				.addComponent(jSlider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+         				.addGroup(groupLayout.createSequentialGroup()
+         					.addGap(1)
+         					.addComponent(sliderLabel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+         			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
          );
          setLayout(groupLayout);
     }

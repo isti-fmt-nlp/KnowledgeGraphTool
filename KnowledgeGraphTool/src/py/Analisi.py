@@ -3,6 +3,7 @@
 '''
 import nltk
 import sys
+from ProgressBar import progressBar
 from pygraph.classes.digraph import digraph
 sys.path.insert(1, sys.argv[2])
 sys.path.insert(1, sys.argv[2]+'irutils')
@@ -19,7 +20,9 @@ pathres=sys.argv[1] + '/Result/'
 
 fp1 = [ (pathdom1 + f) for f in listdir(pathdom1) if isfile(join(pathdom1,f)) ]
 fp2 = [ (pathdom2 + f) for f in listdir(pathdom2) if isfile(join(pathdom2,f)) ]
-
+bar=progressBar()
+progress=0.0;
+bar.setPercent(int(progress))
 terms_filter = TextFilter()
 EDGE_START_WEIGHT = 1.0
 OCCURRENCES_POS = 0 # the tuple representing the number of occurrences is the first attribute (position 0) for each edge
@@ -43,14 +46,15 @@ req_file=open(path_file_req,"r")
 reqs= req_file.readlines()
 req_file.close()
 #print reqs
-
+nreq=len(reqs)*2+2
 ind=1
 jac=0
 jac_file = open(pathres+"jaccard.txt","w")
 
 #Ciclo creazione e salvataggio sotto grafi cammini + jaccard
 for req in reqs:
-	#print 'Req:' + req
+        progress+=1
+        #print 'Req:' + req
 	filtered_sent = terms_filter.filter_all(req)
 	#print 'Filter: ' + filtered_sent
 	path1, path_weight1 = v1.search_A_star(filtered_sent)
@@ -64,16 +68,27 @@ for req in reqs:
    		subgraph_req = s1.get_connected_subgraph(term)
    		current_subgraph = s1.get_merged_subgraph(current_subgraph, subgraph_req)
 	SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:6] + '-dom1.gv', current_subgraph)
-	for index, term in enumerate(path2_tokens):
+        x=float(progress/nreq)
+        bar.setPercent(int(x*100))
+        for index, term in enumerate(path2_tokens):
    		subgraph_req2 = s2.get_connected_subgraph(term)
    		current_subgraph2 = s2.get_merged_subgraph(current_subgraph2, subgraph_req2)
 	SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:6] + '-dom2.gv', current_subgraph2)
-	path_subgraph1=' '.join(current_subgraph.nodes())
+        path_subgraph1=' '.join(current_subgraph.nodes())
 	path_subgraph2=' '.join(current_subgraph2.nodes())
 	jac= SentenceNetCreator.evaluate_jaccard(s1,path_subgraph1,path_subgraph2,filtered_sent)
         r='R%d jaccard\n%.10f\n'%(ind,jac)
         jac_file.write(r)
         ind+=1
+        progress+=1
+        x=float(progress/nreq)
+        bar.setPercent(int(x*100))
 jac_file.close()
 s1.write_graph(pathres + 'Graph-dom1.gv')
+progress+=1
+x=float(progress/nreq)
+bar.setPercent(int(x*100))
 s2.write_graph(pathres + 'Graph-dom2.gv')
+progress+=1
+x=float(progress/nreq)
+bar.setPercent(int(x*100))
