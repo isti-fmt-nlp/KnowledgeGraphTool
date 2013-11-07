@@ -5,6 +5,7 @@
 package kgtUtility;
 
 import java.io.File;
+import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,6 +15,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -53,9 +55,16 @@ public class KgtXml {
 		Transformer transformer = transformerFactory.newTransformer();
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes"); 
 		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File(pathProgetto+"/"+".kgtproject.xml").getPath());
+                File xml=new File(pathProgetto+"/"+".kgtproject.xml");
+		StreamResult result = new StreamResult(xml.getPath());
                 transformer.transform(source, result);
- 
+                String os=System.getProperty("os.name").toLowerCase();
+                if(os.indexOf("win")>=0){
+                try {
+                    Runtime.getRuntime().exec("attrib +H " + xml.getAbsolutePath());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex); }
+                }
 		System.out.println("File saved!");
                 
  

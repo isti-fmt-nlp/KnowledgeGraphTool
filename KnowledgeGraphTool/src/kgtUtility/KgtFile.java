@@ -29,7 +29,13 @@ public class KgtFile {
             return false;
         }
         if (orig.isFile()){ 
-          dest=new File(destinazione+File.separator+orig.getName());
+           String name=orig.getName();
+          if(name.substring(name.lastIndexOf('.'),name.length()).equalsIgnoreCase(".pdf")){
+              ConvertPdftoTxt.convert(origine, destinazione);
+              System.out.println("conversion1");
+              return true;
+          }
+           dest=new File(destinazione+File.separator+name);
            int letti = 0;
            long tot = 0;
           // inizializzo uno buffer di 4Kb
