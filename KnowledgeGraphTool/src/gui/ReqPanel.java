@@ -5,11 +5,20 @@ import guiComponents.ModelloTabella;
 import guiComponents.RendererCelleTabella;
 import javax.swing.JPanel;
 import data.Requirements;
-import guiComponents.VisualizzaRequisito;
+import guiComponents.ButtonColumn;
+import guiListener.OpenGraph;
+import guiListener.VisualizzaRequisito;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.io.File;
 import java.util.Observable;
+import javax.imageio.ImageIO;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -37,14 +46,17 @@ public class ReqPanel extends JPanel{
 		);
 		table = new JTable();
 		table.setFillsViewportHeight(true);
-		table.setColumnSelectionAllowed(false);
-		table.setRowSelectionAllowed(false);
                 table.setModel(tm);
-		tm.addColumn("Requirments");
+		tm.addColumn("Requirements");
 		tm.addColumn("Jaccards");
-		table.getColumnModel().getColumn(0).setCellRenderer(rc);
-		table.getColumnModel().getColumn(1).setCellRenderer(rc);
-		scrollPane.setViewportView(table);
+                tm.addColumn("Graph");
+		table.getColumn("Requirements").setCellRenderer(rc);
+		table.getColumn("Jaccards").setCellRenderer(rc);
+                OpenGraph open=new OpenGraph(reqs);
+                new ButtonColumn(table, (Action) open,2);
+                table.getColumn("Graph").setMaxWidth(50);
+                table.setRowHeight(19);
+                scrollPane.setViewportView(table);
                 vr=new VisualizzaRequisito(reqs);
                 table.getSelectionModel().addListSelectionListener(vr);
 		setLayout(groupLayout);
@@ -62,11 +74,12 @@ public class ReqPanel extends JPanel{
                     reqs.loadAnalysis(path);
                 String txt;
 		float jac;
+                ImageIcon view=new ImageIcon(new File("src"+File.separator+"icon"+File.separator+"graph2.png").getAbsolutePath());
                 for(int i=0;i<reqs.getSize();i++){
 			txt=reqs.getReq(i).getReq();
                         jac=reqs.getReq(i).getVal();
                         if(jac>=0)
-                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,jac});
+                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,jac,view});
                         else
                             tm.addRow(new Object[]{"R"+(i+1)+"-"+txt});
 		}

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package guiComponents;
+package guiListener;
 
 import data.Requirements;
 import java.util.Observable;

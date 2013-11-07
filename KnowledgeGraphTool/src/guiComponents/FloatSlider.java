@@ -1,5 +1,6 @@
 package guiComponents;
 
+import guiListener.ThresholdChange;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

@@ -4,16 +4,16 @@
  */
 package Test;
 import Controllori.ControlloreProgetto;
-import guiComponents.AggiungiDominio;
-import guiComponents.AggiungiRequisiti;
-import guiComponents.ApriProgetto;
-import guiComponents.AvviaAnalisi;
-import guiComponents.ChiudiProgetto;
+import guiListener.AggiungiDominio;
+import guiListener.AggiungiRequisiti;
+import guiListener.ApriProgetto;
+import guiListener.AvviaAnalisi;
+import guiListener.ChiudiProgetto;
 import guiComponents.FileSelectorModel;
 import guiComponents.RendererCelleTabella;
-import guiComponents.ThresholdChange;
-import guiComponents.VisualizzaRequisito;
-import guiComponents.NuovoProgetto;
+import guiListener.ThresholdChange;
+import guiListener.VisualizzaRequisito;
+import guiListener.NuovoProgetto;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JTable;

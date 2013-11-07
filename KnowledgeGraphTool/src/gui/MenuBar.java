@@ -1,12 +1,12 @@
 package gui;
 
-import guiComponents.AggiungiDominio;
-import guiComponents.AggiungiRequisiti;
-import guiComponents.ApriProgetto;
-import guiComponents.AvviaAnalisi;
-import guiComponents.ChiudiProgetto;
+import guiListener.AggiungiDominio;
+import guiListener.AggiungiRequisiti;
+import guiListener.ApriProgetto;
+import guiListener.AvviaAnalisi;
+import guiListener.ChiudiProgetto;
 import guiComponents.FloatSlider;
-import guiComponents.NuovoProgetto;
+import guiListener.NuovoProgetto;
 
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
