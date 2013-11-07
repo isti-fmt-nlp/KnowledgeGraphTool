@@ -3,14 +3,15 @@
  * and open the template in the editor.
  */
 package Test;
-import Controllori.ControlloreProgetto;
+import controllers.ControlloreProgetto;
+import controllers.ControlloreProgetto;
 import guiListener.AggiungiDominio;
 import guiListener.AggiungiRequisiti;
 import guiListener.ApriProgetto;
 import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
-import guiComponents.FileSelectorModel;
-import guiComponents.RendererCelleTabella;
+import supportGui.FileSelectorModel;
+import supportGui.RendererCelleTabella;
 import guiListener.ThresholdChange;
 import guiListener.VisualizzaRequisito;
 import guiListener.NuovoProgetto;

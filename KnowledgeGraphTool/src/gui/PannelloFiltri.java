@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package gui;
-import guiComponents.RangeSlider;
+import supportGui.RangeSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -79,9 +79,9 @@ public class PannelloFiltri extends javax.swing.JPanel {
         btnVista = new javax.swing.JButton();
         btnMostra = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
-        degreeSlider = new guiComponents.RangeSlider();
-        inDegreeSlider = new guiComponents.RangeSlider();
-        edgeSlider = new guiComponents.RangeSlider();
+        degreeSlider = new supportGui.RangeSlider();
+        inDegreeSlider = new supportGui.RangeSlider();
+        edgeSlider = new supportGui.RangeSlider();
         lblminimo1 = new javax.swing.JLabel();
         lblminDegree = new javax.swing.JLabel();
         lblMassimo1 = new javax.swing.JLabel();
@@ -322,9 +322,9 @@ public class PannelloFiltri extends javax.swing.JPanel {
     private javax.swing.JCheckBox checkDegree;
     private javax.swing.JCheckBox checkEdge;
     private javax.swing.JCheckBox checkInDegree;
-    private guiComponents.RangeSlider degreeSlider;
-    private guiComponents.RangeSlider edgeSlider;
-    private guiComponents.RangeSlider inDegreeSlider;
+    private supportGui.RangeSlider degreeSlider;
+    private supportGui.RangeSlider edgeSlider;
+    private supportGui.RangeSlider inDegreeSlider;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;

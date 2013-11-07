@@ -254,21 +254,21 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="guiComponents.RangeSlider" name="degreeSlider">
+        <Component class="supportGui.RangeSlider" name="degreeSlider">
           <Properties>
             <Property name="paintLabels" type="boolean" value="true"/>
             <Property name="paintTicks" type="boolean" value="true"/>
             <Property name="snapToTicks" type="boolean" value="true"/>
           </Properties>
         </Component>
-        <Component class="guiComponents.RangeSlider" name="inDegreeSlider">
+        <Component class="supportGui.RangeSlider" name="inDegreeSlider">
           <Properties>
             <Property name="paintLabels" type="boolean" value="true"/>
             <Property name="paintTicks" type="boolean" value="true"/>
             <Property name="snapToTicks" type="boolean" value="true"/>
           </Properties>
         </Component>
-        <Component class="guiComponents.RangeSlider" name="edgeSlider">
+        <Component class="supportGui.RangeSlider" name="edgeSlider">
           <Properties>
             <Property name="paintLabels" type="boolean" value="true"/>
             <Property name="paintTicks" type="boolean" value="true"/>

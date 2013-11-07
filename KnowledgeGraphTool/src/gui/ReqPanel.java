@@ -1,11 +1,11 @@
 package gui;
 
-import Controllori.ControlloreProgetto;
-import guiComponents.ModelloTabella;
-import guiComponents.RendererCelleTabella;
+import controllers.ControlloreProgetto;
+import supportGui.ModelloTabella;
+import supportGui.RendererCelleTabella;
 import javax.swing.JPanel;
 import data.Requirements;
-import guiComponents.ButtonColumn;
+import supportGui.ButtonColumn;
 import guiListener.OpenGraph;
 import guiListener.VisualizzaRequisito;
 import javax.swing.GroupLayout;

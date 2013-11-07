@@ -5,11 +5,11 @@
 package guiListener;
 
 import data.Requirements;
+import graphView.GraphWindow;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.Action;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+
 
 /**
  *
@@ -53,7 +53,10 @@ public class OpenGraph implements Action{
     @Override
     public void actionPerformed(ActionEvent ae) {
             int row=Integer.parseInt(ae.getActionCommand());
-            System.out.println(reqs.getReq(row).getReq());
+            String path=reqs.getReq(row).getPathD1();
+            new Thread(new GraphWindow(path)).start();
+            path=reqs.getReq(row).getPathD2();
+            new Thread(new GraphWindow(path)).start();
     }
     
 }

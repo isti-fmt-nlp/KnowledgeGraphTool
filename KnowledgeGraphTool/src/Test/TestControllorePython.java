@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 package Test;
-import Controllori.ControlloreProgetto;
-import KgtUtility.CallPyScript;
+import controllers.ControlloreProgetto;
+import kgtUtility.CallPyScript;
 import java.io.File;
 import java.io.IOException;
 import org.openide.util.Exceptions;

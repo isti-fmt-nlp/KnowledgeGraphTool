@@ -4,7 +4,7 @@
  */
 package guiListener;
 
-import Controllori.ControlloreProgetto;
+import controllers.ControlloreProgetto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;

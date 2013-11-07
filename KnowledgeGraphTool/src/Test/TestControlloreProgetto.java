@@ -4,7 +4,7 @@
  */
 package Test;
 
-import Controllori.ControlloreProgetto;
+import controllers.ControlloreProgetto;
 /**
  *
  * @author Lipari

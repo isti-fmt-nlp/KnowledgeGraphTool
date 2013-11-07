@@ -4,8 +4,8 @@
  */
 package guiListener;
 
-import Controllori.ControlloreProgetto;
-import KgtUtility.CallPyScript;
+import controllers.ControlloreProgetto;
+import kgtUtility.CallPyScript;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

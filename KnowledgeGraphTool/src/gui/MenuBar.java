@@ -5,7 +5,7 @@ import guiListener.AggiungiRequisiti;
 import guiListener.ApriProgetto;
 import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
-import guiComponents.FloatSlider;
+import supportGui.FloatSlider;
 import guiListener.NuovoProgetto;
 
 import javax.swing.JPanel;
