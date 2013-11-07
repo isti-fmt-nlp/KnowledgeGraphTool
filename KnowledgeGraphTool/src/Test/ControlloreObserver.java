@@ -125,7 +125,7 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
 
     @Override
     public void update(Observable o, Object o1) {
-            ControlloreProgetto cp=ControlloreProgetto.getIstance();
+            ControlloreProgetto cp=ControlloreProgetto.getInstance();
             if(o.getClass().equals(VisualizzaRequisito.class))
                 reqBox1.getTextBox().setText((String)o1);
             if(o.getClass().equals(ThresholdChange.class)){

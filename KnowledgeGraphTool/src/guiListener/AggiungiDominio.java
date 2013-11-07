@@ -19,7 +19,7 @@ import org.jfree.ui.ExtensionFileFilter;
  * @author Peppe
  */
 public class AggiungiDominio extends Observable implements ActionListener{
-    private ControlloreProgetto cp=ControlloreProgetto.getIstance();
+    private ControlloreProgetto cp=ControlloreProgetto.getInstance();
     private String dom;
     public AggiungiDominio(String dom){
     this.dom=dom;

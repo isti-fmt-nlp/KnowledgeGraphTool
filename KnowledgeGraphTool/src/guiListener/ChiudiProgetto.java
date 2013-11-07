@@ -14,7 +14,7 @@ import java.util.Observable;
  * @author Peppe
  */
 public class ChiudiProgetto extends Observable implements ActionListener{
-    ControlloreProgetto cp=ControlloreProgetto.getIstance();
+    ControlloreProgetto cp=ControlloreProgetto.getInstance();
     @Override
     public void actionPerformed(ActionEvent ae) {
              cp.chiudiProgetto();

@@ -16,25 +16,27 @@ public class CallPyScript {
        String os=System.getProperty("os.name").toLowerCase();
             try
             {
-                ControlloreProgetto cp=ControlloreProgetto.getIstance();
+                ControlloreProgetto cp=ControlloreProgetto.getInstance();
                 File pathLib=new File("../conceptLinkNetwork");
                 String pathRoot=cp.getSource();
+                pathRoot.replaceAll(" ", File.pathSeparator);
+                System.out.println(pathRoot);
                 Runtime rt = Runtime.getRuntime();
                 Process pr=null;
                 if(os.indexOf("win")>=0){
                      System.out.println(os);
-                     pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath());                
-                     System.out.println(("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()));
+                     pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath());                
+                     System.out.println(("cmd /c cd ../conceptLinkNetwork/ & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()));
                 }
                 
                  if(os.indexOf("mac")>=0){
                     System.out.println(os);
-                    pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
+                    pr = rt.exec("python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
                 //Da provare
                 if(os.indexOf("nix")>=0){
                     System.out.println(os);
-                     pr = rt.exec("python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
+                     pr = rt.exec("python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
                 }
               
            input=new BufferedReader(new InputStreamReader(pr.getInputStream()));

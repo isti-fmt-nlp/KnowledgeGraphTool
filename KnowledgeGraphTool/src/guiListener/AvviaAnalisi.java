@@ -26,7 +26,7 @@ public class AvviaAnalisi extends Observable implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         this.setChanged();
         this.notifyObservers("analysis");
-        ControlloreProgetto cp=ControlloreProgetto.getIstance();
+        ControlloreProgetto cp=ControlloreProgetto.getInstance();
         File f=new File("./src/py/Analisi.py");
         String pathScript="";
         try {
@@ -34,7 +34,7 @@ public class AvviaAnalisi extends Observable implements ActionListener{
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        if(ControlloreProgetto.getIstance().AnalysisCompleted()){
+        if(ControlloreProgetto.getInstance().AnalysisCompleted()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
              int dialogResult = JOptionPane.showConfirmDialog (null, "Result exists. Do you want to save them?","Warning",dialogButton);
              if(dialogResult == JOptionPane.NO_OPTION){

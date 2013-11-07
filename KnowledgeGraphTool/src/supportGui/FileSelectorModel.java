@@ -51,7 +51,6 @@ public class FileSelectorModel implements TreeModel {
                 || parentNode.listFiles(fileFilter) == null) {
             return 0;
         }
-
         return parentNode.listFiles(fileFilter).length;
     }
 

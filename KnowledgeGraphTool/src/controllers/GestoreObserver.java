@@ -54,7 +54,7 @@ public class GestoreObserver implements Observer{
 
     @Override
     public void update(Observable o, Object o1) {
-        ControlloreProgetto cp=ControlloreProgetto.getIstance();
+        ControlloreProgetto cp=ControlloreProgetto.getInstance();
         if(o.getClass().equals(VisualizzaRequisito.class))
             reqBox.getTextBox().setText((String)o1);
         if(o.getClass().equals(ThresholdChange.class)){
@@ -91,12 +91,17 @@ public class GestoreObserver implements Observer{
             projectTree.getTree().setModel(fs);
             menuBar.enableAnalisi(cp.isReady());
         }
+        if(o.getClass().equals(AggiungiRequisiti.class))
+             reqPanel.viewReqs(cp.getSource());
+
         if(o.getClass().equals(AvviaAnalisi.class)){
             if(o1==null){
                 menuBar.enableSave(cp.AnalysisCompleted());
                 reqPanel.viewReqs(cp.getSource());
                 main.setEnabled(true);
                 menuBar.enableThreshold(cp.AnalysisCompleted());
+                FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+                    projectTree.getTree().setModel(fs);
             }
             else{
                 if(o1.equals("fail")){

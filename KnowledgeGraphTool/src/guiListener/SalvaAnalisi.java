@@ -20,13 +20,13 @@ public class SalvaAnalisi extends Observable implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ControlloreProgetto.getIstance().AnalysisCompleted()){
+        if(ControlloreProgetto.getInstance().AnalysisCompleted()){
             Calendar c=Calendar.getInstance();
             String nameDir = JOptionPane.showInputDialog(null, "Insert save dir name","Result-"+c.get(Calendar.DATE)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
         if(nameDir==null || nameDir.isEmpty())
              JOptionPane.showMessageDialog(null, "Save Fail!");
         else
-            ControlloreProgetto.getIstance().salvaRisultati(nameDir);
+            ControlloreProgetto.getInstance().salvaRisultati(nameDir);
         }
     }
     

@@ -16,7 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Peppe
  */
 public class AggiungiRequisiti extends Observable implements ActionListener{
-   private ControlloreProgetto cp=ControlloreProgetto.getIstance();
+   private ControlloreProgetto cp=ControlloreProgetto.getInstance();
    @Override
     public void actionPerformed(ActionEvent ae) {
          FileNameExtensionFilter filter = new FileNameExtensionFilter("Solo Txt", "txt");

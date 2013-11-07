@@ -11,7 +11,7 @@ import controllers.ControlloreProgetto;
  */
 public class TestControlloreProgetto {
     public static void main(String[] args) {
-        ControlloreProgetto cp=ControlloreProgetto.getIstance();
+        ControlloreProgetto cp=ControlloreProgetto.getInstance();
         cp.creaProgetto("C:/Users/Lipari/Documents/Prova", "Progetto1");
         System.out.println(cp.apriProgetto(cp.getSource())); 
         cp.chiudiProgetto();

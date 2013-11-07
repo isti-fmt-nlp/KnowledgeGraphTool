@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Peppe
  */
 public class ApriProgetto extends Observable implements ActionListener{
-    ControlloreProgetto cp=ControlloreProgetto.getIstance();
+    ControlloreProgetto cp=ControlloreProgetto.getInstance();
     @Override
     public void actionPerformed(ActionEvent ae) {
          if(cp.isOpen()){

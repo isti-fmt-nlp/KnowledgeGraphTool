@@ -11,14 +11,10 @@ import guiListener.VisualizzaRequisito;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.io.File;
 import java.util.Observable;
-import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -28,7 +24,9 @@ public class ReqPanel extends JPanel{
 	private JTable table;
 	private RendererCelleTabella rc=new RendererCelleTabella();
 	private VisualizzaRequisito vr;
-        
+        private ControlloreProgetto cp=ControlloreProgetto.getInstance();
+        private OpenGraph open;
+
 	public ReqPanel() {
 		setPreferredSize(new Dimension(300, 400));
 		setMinimumSize(new Dimension(300, 400));
@@ -52,8 +50,6 @@ public class ReqPanel extends JPanel{
                 tm.addColumn("Graph");
 		table.getColumn("Requirements").setCellRenderer(rc);
 		table.getColumn("Jaccards").setCellRenderer(rc);
-                OpenGraph open=new OpenGraph(reqs);
-                new ButtonColumn(table, (Action) open,2);
                 table.getColumn("Graph").setMaxWidth(50);
                 table.setRowHeight(19);
                 scrollPane.setViewportView(table);
@@ -66,12 +62,22 @@ public class ReqPanel extends JPanel{
          for(int i=0;i<n;i++){
              tm.removeRow(0);
          }
+         reqs.clearReq();
         }
 	public void viewReqs(String path){
                 clearRows();
-                ControlloreProgetto.getIstance().setNReqs(reqs.loadReqs(path));
-                if(ControlloreProgetto.getIstance().AnalysisCompleted())
+                if(!cp.Requirements())
+                    return;
+                cp.setNReqs(reqs.loadReqs(path));
+                open=new OpenGraph(reqs);
+                if(cp.AnalysisCompleted()){
                     reqs.loadAnalysis(path);
+                    new ButtonColumn(table, (Action) open,2);
+                }
+                else{
+                    table.getColumn("Graph").setCellEditor(null);
+                    table.getColumn("Graph").setCellRenderer(null);
+                }
                 String txt;
 		float jac;
                 ImageIcon view=new ImageIcon(new File("src"+File.separator+"icon"+File.separator+"graph2.png").getAbsolutePath());

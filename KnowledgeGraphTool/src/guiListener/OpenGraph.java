@@ -53,7 +53,9 @@ public class OpenGraph implements Action{
     @Override
     public void actionPerformed(ActionEvent ae) {
             int row=Integer.parseInt(ae.getActionCommand());
+            System.out.println(reqs.getSize());
             String path=reqs.getReq(row).getPathD1();
+            System.out.println(path);
             new Thread(new GraphWindow(path)).start();
             path=reqs.getReq(row).getPathD2();
             new Thread(new GraphWindow(path)).start();

@@ -33,7 +33,7 @@ public class ControlloreProgetto{
     */
     private ControlloreProgetto(){
     }
-    public static ControlloreProgetto getIstance(){
+    public static ControlloreProgetto getInstance(){
             if(cP==null)
                         cP = new ControlloreProgetto();
              return cP;
@@ -64,6 +64,7 @@ public class ControlloreProgetto{
         reqs=root+File.separator+"Requirements";
         res=root+File.separator+"Result";
         oldRes=root+File.separator+"Old Result";
+        analysis=false;
 
         return root;
     }
@@ -143,6 +144,7 @@ public class ControlloreProgetto{
         reqs=null;
         res=null;
         oldRes=null;
+        analysis=false;
     }
 
 
@@ -150,7 +152,8 @@ public class ControlloreProgetto{
         try {
              if(dom.equals(DOM1))
                 return KgtFile.copiaFile(path,dom1);
-
+                
+                
             if(dom.equals(DOM2))
                 return KgtFile.copiaFile(path,dom2);
             
@@ -166,10 +169,15 @@ public class ControlloreProgetto{
             }
             return false;
     }
+   public boolean Requirements(){
+       if(new File(reqs).listFiles().length!=0)
+           return true;
+       else 
+           return false;
+   }
    public boolean aggiungiRequisiti(String path){
         File req=new File(reqs);
-        System.out.println(req.getPath());
-        if(req.listFiles().length!=0)
+        if(Requirements())
             return false;
         else
             try {
