@@ -21,7 +21,7 @@ public class ApriProgetto extends Observable implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
          if(cp.isOpen()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
-             int dialogResult = JOptionPane.showConfirmDialog (null, "Il progetto esistente verrà chiuso. Confermi?","Warning",dialogButton);
+             int dialogResult = JOptionPane.showConfirmDialog (null, "The current project will be closed. Do you Confirm?","Warning",dialogButton);
              if(dialogResult == JOptionPane.NO_OPTION){
                  return;
              }else{
@@ -31,21 +31,20 @@ public class ApriProgetto extends Observable implements ActionListener{
          }
          
          JFileChooser fileChooser = new JFileChooser();
-         fileChooser.setDialogTitle("Seleziona directory progetto");
+         fileChooser.setDialogTitle("Select directory project");
          //indica che dobbiamo scegliere solo le cartelle ( se non specificato, potranno essere selezionati solo i file)
          fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
          //mostra la finestra per scegliere la cartella
          //restituisce l'intero JFileChooser.APPROVE_OPTION solo se si ha premuto su "Apri"
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                      System.out.println("Cartella selezionata: "+fileChooser.getSelectedFile());
                       if(cp.apriProgetto(fileChooser.getSelectedFile().getAbsolutePath()).equals("progetto_inesistente")){
-                          JOptionPane.showMessageDialog(null,"Progetto inesistente");
+                          JOptionPane.showMessageDialog(null,"Folder is not a project");
                           return;
                       }
                       this.setChanged();
                       this.notifyObservers();
                    }else{
-                   System.out.println("Operazione annullata");
+                   System.out.println("Operation aborted");
                }
     }
     

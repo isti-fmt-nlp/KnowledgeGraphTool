@@ -24,6 +24,7 @@ public class ControlloreProgetto{
     private String res=null;
     private String oldRes=null;
     private boolean analysis=false;
+    private boolean requirements=false;
     private int nreq=0;
     private static ControlloreProgetto cP=null; //riferimento all' istanza
     public final String DOM1="dominio_1";
@@ -125,6 +126,8 @@ public class ControlloreProgetto{
                 oldRes=root+File.separator+"Old Result";}
             if(new File(res).listFiles().length!=0)
                 analysis=true;
+            if(new File(reqs).listFiles().length!=0)
+                requirements=true;
             return "progetto_aperto";
         }
         else
@@ -145,6 +148,7 @@ public class ControlloreProgetto{
         res=null;
         oldRes=null;
         analysis=false;
+        requirements=false;
     }
 
 
@@ -170,10 +174,7 @@ public class ControlloreProgetto{
             return false;
     }
    public boolean Requirements(){
-       if(new File(reqs).listFiles().length!=0)
-           return true;
-       else 
-           return false;
+     return requirements;
    }
    public boolean aggiungiRequisiti(String path){
         File req=new File(reqs);
@@ -182,6 +183,7 @@ public class ControlloreProgetto{
         else
             try {
                 if(KgtFile.copiaFile(path,req.getPath())){
+                    requirements=true;
                     return true;
                 }
             } catch (IOException ex) {
@@ -233,8 +235,13 @@ public class ControlloreProgetto{
     }
     public boolean eliminaRequisito(){
         File req=new File(reqs);    
-        if(req.listFiles()[0].delete()){
-            return true;
+        if(Requirements()){
+           for(File f:req.listFiles()){
+               System.out.println(f.getName());
+               requirements=! f.delete();
+           }
+           return !requirements;
+           
         }
         return false;
     }

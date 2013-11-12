@@ -74,6 +74,7 @@ public class FileSelectorModel implements TreeModel {
     // The following methods are not implemented, as we won't need them for this example.
 
     public void valueForPathChanged(TreePath path, Object newValue) {
+        
     }
 
     public void addTreeModelListener(TreeModelListener l) {

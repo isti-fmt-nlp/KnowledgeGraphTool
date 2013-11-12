@@ -7,6 +7,9 @@ import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
 import supportGui.FloatSlider;
 import guiListener.NuovoProgetto;
+import guiListener.RemoveDominio;
+import guiListener.RemoveRequirements;
+import guiListener.SalvaAnalisi;
 
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
@@ -39,8 +42,14 @@ public class MenuBar extends JPanel {
         private NuovoProgetto nuovoAction=new NuovoProgetto();
         private ChiudiProgetto chiudiAction=new ChiudiProgetto();
         private AggiungiDominio addDom1=new AggiungiDominio("dominio_1");
+        private RemoveDominio remDom1=new RemoveDominio("dominio_1");
+        private RemoveDominio remDom2=new RemoveDominio("dominio_2");
+        private RemoveRequirements remReq=new RemoveRequirements();
         private AggiungiDominio addDom2=new AggiungiDominio("dominio_2");
         private AggiungiRequisiti addReq=new AggiungiRequisiti();
+        JMenuItem mntmRemoveFileDomain;
+        JMenuItem mntmRemoveFileDomain_1;
+        JMenuItem mntmRemoveRequirements;
 
 
         /**
@@ -92,7 +101,23 @@ public class MenuBar extends JPanel {
 		mnProgetto.add(mntmAggiungiRequisiti);
                 mntmAggiungiRequisiti.setEnabled(false);
 		mntmAggiungiRequisiti.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+                
+                mntmRemoveFileDomain = new JMenuItem("Remove Domain1 file");
+                mntmRemoveFileDomain.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_MASK));
+                mnProgetto.add(mntmRemoveFileDomain);
+                mntmRemoveFileDomain.addActionListener(remDom1);
+                
+                
+                mntmRemoveFileDomain_1 = new JMenuItem("Remove Domain2 file");
+                mntmRemoveFileDomain_1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F,java.awt.event.InputEvent.SHIFT_MASK));
 
+                mnProgetto.add(mntmRemoveFileDomain_1);
+                mntmRemoveFileDomain_1.addActionListener(remDom2);
+                
+                mntmRemoveRequirements = new JMenuItem("Remove Requirements");
+                mnProgetto.add(mntmRemoveRequirements);
+                mntmRemoveRequirements.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
+                mntmRemoveRequirements.addActionListener(remReq);
                 
                 mnSalva = new JMenu("Save");
                 mnSalva.setEnabled(false);
@@ -101,7 +126,8 @@ public class MenuBar extends JPanel {
 		
 		JMenuItem mntmSalvaAnalisi = new JMenuItem("Save Analysis");
                 mnSalva.add(mntmSalvaAnalisi);
-		
+		SalvaAnalisi save=new SalvaAnalisi();
+                mntmSalvaAnalisi.addActionListener(save);
                 mntmSalvaAnalisi.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
 
 		
@@ -143,6 +169,7 @@ public class MenuBar extends JPanel {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
+                setMenuItemsEnable(false);
 	}
 	
 	public Observable [] getObservable(){
@@ -154,7 +181,16 @@ public class MenuBar extends JPanel {
             mntmAggiungiDominio2.setEnabled(t);
             mntmAggiungiRequisiti.setEnabled(t);
             mntmChiudiProgetto.setEnabled(t);
+            mntmRemoveFileDomain.setEnabled(t);
+            mntmRemoveFileDomain_1.setEnabled(t);
+            mntmRemoveRequirements.setEnabled(t);
        }
+       public void setMenuAddRequirementsEnable(boolean t){
+            mntmAggiungiRequisiti.setEnabled(t);
+            mntmRemoveRequirements.setEnabled(!t);
+        
+       }
+       
        public void enableAnalisi(boolean t){
             btnNewButton.setEnabled(t);
        }

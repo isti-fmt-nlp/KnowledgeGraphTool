@@ -4,7 +4,6 @@
  */
 package controllers;
 
-import controllers.ControlloreProgetto;
 import gui.MenuBar;
 import gui.ProjectTree;
 import gui.ReqBox;
@@ -16,6 +15,8 @@ import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
 import supportGui.FileSelectorModel;
 import guiListener.NuovoProgetto;
+import guiListener.RemoveDominio;
+import guiListener.RemoveRequirements;
 import supportGui.RendererCelleTabella;
 import guiListener.ThresholdChange;
 import guiListener.VisualizzaRequisito;
@@ -43,12 +44,12 @@ public class GestoreObserver implements Observer{
         this.reqBox=reqBox;
         this.reqPanel=reqPanel;
     }
-    public void addObservers(Observable[] o){
+    public void addObservables(Observable[] o){
          for(Observable ob:o){
           ob.addObserver(this);
         }
     }
-    public void addObserver (Observable o){
+    public void addObservable (Observable o){
          o.addObserver(this);
     }
 
@@ -71,16 +72,21 @@ public class GestoreObserver implements Observer{
         if(o.getClass().equals(ApriProgetto.class)||o.getClass().equals(NuovoProgetto.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
+            projectTree.enablePopUp(true);
+            projectTree.enableAddRequirements(!cp.Requirements());
             menuBar.setMenuItemsEnable(true);
+            menuBar.setMenuAddRequirementsEnable(!cp.Requirements());
             menuBar.enableAnalisi(cp.isReady());
             if(cp.AnalysisCompleted()){
                 menuBar.enableThreshold(true);
                 menuBar.enableSave(cp.AnalysisCompleted());
             }
             reqPanel.viewReqs(cp.getSource());
+            
         }
         if(o.getClass().equals(ChiudiProgetto.class)){
             projectTree.getTree().setModel(null);
+            projectTree.enablePopUp(false);
             menuBar.setMenuItemsEnable(false);
             menuBar.enableAnalisi(false);
             menuBar.enableThreshold(false);
@@ -89,10 +95,33 @@ public class GestoreObserver implements Observer{
         if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(AggiungiRequisiti.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
+            reqPanel.viewReqs(cp.getSource());
             menuBar.enableAnalisi(cp.isReady());
         }
-        if(o.getClass().equals(AggiungiRequisiti.class))
+         if(o.getClass().equals(RemoveDominio.class)||o.getClass().equals(RemoveRequirements.class)){
+            FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+            projectTree.getTree().setModel(fs);
+            reqPanel.viewReqs(cp.getSource());
+            menuBar.enableAnalisi(cp.isReady());
+        }
+        if(o.getClass().equals(AggiungiRequisiti.class)){
              reqPanel.viewReqs(cp.getSource());
+             menuBar.enableAnalisi(cp.isReady());
+             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+             projectTree.getTree().setModel(fs);
+             projectTree.enableAddRequirements(false);
+             menuBar.setMenuAddRequirementsEnable(false);
+             
+        }
+        if(o.getClass().equals(RemoveRequirements.class)){
+             reqPanel.viewReqs(cp.getSource());
+             menuBar.enableAnalisi(cp.isReady());
+             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+             projectTree.getTree().setModel(fs);
+             projectTree.enableAddRequirements(true);
+             menuBar.setMenuAddRequirementsEnable(true);
+
+        }
 
         if(o.getClass().equals(AvviaAnalisi.class)){
             if(o1==null){
@@ -101,7 +130,7 @@ public class GestoreObserver implements Observer{
                 main.setEnabled(true);
                 menuBar.enableThreshold(cp.AnalysisCompleted());
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());
-                    projectTree.getTree().setModel(fs);
+                projectTree.getTree().setModel(fs);
             }
             else{
                 if(o1.equals("fail")){

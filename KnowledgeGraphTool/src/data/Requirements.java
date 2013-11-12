@@ -28,6 +28,7 @@ public class Requirements {
                         nreq++;
                         line = readerL.readLine();
                     }
+                    readerL.close();
                 }catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 } 
@@ -63,6 +64,7 @@ public class Requirements {
                         jac=readerJ.readLine();
                         }
                     }
+                    readerJ.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

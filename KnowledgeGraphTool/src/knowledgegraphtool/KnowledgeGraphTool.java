@@ -5,7 +5,6 @@
 package knowledgegraphtool;
 
 import controllers.GestoreObserver;
-import java.awt.Image;
 import java.io.File;
 import java.util.Observable;
 import javax.swing.ImageIcon;
@@ -24,8 +23,9 @@ public class KnowledgeGraphTool extends JFrame {
         initComponents();
         GestoreObserver go=new GestoreObserver(this,menuBar1,projectTree1,reqBox1,reqPanel1);
         Observable[] obs=menuBar1.getObservable();
-        go.addObservers(obs);
-        go.addObserver(reqPanel1.getObservable());
+        go.addObservables(obs);
+        go.addObservable(reqPanel1.getObservable());
+        go.addObservables(projectTree1.getObservable());
         ImageIcon icon=new ImageIcon("src"+File.separator+"icon"+File.separator+"graph2Icon.png");
         this.setIconImage(icon.getImage());
     }
