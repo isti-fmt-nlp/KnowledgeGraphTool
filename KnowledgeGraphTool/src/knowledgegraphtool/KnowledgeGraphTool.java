@@ -45,7 +45,8 @@ public class KnowledgeGraphTool extends JFrame {
         reqPanel1 = new gui.ReqPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(org.openide.util.NbBundle.getMessage(KnowledgeGraphTool.class, "KnowledgeGraphTool.title")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("knowledgegraphtool/Bundle"); // NOI18N
+        setTitle(bundle.getString("KnowledgeGraphTool.title")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -5,6 +5,7 @@ import guiListener.AggiungiRequisiti;
 import guiListener.ApriProgetto;
 import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
+import guiListener.LoadAnalysis;
 import supportGui.FloatSlider;
 import guiListener.NuovoProgetto;
 import guiListener.RemoveDominio;
@@ -47,6 +48,7 @@ public class MenuBar extends JPanel {
         private RemoveRequirements remReq=new RemoveRequirements();
         private AggiungiDominio addDom2=new AggiungiDominio("dominio_2");
         private AggiungiRequisiti addReq=new AggiungiRequisiti();
+        private LoadAnalysis la=new LoadAnalysis();
         JMenuItem mntmRemoveFileDomain;
         JMenuItem mntmRemoveFileDomain_1;
         JMenuItem mntmRemoveRequirements;
@@ -131,10 +133,10 @@ public class MenuBar extends JPanel {
                 mntmSalvaAnalisi.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
 
 		
-		JMenuItem mntmExportPdfGrafi = new JMenuItem("Export Pdf Graph");
-		mnSalva.add(mntmExportPdfGrafi);
-		mntmExportPdfGrafi.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
-
+		JMenuItem mntmLoadAnalysis = new JMenuItem("Load Analysis");
+		mnSalva.add(mntmLoadAnalysis);
+		mntmLoadAnalysis.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+                mntmLoadAnalysis.addActionListener(la);
 		
 		btnNewButton = new JButton("Start Analysis");
                 btnNewButton.addActionListener(analisi);
@@ -173,7 +175,7 @@ public class MenuBar extends JPanel {
 	}
 	
 	public Observable [] getObservable(){
-                Observable [] obs={(Observable)floatSlider.getChangeListener() , (Observable)apriAction,chiudiAction,nuovoAction,addDom1,addDom2,addReq,analisi};
+                Observable [] obs={(Observable)floatSlider.getChangeListener() , (Observable)apriAction,chiudiAction,nuovoAction,addDom1,addDom2,addReq,analisi,la};
                 return obs;
 	}
         public void setMenuItemsEnable(boolean t){

@@ -7,7 +7,6 @@ import controllers.ControlloreProgetto;
 import kgtUtility.CallPyScript;
 import java.io.File;
 import java.io.IOException;
-import org.openide.util.Exceptions;
 /**
  *
  * @author Lipari
@@ -20,9 +19,7 @@ public class TestControllorePython {
         String pathScript="";
         try {
             pathScript = f.getCanonicalPath();
-        } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+        } catch (IOException ex) {}
             System.out.println(pathScript);
 
         CallPyScript.analisi(pathScript);

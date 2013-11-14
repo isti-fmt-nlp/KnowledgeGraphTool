@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.Observable;
 
 import javax.swing.JOptionPane;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -31,9 +30,7 @@ public class AvviaAnalisi extends Observable implements ActionListener{
         String pathScript="";
         try {
             pathScript = f.getCanonicalPath();
-        } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+        } catch (IOException ex) { }
         if(ControlloreProgetto.getInstance().AnalysisCompleted()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
              int dialogResult = JOptionPane.showConfirmDialog (null, "Result exists. Do you want to save them?","Warning",dialogButton);

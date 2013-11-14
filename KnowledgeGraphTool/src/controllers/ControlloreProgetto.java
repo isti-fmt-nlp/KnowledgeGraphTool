@@ -7,7 +7,6 @@ import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -161,15 +160,13 @@ public class ControlloreProgetto{
             if(dom.equals(DOM2))
                 return KgtFile.copiaFile(path,dom2);
             
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);}
-        return false;
+            } catch (IOException ex) {}
+              return false;
     }
     public boolean aggiungiRisultato(String path){
             try {
             return KgtFile.copiaFile(path,res);
             } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
             }
             return false;
     }
@@ -187,7 +184,6 @@ public class ControlloreProgetto{
                     return true;
                 }
             } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
         }
         return false;
     } 
@@ -217,22 +213,36 @@ public class ControlloreProgetto{
                 KgtFile.copiaFile(f.getAbsolutePath(),oldris.getAbsolutePath());
                 f.delete();
             } catch (IOException ex) {
-             Exceptions.printStackTrace(ex);
             }
          }
     }
      public void salvaRisultati(String dirName){
          File ris=new File(res);
+         File req=new File(reqs);
          File oldris=new File(oldRes+File.separator+dirName);
          oldris.mkdir();
-         for(File f: ris.listFiles()){
-            try {
+         try {
+            for(File f: ris.listFiles()){
                 KgtFile.copiaFile(f.getAbsolutePath(),oldris.getAbsolutePath());
-            } catch (IOException ex) {
-             Exceptions.printStackTrace(ex);
             }
-         }
+            KgtFile.copiaFile(req.listFiles()[0].getAbsolutePath(), oldris.getAbsolutePath());
+         } catch (IOException ex) {
+            }
     }
+     public void loadResult(String dirName){
+         File load=new File(oldRes+File.separator+dirName);
+         try{
+             System.out.println(load.getAbsolutePath());
+             for(File f: load.listFiles()){
+                 System.out.println(f.getName());
+                 if(!f.getName().equals("jaccard.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
+                     eliminaRequisito();
+                     KgtFile.copiaFile(f.getAbsolutePath(),reqs );
+                 }else
+                     KgtFile.copiaFile(f.getAbsolutePath(), res);
+             }
+         }catch (IOException ex) {}
+      }
     public boolean eliminaRequisito(){
         File req=new File(reqs);    
         if(Requirements()){

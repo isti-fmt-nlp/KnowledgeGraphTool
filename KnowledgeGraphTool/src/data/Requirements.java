@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.openide.util.Exceptions;
 
 public class Requirements {
 	private ArrayList<Requirement> reqList=new ArrayList<Requirement>();
@@ -29,11 +28,8 @@ public class Requirements {
                         line = readerL.readLine();
                     }
                     readerL.close();
-                }catch (IOException ex) {
-                    Exceptions.printStackTrace(ex);
-                } 
+                }catch (IOException ex) {} 
             }catch (FileNotFoundException ex) {
-                Exceptions.printStackTrace(ex);
             }
             return nreq;
         }

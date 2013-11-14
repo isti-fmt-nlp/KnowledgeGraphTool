@@ -13,6 +13,7 @@ import guiListener.AggiungiRequisiti;
 import guiListener.ApriProgetto;
 import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
+import guiListener.LoadAnalysis;
 import supportGui.FileSelectorModel;
 import guiListener.NuovoProgetto;
 import guiListener.RemoveDominio;
@@ -79,8 +80,9 @@ public class GestoreObserver implements Observer{
             menuBar.enableAnalisi(cp.isReady());
             if(cp.AnalysisCompleted()){
                 menuBar.enableThreshold(true);
-                menuBar.enableSave(cp.AnalysisCompleted());
+               
             }
+             menuBar.enableSave(true);
             reqPanel.viewReqs(cp.getSource());
             
         }
@@ -120,9 +122,21 @@ public class GestoreObserver implements Observer{
              projectTree.getTree().setModel(fs);
              projectTree.enableAddRequirements(true);
              menuBar.setMenuAddRequirementsEnable(true);
-
+             projectTree.enableAddRequirements(false);
+             menuBar.setMenuAddRequirementsEnable(false);
+             
         }
-
+        if(o.getClass().equals(LoadAnalysis.class)){
+            FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+            projectTree.getTree().setModel(fs);
+            menuBar.setMenuItemsEnable(true);
+            menuBar.setMenuAddRequirementsEnable(!cp.Requirements());
+            menuBar.enableAnalisi(cp.isReady());
+            if(cp.AnalysisCompleted()){
+                menuBar.enableThreshold(true);
+            }
+            reqPanel.viewReqs(cp.getSource());
+        }
         if(o.getClass().equals(AvviaAnalisi.class)){
             if(o1==null){
                 menuBar.enableSave(cp.AnalysisCompleted());

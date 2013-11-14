@@ -5,9 +5,9 @@
 package guiListener;
 
 import data.Requirements;
-import graphView.GraphWindow;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import javax.swing.Action;
 
 
@@ -53,12 +53,18 @@ public class OpenGraph implements Action{
     @Override
     public void actionPerformed(ActionEvent ae) {
             int row=Integer.parseInt(ae.getActionCommand());
-            System.out.println(reqs.getSize());
+            Runtime rt = Runtime.getRuntime();
+            Runtime rt2 = Runtime.getRuntime();
+            Process pr=null;
+            Process pr2=null;
             String path=reqs.getReq(row).getPathD1();
-            System.out.println(path);
-            new Thread(new GraphWindow(path)).start();
-            path=reqs.getReq(row).getPathD2();
-            new Thread(new GraphWindow(path)).start();
-    }
+        try {
+            pr = rt.exec("java -jar C:\\Users\\Lipari\\Documents\\NetBeansProjects\\GraphWindow\\dist\\GraphWindow.jar "+ path);
+        } catch (IOException ex) {}
+        path=reqs.getReq(row).getPathD2();
+        try {
+            pr2 = rt2.exec("java -jar C:\\Users\\Lipari\\Documents\\NetBeansProjects\\GraphWindow\\dist\\GraphWindow.jar "+ path);
+        } catch (IOException ex) {}
+        }
     
 }

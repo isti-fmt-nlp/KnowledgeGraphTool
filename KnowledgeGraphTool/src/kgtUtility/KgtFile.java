@@ -31,7 +31,8 @@ public class KgtFile {
         if (orig.isFile()){ 
            String name=orig.getName();
           if(name.substring(name.lastIndexOf('.'),name.length()).equalsIgnoreCase(".pdf")){
-              ConvertPdftoTxt.convert(origine, destinazione);
+              ConvertPdftoTxt c=new ConvertPdftoTxt(origine, destinazione);
+              c.convertFile();
               System.out.println("conversion1");
               return true;
           }

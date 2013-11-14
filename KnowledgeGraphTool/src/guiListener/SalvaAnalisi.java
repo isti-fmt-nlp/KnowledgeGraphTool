@@ -26,8 +26,12 @@ public class SalvaAnalisi extends Observable implements ActionListener{
             String nameDir = JOptionPane.showInputDialog(null, "Insert save dir name","Result-"+c.get(Calendar.DATE)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
         if(nameDir==null || nameDir.isEmpty())
              JOptionPane.showMessageDialog(null, "Save Fail!");
-        else
-            cp.salvaRisultati(nameDir);
+        else{
+           cp.salvaRisultati(nameDir);
+           this.setChanged();
+           this.notifyObservers();
+        }
+        
         }
     }
     
