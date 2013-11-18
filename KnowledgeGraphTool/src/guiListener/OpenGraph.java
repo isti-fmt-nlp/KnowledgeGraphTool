@@ -61,7 +61,6 @@ public class OpenGraph implements Action{
             Process pr2=null;
             String path=reqs.getReq(row).getPathD1();
             File GraphWindow=new File("lib"+File.separator+"GraphWindow.jar");
-            System.out.println(GraphWindow.getAbsolutePath());
         try {
             pr = rt.exec("java -jar "+GraphWindow.getAbsolutePath()+" \""+path+"\"");
         } catch (IOException ex) {}
