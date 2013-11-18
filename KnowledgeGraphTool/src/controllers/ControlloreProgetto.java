@@ -238,6 +238,7 @@ public class ControlloreProgetto{
                  if(!f.getName().equals("jaccard.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
                      eliminaRequisito();
                      KgtFile.copiaFile(f.getAbsolutePath(),reqs );
+                     requirements=true;
                  }else
                      KgtFile.copiaFile(f.getAbsolutePath(), res);
              }

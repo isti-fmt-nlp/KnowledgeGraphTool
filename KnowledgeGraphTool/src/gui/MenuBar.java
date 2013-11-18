@@ -121,7 +121,7 @@ public class MenuBar extends JPanel {
                 mntmRemoveRequirements.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
                 mntmRemoveRequirements.addActionListener(remReq);
                 
-                mnSalva = new JMenu("Save");
+                mnSalva = new JMenu("Save/Load");
                 mnSalva.setEnabled(false);
                 menuBar.add(mnSalva);
 		

@@ -53,7 +53,6 @@ public class LoadAnalysis extends Observable implements ActionListener{
          fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
          fileChooser.setApproveButtonText("Load");
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                      System.out.println(fileChooser.getSelectedFile().getName());
                       cp.loadResult(fileChooser.getSelectedFile().getName());
                       this.setChanged();
                       this.notifyObservers();
