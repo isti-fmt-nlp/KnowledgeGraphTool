@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import javax.swing.Action;
+import java.io.File;
+
 
 
 /**
@@ -58,12 +60,14 @@ public class OpenGraph implements Action{
             Process pr=null;
             Process pr2=null;
             String path=reqs.getReq(row).getPathD1();
+            File GraphWindow=new File("lib"+File.separator+"GraphWindow.jar");
+            System.out.println(GraphWindow.getAbsolutePath());
         try {
-            pr = rt.exec("java -jar C:\\Users\\Lipari\\Documents\\NetBeansProjects\\GraphWindow\\dist\\GraphWindow.jar "+ path);
+            pr = rt.exec("java -jar "+GraphWindow.getAbsolutePath()+" \""+path+"\"");
         } catch (IOException ex) {}
         path=reqs.getReq(row).getPathD2();
         try {
-            pr2 = rt2.exec("java -jar C:\\Users\\Lipari\\Documents\\NetBeansProjects\\GraphWindow\\dist\\GraphWindow.jar "+ path);
+            pr2 = rt2.exec("java -jar "+GraphWindow.getAbsolutePath()+" \""+path+"\"");
         } catch (IOException ex) {}
         }
     

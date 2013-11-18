@@ -1,0 +1,19 @@
+<project name="BuildKnowledgeGraphTool" basedir="." default="alljar">
+	<target name="allrun" depends="graph,runknowledge"/>
+	<target name="alljar" depends="graph,jarknowledge"/>
+	
+	<target name="graph">
+		<ant dir="GraphWindow" target="jar"/>
+		<copy todir="KnowledgeGraphTool/lib" overwrite="true">
+			<fileset dir="GraphWindow/dist" includes="**"/>
+		</copy>
+	</target>
+	
+	<target name="runknowledge">
+		<ant dir="KnowledgeGraphTool" target="run"/>
+	</target>
+	
+	<target name="jarknowledge">
+		<ant dir="KnowledgeGraphTool" target="jar"/>
+	</target>
+</project>
