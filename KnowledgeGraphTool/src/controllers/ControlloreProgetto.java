@@ -239,8 +239,10 @@ public class ControlloreProgetto{
                      eliminaRequisito();
                      KgtFile.copiaFile(f.getAbsolutePath(),reqs );
                      requirements=true;
-                 }else
-                     KgtFile.copiaFile(f.getAbsolutePath(), res);
+                 }else{
+                     if(f.getName().equals("jaccard.txt"))
+                         setAnalysis(true);
+                     KgtFile.copiaFile(f.getAbsolutePath(), res);}
              }
          }catch (IOException ex) {}
       }

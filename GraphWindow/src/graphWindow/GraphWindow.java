@@ -23,11 +23,12 @@ public class GraphWindow extends javax.swing.JFrame implements Runnable, Observe
      * Creates new form GraphWindow
      */
     public GraphWindow(String path) {
-        ImageIcon icon=new ImageIcon("src"+File.separator+"icon"+File.separator+"graph2Icon.png");
-        this.setIconImage(icon.getImage());
         ge=GraphEditor.getInstance();
         ge.loadGraph(path);
         initComponents();
+        System.out.println(new File(".").getAbsolutePath());
+        ImageIcon icon=new ImageIcon("src"+File.separator+"icon"+File.separator+"graph2Icon.png");
+        this.setIconImage(icon.getImage());
         applet=ge.getApplet();
         this.setResizable(false);
         jPanel1.add(applet);
@@ -113,7 +114,6 @@ public class GraphWindow extends javax.swing.JFrame implements Runnable, Observe
             java.util.logging.Logger.getLogger(GraphWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         GraphWindow gw=new GraphWindow(args[0]);
         gw.setTitle(args[0]);
         gw.run();
