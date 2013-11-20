@@ -23,8 +23,10 @@ public class Requirements {
                 try {
                     line = readerL.readLine();
                     while(line!=null) {
-                        reqList.add(new Requirement(line));
-                        nreq++;
+                        if(!line.isEmpty()){
+                            reqList.add(new Requirement(line));
+                            nreq++;
+                        }
                         line = readerL.readLine();
                     }
                     readerL.close();

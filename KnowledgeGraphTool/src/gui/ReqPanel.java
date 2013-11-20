@@ -57,18 +57,27 @@ public class ReqPanel extends JPanel{
                 table.getSelectionModel().addListSelectionListener(vr);
 		setLayout(groupLayout);
 	}
-        public void clearRows(){
+        public void clearRequirements(){
             int n=tm.getRowCount();
-         for(int i=0;i<n;i++){
-             tm.removeRow(0);
-         }
-         reqs.clearReq();
+            for(int i=0;i<n;i++){
+                tm.removeRow(0);
+             }
+             reqs.clearReq();
+             cp.setNReqs(0);
+        }
+        private void clearRows(){
+            int n=tm.getRowCount();
+            for(int i=0;i<n;i++){
+                tm.removeRow(0);
+            }
         }
 	public void viewReqs(String path){
-                clearRows();
                 if(!cp.Requirements())
                     return;
-                cp.setNReqs(reqs.loadReqs(path));
+                if(cp.getNReqs()<=0)
+                    cp.setNReqs(reqs.loadReqs(path));
+                else
+                    clearRows();
                 open=new OpenGraph(reqs);
                 if(cp.AnalysisCompleted()){
                     reqs.loadAnalysis(path);

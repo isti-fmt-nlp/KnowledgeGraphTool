@@ -82,9 +82,8 @@ public class GestoreObserver implements Observer{
                 menuBar.enableThreshold(true);
                
             }
-             menuBar.enableSave(true);
+            menuBar.enableSave(true);
             reqPanel.viewReqs(cp.getSource());
-            
         }
         if(o.getClass().equals(ChiudiProgetto.class)){
             projectTree.getTree().setModel(null);
@@ -92,40 +91,32 @@ public class GestoreObserver implements Observer{
             menuBar.setMenuItemsEnable(false);
             menuBar.enableAnalisi(false);
             menuBar.enableThreshold(false);
-            reqPanel.clearRows();
+            reqPanel.clearRequirements();
         }
-        if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(AggiungiRequisiti.class)){
+        if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(RemoveDominio.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
+            menuBar.enableAnalisi(cp.isReady());
+        }
+       
+        if(o.getClass().equals(AggiungiRequisiti.class)||o.getClass().equals(RemoveRequirements.class)){
+            FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+            projectTree.getTree().setModel(fs);
+            reqPanel.clearRequirements();
             reqPanel.viewReqs(cp.getSource());
             menuBar.enableAnalisi(cp.isReady());
         }
-         if(o.getClass().equals(RemoveDominio.class)||o.getClass().equals(RemoveRequirements.class)){
-            FileSelectorModel fs=new FileSelectorModel(cp.getSource());
-            projectTree.getTree().setModel(fs);
-            reqPanel.viewReqs(cp.getSource());
-            menuBar.enableAnalisi(cp.isReady());
-        }
+        
         if(o.getClass().equals(AggiungiRequisiti.class)){
-             reqPanel.viewReqs(cp.getSource());
-             menuBar.enableAnalisi(cp.isReady());
-             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
-             projectTree.getTree().setModel(fs);
              projectTree.enableAddRequirements(false);
              menuBar.setMenuAddRequirementsEnable(false);
-             
         }
-        if(o.getClass().equals(RemoveRequirements.class)){
-             reqPanel.viewReqs(cp.getSource());
-             menuBar.enableAnalisi(cp.isReady());
-             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
-             projectTree.getTree().setModel(fs);
+        
+         if(o.getClass().equals(RemoveRequirements.class)){
              projectTree.enableAddRequirements(true);
              menuBar.setMenuAddRequirementsEnable(true);
-             projectTree.enableAddRequirements(false);
-             menuBar.setMenuAddRequirementsEnable(false);
-             
         }
+         
         if(o.getClass().equals(LoadAnalysis.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
@@ -135,25 +126,29 @@ public class GestoreObserver implements Observer{
             if(cp.AnalysisCompleted()){
                 menuBar.enableThreshold(true);
             }
+            reqPanel.clearRequirements();
             reqPanel.viewReqs(cp.getSource());
         }
         if(o.getClass().equals(AvviaAnalisi.class)){
             if(o1==null){
-                menuBar.enableSave(cp.AnalysisCompleted());
-                reqPanel.viewReqs(cp.getSource());
                 main.setEnabled(true);
+                main.setVisible(true);
                 menuBar.enableThreshold(cp.AnalysisCompleted());
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());
                 projectTree.getTree().setModel(fs);
+                menuBar.enableSave(cp.AnalysisCompleted());
+                reqPanel.viewReqs(cp.getSource());
             }
             else{
                 if(o1.equals("fail")){
                     main.setEnabled(true);
-                     main.setCursor(null);
-                }else{
+                    main.setVisible(true);
+                    main.setCursor(null);
+                }
+                if(o1.equals("analysis")){
                     main.setEnabled(false);
+                    main.setVisible(false);
                     main.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            
                 }
             }
         }

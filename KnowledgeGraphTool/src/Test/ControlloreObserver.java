@@ -155,7 +155,7 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
                 menuBar1.setMenuItemsEnable(false);
                 menuBar1.enableAnalisi(false);
                 menuBar1.enableThreshold(false);
-                reqPanel1.clearRows();
+                reqPanel1.clearRequirements();
             }
              if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(AggiungiRequisiti.class)){
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());

@@ -251,7 +251,7 @@ public class ControlloreProgetto{
         if(Requirements()){
            for(File f:req.listFiles()){
                System.out.println(f.getName());
-               requirements=! f.delete();
+               requirements=!f.delete();
            }
            return !requirements;
            
