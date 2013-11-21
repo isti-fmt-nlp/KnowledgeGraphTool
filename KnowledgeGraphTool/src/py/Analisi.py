@@ -50,7 +50,10 @@ nreq=len(reqs)*2+2
 ind=1
 jac=0
 jac_file = open(pathres+"jaccard.txt","w")
-
+domain1 = [(f) for f in listdir(pathdom1) if isfile(join(pathdom1,f))]
+domain2 = [(f) for f in listdir(pathdom2) if isfile(join(pathdom2,f))]
+domains='Domain1:' + " | ".join(domain1) + '\nDomain2:' + " | ".join(domain2) + ' \n'
+jac_file.write(domains)
 #Ciclo creazione e salvataggio sotto grafi cammini + jaccard
 for req in reqs:
         progress+=1

@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controllers;
 
 import gui.MenuBar;
@@ -57,16 +54,22 @@ public class GestoreObserver implements Observer{
     @Override
     public void update(Observable o, Object o1) {
         ControlloreProgetto cp=ControlloreProgetto.getInstance();
+        
         if(o.getClass().equals(VisualizzaRequisito.class))
             reqBox.getTextBox().setText((String)o1);
+        
         if(o.getClass().equals(ThresholdChange.class)){
             JTable t=reqPanel.getTable();
             RendererCelleTabella rc=(RendererCelleTabella)t.getCellRenderer(0, 0);
             for(int i=0;i<t.getRowCount();i++){
-                if((Float)t.getValueAt(i, 1)<=(Float)o1)
-                    rc.setAlert(i);
-		else
+                if(t.getValueAt(i, 1)==0)
                     rc.removeAlert(i);
+                else{
+                    if((Float)t.getValueAt(i, 1)<=(Float)o1)
+                        rc.setAlert(i);
+                    else
+                        rc.removeAlert(i);
+                }
 		t.repaint();
             }
         }
@@ -80,7 +83,7 @@ public class GestoreObserver implements Observer{
             menuBar.enableAnalisi(cp.isReady());
             if(cp.AnalysisCompleted()){
                 menuBar.enableThreshold(true);
-               
+                menuBar.setThreshold(0);
             }
             menuBar.enableSave(true);
             reqPanel.viewReqs(cp.getSource());
@@ -91,12 +94,14 @@ public class GestoreObserver implements Observer{
             menuBar.setMenuItemsEnable(false);
             menuBar.enableAnalisi(false);
             menuBar.enableThreshold(false);
+            menuBar.setThreshold(0);
             reqPanel.clearRequirements();
         }
         if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(RemoveDominio.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
             menuBar.enableAnalisi(cp.isReady());
+            menuBar.enableThreshold(cp.AnalysisCompleted());
         }
        
         if(o.getClass().equals(AggiungiRequisiti.class)||o.getClass().equals(RemoveRequirements.class)){
@@ -105,8 +110,9 @@ public class GestoreObserver implements Observer{
             reqPanel.clearRequirements();
             reqPanel.viewReqs(cp.getSource());
             menuBar.enableAnalisi(cp.isReady());
+            menuBar.enableThreshold(cp.AnalysisCompleted());
+            menuBar.setThreshold(0);
         }
-        
         if(o.getClass().equals(AggiungiRequisiti.class)){
              projectTree.enableAddRequirements(false);
              menuBar.setMenuAddRequirementsEnable(false);
@@ -144,6 +150,7 @@ public class GestoreObserver implements Observer{
                     main.setEnabled(true);
                     main.setVisible(true);
                     main.setCursor(null);
+                    reqPanel.viewReqs(cp.getSource());
                 }
                 if(o1.equals("analysis")){
                     main.setEnabled(false);

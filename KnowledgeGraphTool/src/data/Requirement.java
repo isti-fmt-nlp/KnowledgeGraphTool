@@ -1,7 +1,7 @@
 package data;
 
 public class Requirement {
-	private float val;
+	private float val=-1;
 	private String pathGraphD1;
 	private String pathGraphD2;
 	private String req;

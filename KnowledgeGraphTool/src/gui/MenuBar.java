@@ -202,4 +202,7 @@ public class MenuBar extends JPanel {
        public void enableSave(boolean t){
             mnSalva.setEnabled(t);
        }
+       public void setThreshold(int n){
+           floatSlider.getFloatSlider().setValue(n);
+       }
 }

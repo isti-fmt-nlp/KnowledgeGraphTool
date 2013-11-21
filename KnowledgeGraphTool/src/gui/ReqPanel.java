@@ -95,8 +95,9 @@ public class ReqPanel extends JPanel{
                         jac=reqs.getReq(i).getVal();
                         if(jac>=0)
                             tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,jac,view});
-                        else
-                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt});
+                        else{
+                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt,0});
+                        }
 		}
 	}
 	public Requirements getRequirements(){

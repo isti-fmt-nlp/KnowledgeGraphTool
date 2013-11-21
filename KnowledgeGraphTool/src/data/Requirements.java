@@ -53,6 +53,11 @@ public class Requirements {
 		try {
                     readerJ = new BufferedReader(new FileReader(pathjac));
                     jac=readerJ.readLine();
+                    String domain1=jac;
+                    jac=readerJ.readLine();
+                    String domain2=jac;
+                    System.out.println("____ANALYSIS____:\n"+domain1+"\nDomain2:"+domain2);
+                    jac=readerJ.readLine();
                     ind=0;
                     n=reqList.size();
                     for(int i=0;i<n;i++) {

@@ -206,16 +206,18 @@ public class ControlloreProgetto{
     
     public void salvaCancRisultati(String dirName){
          File ris=new File(res);
+         File req=new File(reqs);
          File oldris=new File(oldRes+File.separator+dirName);
          oldris.mkdir();
+          try {
          for(File f: ris.listFiles()){
-            try {
-                KgtFile.copiaFile(f.getAbsolutePath(),oldris.getAbsolutePath());
-                f.delete();
-            } catch (IOException ex) {
-            }
+            KgtFile.copiaFile(f.getAbsolutePath(),oldris.getAbsolutePath());
+            f.delete();
          }
-    }
+         KgtFile.copiaFile(req.listFiles()[0].getAbsolutePath(), oldris.getAbsolutePath());
+         } catch (IOException ex){}
+         }
+    
      public void salvaRisultati(String dirName){
          File ris=new File(res);
          File req=new File(reqs);
