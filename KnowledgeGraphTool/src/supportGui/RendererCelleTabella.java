@@ -21,7 +21,11 @@ public class RendererCelleTabella extends DefaultTableCellRenderer {
 		alertRows.add(row, row);
 	}
 	public void removeAlert(int row){
-		alertRows.set(row, null);
+            int index=alertRows.size();
+            if(row>=index)
+                for(int i=index; i<=row;i++)
+                    alertRows.add(null);
+            alertRows.set(row, null);
 	}
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
