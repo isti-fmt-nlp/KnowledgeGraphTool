@@ -2,6 +2,7 @@ package gui;
 
 import guiListener.AggiungiDominio;
 import guiListener.AggiungiRequisiti;
+import guiListener.JaccardSelection;
 import guiListener.RemoveDominio;
 import guiListener.RemoveRequirements;
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 import javax.swing.JMenuItem;
+import javax.swing.tree.DefaultTreeCellRenderer;
 
 public class ProjectTree extends JPanel{
 	private JTree tree = null;
@@ -25,6 +27,7 @@ public class ProjectTree extends JPanel{
         private RemoveDominio remDom1=new RemoveDominio("dominio_1");
         private RemoveDominio remDom2=new RemoveDominio("dominio_2");
         private RemoveRequirements remReq=new RemoveRequirements();
+        private JaccardSelection js;
         private JPopupMenu popupMenu;
         JMenuItem mntmAddFileDomain;
         JMenuItem mntmAddFileDomain_1;
@@ -38,6 +41,7 @@ public class ProjectTree extends JPanel{
                 tree=new JTree();
                 tree.setRootVisible(true);
 		tree.setModel(null);
+                
                 scrollPane.setViewportView(tree);
                 
                 popupMenu = new JPopupMenu();
@@ -86,6 +90,11 @@ public class ProjectTree extends JPanel{
 		);
 		setLayout(groupLayout);
                 enablePopUp(false);
+                js=new JaccardSelection(tree);
+                tree.addTreeSelectionListener(js);
+                DefaultTreeCellRenderer dtcr=new DefaultTreeCellRenderer();
+                dtcr.setLeafIcon(null);
+                tree.setCellRenderer(dtcr);
 	}
 	public JTree getTree(){
 		return tree;
@@ -121,6 +130,6 @@ public class ProjectTree extends JPanel{
 		});
 	}
         public Observable[] getObservable(){
-            return new Observable[]{addDom1,addDom2,addReq,remDom1,remDom2,remReq};
+            return new Observable[]{addDom1,addDom2,addReq,remDom1,remDom2,remReq,js};
         }
 }

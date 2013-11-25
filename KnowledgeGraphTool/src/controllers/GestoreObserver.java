@@ -10,6 +10,7 @@ import guiListener.AggiungiRequisiti;
 import guiListener.ApriProgetto;
 import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
+import guiListener.JaccardSelection;
 import guiListener.LoadAnalysis;
 import supportGui.FileSelectorModel;
 import guiListener.NuovoProgetto;
@@ -19,6 +20,8 @@ import supportGui.RendererCelleTabella;
 import guiListener.ThresholdChange;
 import guiListener.VisualizzaRequisito;
 import java.awt.Cursor;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
@@ -58,6 +61,10 @@ public class GestoreObserver implements Observer{
         if(o.getClass().equals(VisualizzaRequisito.class))
             reqBox.getTextBox().setText((String)o1);
         
+        if(o.getClass().equals(JaccardSelection.class)){
+           reqBox.getTextBox().setText((String)o1);
+        }
+        
         if(o.getClass().equals(ThresholdChange.class)){
             JTable t=reqPanel.getTable();
             RendererCelleTabella rc=(RendererCelleTabella)t.getCellRenderer(0, 0);
@@ -81,7 +88,7 @@ public class GestoreObserver implements Observer{
             menuBar.setMenuItemsEnable(true);
             menuBar.setMenuAddRequirementsEnable(!cp.Requirements());
             menuBar.enableAnalisi(cp.isReady());
-            if(cp.AnalysisCompleted()){
+            if(cp.analysisCompleted()){
                 menuBar.enableThreshold(true);
                 menuBar.setThreshold(0);
             }
@@ -91,58 +98,49 @@ public class GestoreObserver implements Observer{
         if(o.getClass().equals(ChiudiProgetto.class)){
             projectTree.getTree().setModel(null);
             projectTree.enablePopUp(false);
+            reqPanel.clearRows();
             menuBar.setMenuItemsEnable(false);
             menuBar.enableAnalisi(false);
             menuBar.enableThreshold(false);
             menuBar.setThreshold(0);
-            reqPanel.clearRequirements();
         }
         if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(RemoveDominio.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
             menuBar.enableAnalisi(cp.isReady());
-            menuBar.enableThreshold(cp.AnalysisCompleted());
+            menuBar.enableThreshold(cp.analysisCompleted());
         }
        
         if(o.getClass().equals(AggiungiRequisiti.class)||o.getClass().equals(RemoveRequirements.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
-            reqPanel.clearRequirements();
             reqPanel.viewReqs(cp.getSource());
             menuBar.enableAnalisi(cp.isReady());
-            menuBar.enableThreshold(cp.AnalysisCompleted());
-            menuBar.setThreshold(0);
-        }
-        if(o.getClass().equals(AggiungiRequisiti.class)){
-             projectTree.enableAddRequirements(false);
-             menuBar.setMenuAddRequirementsEnable(false);
+            menuBar.enableThreshold(cp.analysisCompleted());
+            projectTree.enableAddRequirements(!cp.Requirements());
+            menuBar.setMenuAddRequirementsEnable(!cp.Requirements());
         }
         
-         if(o.getClass().equals(RemoveRequirements.class)){
-             projectTree.enableAddRequirements(true);
-             menuBar.setMenuAddRequirementsEnable(true);
-        }
-         
         if(o.getClass().equals(LoadAnalysis.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
             menuBar.setMenuItemsEnable(true);
             menuBar.setMenuAddRequirementsEnable(!cp.Requirements());
+            projectTree.enableAddRequirements(!cp.Requirements());
             menuBar.enableAnalisi(cp.isReady());
-            if(cp.AnalysisCompleted()){
+            if(cp.analysisCompleted()){
                 menuBar.enableThreshold(true);
             }
-            reqPanel.clearRequirements();
             reqPanel.viewReqs(cp.getSource());
         }
         if(o.getClass().equals(AvviaAnalisi.class)){
             if(o1==null){
                 main.setEnabled(true);
                 main.setVisible(true);
-                menuBar.enableThreshold(cp.AnalysisCompleted());
+                menuBar.enableThreshold(cp.analysisCompleted());
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());
                 projectTree.getTree().setModel(fs);
-                menuBar.enableSave(cp.AnalysisCompleted());
+                menuBar.enableSave(cp.analysisCompleted());
                 reqPanel.viewReqs(cp.getSource());
             }
             else{

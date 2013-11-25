@@ -44,9 +44,9 @@ public class Requirements {
 		int ind=0;
 		for(File file : files){
 			if(file.getName().equals("jaccard.txt"))
-				pathjac=file.getAbsolutePath();
+                            pathjac=file.getAbsolutePath();
 			if(file.getName().startsWith("R")){
-				pathGraph[ind++]=file.getAbsolutePath();
+                            pathGraph[ind++]=file.getAbsolutePath();
                     }
 		}
 		String jac;

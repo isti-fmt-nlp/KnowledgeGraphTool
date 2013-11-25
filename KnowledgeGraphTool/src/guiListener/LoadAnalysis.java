@@ -24,7 +24,7 @@ public class LoadAnalysis extends Observable implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         ControlloreProgetto cp=ControlloreProgetto.getInstance();
-        if(cp.AnalysisCompleted()){
+        if(cp.analysisCompleted()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
              int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to save the current results and requirements?","Warning",dialogButton);
              if(dialogResult == JOptionPane.YES_OPTION){
@@ -48,7 +48,7 @@ public class LoadAnalysis extends Observable implements ActionListener{
                     return dirToLock.equals(f);
                 }
          });
-         fileChooser.setDialogTitle("Select result to load");
+         fileChooser.setDialogTitle("Select results");
          //indica che dobbiamo scegliere solo le cartelle ( se non specificato, potranno essere selezionati solo i file)
          fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
          fileChooser.setApproveButtonText("Load");

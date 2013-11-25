@@ -25,7 +25,7 @@ public class FloatSlider extends JPanel {
         jSlider.setSnapToTicks(true);
         jSlider.setBorder(null);
         jSlider.setMaximum(n);
-        jSlider.setValue(n);
+        jSlider.setValue(0);
         
         // Add listener to update display.
         jSlider.addChangeListener(threshold );

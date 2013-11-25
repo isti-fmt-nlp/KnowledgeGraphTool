@@ -21,7 +21,7 @@ public class SalvaAnalisi extends Observable implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         ControlloreProgetto cp=ControlloreProgetto.getInstance();
-        if(cp.AnalysisCompleted()){
+        if(cp.analysisCompleted()){
             Calendar c=Calendar.getInstance();
             String nameDir = JOptionPane.showInputDialog(null, "Insert save dir name","Result-"+c.get(Calendar.DATE)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
         if(nameDir==null || nameDir.isEmpty())

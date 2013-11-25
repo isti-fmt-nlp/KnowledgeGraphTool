@@ -4,7 +4,6 @@
  */
 package Test;
 import controllers.ControlloreProgetto;
-import controllers.ControlloreProgetto;
 import guiListener.AggiungiDominio;
 import guiListener.AggiungiRequisiti;
 import guiListener.ApriProgetto;
@@ -144,9 +143,9 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
                 projectTree1.getTree().setModel(fs);
                 menuBar1.setMenuItemsEnable(true);
                 menuBar1.enableAnalisi(cp.isReady());
-                if(cp.AnalysisCompleted()){
+                if(cp.analysisCompleted()){
                     menuBar1.enableThreshold(true);
-                    menuBar1.enableSave(cp.AnalysisCompleted());
+                    menuBar1.enableSave(cp.analysisCompleted());
                 }
                 reqPanel1.viewReqs(cp.getSource());
             }
@@ -155,7 +154,6 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
                 menuBar1.setMenuItemsEnable(false);
                 menuBar1.enableAnalisi(false);
                 menuBar1.enableThreshold(false);
-                reqPanel1.clearRequirements();
             }
              if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(AggiungiRequisiti.class)){
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());
@@ -164,10 +162,10 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
              }
              if(o.getClass().equals(AvviaAnalisi.class)){
                  if(o1==null){
-                 menuBar1.enableSave(cp.AnalysisCompleted());
+                 menuBar1.enableSave(cp.analysisCompleted());
                  reqPanel1.viewReqs(cp.getSource());
                  this.setEnabled(true);
-                 menuBar1.enableThreshold(cp.AnalysisCompleted());
+                 menuBar1.enableThreshold(cp.analysisCompleted());
                  }
                  else{
                      if(o1.equals("fail"))

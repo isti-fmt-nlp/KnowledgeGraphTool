@@ -20,7 +20,7 @@ public class RemoveRequirements extends Observable implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         ControlloreProgetto cp=ControlloreProgetto.getInstance();
-         if(cp.AnalysisCompleted()){
+         if(cp.analysisCompleted()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
              int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to save the analysis results before removing?","Warning",dialogButton);
              if(dialogResult == JOptionPane.YES_OPTION){
@@ -29,11 +29,9 @@ public class RemoveRequirements extends Observable implements ActionListener{
                  if(nameDir==null || nameDir.isEmpty())
                  return;
                  cp.salvaCancRisultati(nameDir);
-                 cp.setAnalysis(false);
              }
              else{
                  cp.eliminaRisultati();
-                 cp.setAnalysis(false);
              }
          }
         if(cp.Requirements()){

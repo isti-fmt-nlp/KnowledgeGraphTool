@@ -1,5 +1,7 @@
 package controllers;
 
+import data.Requirement;
+import data.Requirements;
 import kgtUtility.KgtXml;
 import kgtUtility.KgtFile;
 import java.io.File;
@@ -17,14 +19,13 @@ import org.w3c.dom.NodeList;
  */
 public class ControlloreProgetto{
     private String root=null;
-    private String dom1=null;
-    private String dom2=null;
-    private String reqs=null;
-    private String res=null;
-    private String oldRes=null;
+    private String path_dom1=null;
+    private String path_dom2=null;
+    private String path_reqs=null;
+    private String path_res=null;
+    private String path_oldRes=null;
+    private Requirements reqs=new Requirements();
     private boolean analysis=false;
-    private boolean requirements=false;
-    private int nreq=0;
     private static ControlloreProgetto cP=null; //riferimento all' istanza
     public final String DOM1="dominio_1";
     public final String DOM2="dominio_2";
@@ -48,6 +49,7 @@ public class ControlloreProgetto{
      * il progetto
      */
     public String creaProgetto(String path,String nomeProgetto){
+        reqs.clearReq();
         File f;
         f=new File(path+"/"+nomeProgetto);
         f.mkdir();
@@ -59,11 +61,11 @@ public class ControlloreProgetto{
         new File(root+File.separator+"Old Result").mkdir();
         
         KgtXml.creaProjectXML(root,nomeProgetto);
-        dom1=root+File.separator+"Domain1";
-        dom2=root+File.separator+"Domain2";
-        reqs=root+File.separator+"Requirements";
-        res=root+File.separator+"Result";
-        oldRes=root+File.separator+"Old Result";
+        path_dom1=root+File.separator+"Domain1";
+        path_dom2=root+File.separator+"Domain2";
+        path_reqs=root+File.separator+"Requirements";
+        path_res=root+File.separator+"Result";
+        path_oldRes=root+File.separator+"Old Result";
         analysis=false;
 
         return root;
@@ -97,36 +99,39 @@ public class ControlloreProgetto{
                 }
                root=path;
                if(name.equals("Domain1"))
-                   dom1=root+File.separator+"Domain1";
+                   path_dom1=root+File.separator+"Domain1";
                if(name.equals("Domain2"))
-                   dom2=root+File.separator+"Domain2";
+                   path_dom2=root+File.separator+"Domain2";
                if(name.equals("Result"))
-                   res=root+File.separator+"Result";
+                   path_res=root+File.separator+"Result";
                if(name.equals("Requirements"))
-                   reqs=root+File.separator+"Requirements";
+                   path_reqs=root+File.separator+"Requirements";
                if(name.equals("Old Result"))
-                   oldRes=root+File.separator+"Old Result";
+                   path_oldRes=root+File.separator+"Old Result";
            }
         if(exist==true){
-            if(dom1==null){
+            if(path_dom1==null){
                new File(root+File.separator+"Domain1").mkdir();
-               dom1=root+File.separator+"Domain1";}
-            if(dom2==null){
+               path_dom1=root+File.separator+"Domain1";}
+            if(path_dom2==null){
                 new File(root+File.separator+"Domain2").mkdir();
-                dom2=root+File.separator+"Domain2";}
-            if(res==null){
+                path_dom2=root+File.separator+"Domain2";}
+            if(path_res==null){
                 new File(root+File.separator+"Result").mkdir();
-                res=root+File.separator+"Result";}
-            if(reqs==null){
+                path_res=root+File.separator+"Result";}
+            if(path_reqs==null){
                 new File(root+File.separator+"Requirements").mkdir();
-                reqs=root+File.separator+"Requirements";}
-            if(oldRes==null){
+                path_reqs=root+File.separator+"Requirements";}
+            if(path_oldRes==null){
                 new File(root+File.separator+"Old Result").mkdir();
-                oldRes=root+File.separator+"Old Result";}
-            if(new File(res).listFiles().length!=0)
+                path_oldRes=root+File.separator+"Old Result";}
+            if(new File(path_res).listFiles().length!=0)
                 analysis=true;
-            if(new File(reqs).listFiles().length!=0)
-                requirements=true;
+            if(new File(path_reqs).listFiles().length!=0){
+                reqs.loadReqs(root);
+                if(analysis)
+                    reqs.loadAnalysis(root);
+            }
             return "progetto_aperto";
         }
         else
@@ -141,46 +146,49 @@ public class ControlloreProgetto{
 
     public void chiudiProgetto() {
         root=null;
-        dom1=null;
-        dom2=null;
-        reqs=null;
-        res=null;
-        oldRes=null;
+        path_dom1=null;
+        path_dom2=null;
+        path_reqs=null;
+        path_res=null;
+        path_oldRes=null;
         analysis=false;
-        requirements=false;
+        reqs.clearReq();
     }
 
 
     public boolean aggiungiDocumento(String dom,String path){
         try {
              if(dom.equals(DOM1))
-                return KgtFile.copiaFile(path,dom1);
+                return KgtFile.copiaFile(path,path_dom1);
                 
                 
             if(dom.equals(DOM2))
-                return KgtFile.copiaFile(path,dom2);
+                return KgtFile.copiaFile(path,path_dom2);
             
             } catch (IOException ex) {}
               return false;
     }
     public boolean aggiungiRisultato(String path){
             try {
-            return KgtFile.copiaFile(path,res);
+            return KgtFile.copiaFile(path,path_res);
             } catch (IOException ex) {
             }
             return false;
     }
    public boolean Requirements(){
-     return requirements;
+       if(reqs.getSize()>0)
+            return true;
+       else
+            return false;
    }
    public boolean aggiungiRequisiti(String path){
-        File req=new File(reqs);
+        File req=new File(path_reqs);
         if(Requirements())
             return false;
         else
             try {
                 if(KgtFile.copiaFile(path,req.getPath())){
-                    requirements=true;
+                    reqs.loadReqs(root);
                     return true;
                 }
             } catch (IOException ex) {
@@ -193,21 +201,22 @@ public class ControlloreProgetto{
         if(name.length()==0)
             return false;
         if(dom.equals(DOM1))
-            ok=new File(dom1+File.separator+name).delete();
+            ok=new File(path_dom1+File.separator+name).delete();
         if(dom.equals(DOM2))
-            ok=new File(dom2+File.separator+name).delete();
+            ok=new File(path_dom2+File.separator+name).delete();
         return ok;
     }
     public void eliminaRisultati(){
-    File ris=new File(res);
+    File ris=new File(path_res);
     for(File f: ris.listFiles())
         f.delete();
+    setAnalysis(false);
     }
     
     public void salvaCancRisultati(String dirName){
-         File ris=new File(res);
-         File req=new File(reqs);
-         File oldris=new File(oldRes+File.separator+dirName);
+         File ris=new File(path_res);
+         File req=new File(path_reqs);
+         File oldris=new File(path_oldRes+File.separator+dirName);
          oldris.mkdir();
           try {
          for(File f: ris.listFiles()){
@@ -216,12 +225,13 @@ public class ControlloreProgetto{
          }
          KgtFile.copiaFile(req.listFiles()[0].getAbsolutePath(), oldris.getAbsolutePath());
          } catch (IOException ex){}
-         }
+         setAnalysis(false);
+     }
     
      public void salvaRisultati(String dirName){
-         File ris=new File(res);
-         File req=new File(reqs);
-         File oldris=new File(oldRes+File.separator+dirName);
+         File ris=new File(path_res);
+         File req=new File(path_reqs);
+         File oldris=new File(path_oldRes+File.separator+dirName);
          oldris.mkdir();
          try {
             for(File f: ris.listFiles()){
@@ -232,33 +242,34 @@ public class ControlloreProgetto{
             }
     }
      public void loadResult(String dirName){
-         File load=new File(oldRes+File.separator+dirName);
+         File load=new File(path_oldRes+File.separator+dirName);
          try{
              System.out.println(load.getAbsolutePath());
              for(File f: load.listFiles()){
                  System.out.println(f.getName());
                  if(!f.getName().equals("jaccard.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
                      eliminaRequisito();
-                     KgtFile.copiaFile(f.getAbsolutePath(),reqs );
-                     requirements=true;
+                     KgtFile.copiaFile(f.getAbsolutePath(),path_reqs );
+                     reqs.loadReqs(root);
                  }else{
-                     if(f.getName().equals("jaccard.txt"))
+                     if(f.getName().equals("jaccard.txt")){
                          setAnalysis(true);
-                     KgtFile.copiaFile(f.getAbsolutePath(), res);}
+                     }
+                     KgtFile.copiaFile(f.getAbsolutePath(), path_res);}
              }
+             if(analysisCompleted())
+                 reqs.loadAnalysis(root);
          }catch (IOException ex) {}
       }
     public boolean eliminaRequisito(){
-        File req=new File(reqs);    
+        File req=new File(path_reqs);    
         if(Requirements()){
            for(File f:req.listFiles()){
-               System.out.println(f.getName());
-               requirements=!f.delete();
+               if(f.delete())
+                   reqs.clearReq();
            }
-           return !requirements;
-           
         }
-        return false;
+        return !Requirements();
     }
     public boolean isOpen(){
         if(root!=null)
@@ -267,24 +278,40 @@ public class ControlloreProgetto{
             return false;
     }
     public boolean isReady(){
-        if(new File(dom1).listFiles().length==0)
+        if(new File(path_dom1).listFiles().length==0)
             return false;
-        if(new File(dom2).listFiles().length==0)
+        if(new File(path_dom2).listFiles().length==0)
                     return false;
-        if(new File(reqs).listFiles().length!=1)
+        if(new File(path_reqs).listFiles().length!=1)
                     return false;
         return true;
     }
     public void setAnalysis(boolean t){
         analysis=t;
     }
-    public boolean AnalysisCompleted(){
+    public boolean analysisCompleted(){
         return analysis;
     }
-    public void setNReqs(int n){
-        nreq=n;
-    }
     public int getNReqs(){
-        return nreq;
+        return reqs.getSize();
+    }
+    public Requirements getReqs(){
+        return reqs;
+    }
+    public void clearReqs(){
+        reqs.clearReq();
+    }
+
+    public void loadReqs(String path) {
+        clearReqs();
+        reqs.loadReqs(path);
+    }
+
+    public void loadAnalysis(String path) {
+        reqs.loadAnalysis(path);
+        setAnalysis(true);
+    }
+    public Requirement getReq(int n){
+        return reqs.getReq(n);
     }
 }
