@@ -38,33 +38,33 @@ public class Requirements {
         public void loadAnalysis(String root){
 		BufferedReader readerJ;
 		int n;
-                String pathjac="";
+                String path_overlap="";
 		File[] files=new File(root+File.separator+"Result").listFiles();
 		String[]pathGraph=new String[files.length-1];
 		int ind=0;
 		for(File file : files){
-			if(file.getName().equals("jaccard.txt"))
-                            pathjac=file.getAbsolutePath();
+			if(file.getName().equals("domain_overlap.txt"))
+                            path_overlap=file.getAbsolutePath();
 			if(file.getName().startsWith("R")){
                             pathGraph[ind++]=file.getAbsolutePath();
                     }
 		}
-		String jac;
+		String overlap;
 		try {
-                    readerJ = new BufferedReader(new FileReader(pathjac));
-                    jac=readerJ.readLine();
-                    String domain1=jac;
-                    jac=readerJ.readLine();
-                    String domain2=jac;
+                    readerJ = new BufferedReader(new FileReader(path_overlap));
+                    overlap=readerJ.readLine();
+                    String domain1=overlap;
+                    overlap=readerJ.readLine();
+                    String domain2=overlap;
                     System.out.println("____ANALYSIS____:\n"+domain1+"\nDomain2:"+domain2);
-                    jac=readerJ.readLine();
+                    overlap=readerJ.readLine();
                     ind=0;
                     n=reqList.size();
                     for(int i=0;i<n;i++) {
-                        if(jac!=null){
-                        jac=readerJ.readLine();
-                        reqList.get(i).fill(pathGraph[ind++],pathGraph[ind++],Float.parseFloat(jac));
-                        jac=readerJ.readLine();
+                        if(overlap!=null){
+                        overlap=readerJ.readLine();
+                        reqList.get(i).fill(pathGraph[ind++],pathGraph[ind++],Float.parseFloat(overlap));
+                        overlap=readerJ.readLine();
                         }
                     }
                     readerJ.close();

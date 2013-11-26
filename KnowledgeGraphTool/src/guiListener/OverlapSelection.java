@@ -5,7 +5,6 @@
 package guiListener;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,43 +20,43 @@ import supportGui.FileNode;
  *
  * @author Lipari
  */
-public class JaccardSelection extends Observable implements TreeSelectionListener{
+public class OverlapSelection extends Observable implements TreeSelectionListener{
     private JTree tree;
-    public JaccardSelection(JTree tree){
+    public OverlapSelection(JTree tree){
         this.tree=tree;
     }
 
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
-        String jacc="";
+        String overlap="";
         FileNode node = (FileNode)tree.getLastSelectedPathComponent();
             if (node == null)
             //Nothing is selected.  
             return;
 
         if (tree.getModel().isLeaf(node)) {
-            if(node.getName().equals("jaccard.txt")){
+            if(node.getName().equals("domain_overlap.txt")){
                 BufferedReader in = null;
                 try {
                     in = new BufferedReader(new FileReader(node));
                     String line = in.readLine();
                     while(line != null){
-                     jacc+=line+"\n";
+                     overlap+=line+"\n";
                     line = in.readLine();
                     }
                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(JaccardSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OverlapSelection.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(JaccardSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OverlapSelection.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                 try {
                     in.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(JaccardSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OverlapSelection.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
                 this.setChanged();
-                this.notifyObservers(jacc);
+                this.notifyObservers(overlap);
         }
         }
     }

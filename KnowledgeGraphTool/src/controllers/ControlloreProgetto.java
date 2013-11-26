@@ -247,12 +247,12 @@ public class ControlloreProgetto{
              System.out.println(load.getAbsolutePath());
              for(File f: load.listFiles()){
                  System.out.println(f.getName());
-                 if(!f.getName().equals("jaccard.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
+                 if(!f.getName().equals("domain_overlap.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
                      eliminaRequisito();
                      KgtFile.copiaFile(f.getAbsolutePath(),path_reqs );
                      reqs.loadReqs(root);
                  }else{
-                     if(f.getName().equals("jaccard.txt")){
+                     if(f.getName().equals("domain_overlap.txt")){
                          setAnalysis(true);
                      }
                      KgtFile.copiaFile(f.getAbsolutePath(), path_res);}

@@ -43,10 +43,10 @@ public class ReqPanel extends JPanel{
 		table.setFillsViewportHeight(true);
                 table.setModel(tm);
 		tm.addColumn("Requirements");
-		tm.addColumn("Jaccards");
+		tm.addColumn("Domain Overlap");
                 tm.addColumn("Graph");
 		table.getColumn("Requirements").setCellRenderer(rc);
-		table.getColumn("Jaccards").setCellRenderer(rc);
+		table.getColumn("Domain Overlap").setCellRenderer(rc);
                 table.getColumn("Graph").setMaxWidth(50);
                 table.setRowHeight(19);
                 scrollPane.setViewportView(table);
@@ -74,13 +74,13 @@ public class ReqPanel extends JPanel{
                     table.getColumn("Graph").setCellRenderer(null);
                 }
                 String txt;
-		float jac;
+		float overlap;
                 ImageIcon view=new ImageIcon(new File("src"+File.separator+"icon"+File.separator+"graph2.png").getAbsolutePath());
                 for(int i=0;i<cp.getNReqs();i++){
 			txt=cp.getReq(i).getReq();
-                        jac=cp.getReq(i).getVal();
-                        if(jac>=0)
-                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,jac,view});
+                        overlap=cp.getReq(i).getVal();
+                        if(overlap>=0)
+                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,overlap,view});
                         else{
                             tm.addRow(new Object[]{"R"+(i+1)+"-"+txt,0});
                         }

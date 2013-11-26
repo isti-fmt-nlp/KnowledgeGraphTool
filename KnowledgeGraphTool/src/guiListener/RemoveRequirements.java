@@ -34,14 +34,12 @@ public class RemoveRequirements extends Observable implements ActionListener{
                  cp.eliminaRisultati();
              }
          }
-        if(cp.Requirements()){
-           if(cp.eliminaRequisito()){
+         if(cp.eliminaRequisito()){
             this.setChanged();
             this.notifyObservers();
            }
              else
                JOptionPane.showMessageDialog(null,"Delete failed");
-        }
     }
 }
     
