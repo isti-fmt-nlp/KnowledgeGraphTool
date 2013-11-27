@@ -2,7 +2,7 @@ package gui;
 
 import guiListener.AggiungiDominio;
 import guiListener.AggiungiRequisiti;
-import guiListener.OverlapSelection;
+import guiListener.OverlapTreeLeafSelection;
 import guiListener.RemoveDominio;
 import guiListener.RemoveRequirements;
 import javax.swing.JPanel;
@@ -27,7 +27,7 @@ public class ProjectTree extends JPanel{
         private RemoveDominio remDom1=new RemoveDominio("dominio_1");
         private RemoveDominio remDom2=new RemoveDominio("dominio_2");
         private RemoveRequirements remReq=new RemoveRequirements();
-        private OverlapSelection js;
+        private OverlapTreeLeafSelection js;
         private JPopupMenu popupMenu;
         JMenuItem mntmAddFileDomain;
         JMenuItem mntmAddFileDomain_1;
@@ -90,7 +90,7 @@ public class ProjectTree extends JPanel{
 		);
 		setLayout(groupLayout);
                 enablePopUp(false);
-                js=new OverlapSelection(tree);
+                js=new OverlapTreeLeafSelection(tree);
                 tree.addTreeSelectionListener(js);
                 DefaultTreeCellRenderer dtcr=new DefaultTreeCellRenderer();
                 dtcr.setLeafIcon(null);

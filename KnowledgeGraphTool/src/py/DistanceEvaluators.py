@@ -9,7 +9,7 @@ from pygraph.classes.digraph import digraph
 from SentenceNetCreator import SentenceNetCreator
 from SentenceNetVisitor import SentenceNetVisitor
 
-class DistanceEvaluator(object):
+class DistanceEvaluators(object):
     '''
     this class provide methods for evaluate distance of two graph path
     '''

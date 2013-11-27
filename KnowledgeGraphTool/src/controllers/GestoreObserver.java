@@ -10,7 +10,7 @@ import guiListener.AggiungiRequisiti;
 import guiListener.ApriProgetto;
 import guiListener.AvviaAnalisi;
 import guiListener.ChiudiProgetto;
-import guiListener.OverlapSelection;
+import guiListener.OverlapTreeLeafSelection;
 import guiListener.LoadAnalysis;
 import supportGui.FileSelectorModel;
 import guiListener.NuovoProgetto;
@@ -61,7 +61,7 @@ public class GestoreObserver implements Observer{
         if(o.getClass().equals(VisualizzaRequisito.class))
             reqBox.getTextBox().setText((String)o1);
         
-        if(o.getClass().equals(OverlapSelection.class)){
+        if(o.getClass().equals(OverlapTreeLeafSelection.class)){
            reqBox.getTextBox().setText((String)o1);
         }
         

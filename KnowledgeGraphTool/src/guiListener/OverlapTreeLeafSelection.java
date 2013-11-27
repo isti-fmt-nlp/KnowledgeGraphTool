@@ -20,9 +20,9 @@ import supportGui.FileNode;
  *
  * @author Lipari
  */
-public class OverlapSelection extends Observable implements TreeSelectionListener{
+public class OverlapTreeLeafSelection extends Observable implements TreeSelectionListener{
     private JTree tree;
-    public OverlapSelection(JTree tree){
+    public OverlapTreeLeafSelection(JTree tree){
         this.tree=tree;
     }
 
@@ -45,14 +45,14 @@ public class OverlapSelection extends Observable implements TreeSelectionListene
                     line = in.readLine();
                     }
                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(OverlapSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OverlapTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(OverlapSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OverlapTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                 try {
                     in.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(OverlapSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OverlapTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
                 this.setChanged();
