@@ -22,6 +22,6 @@ public class TestControllorePython {
         } catch (IOException ex) {}
             System.out.println(pathScript);
 
-        CallPyScript.analisi(pathScript);
+        CallPyScript.analisiScript(pathScript);
     }
 }

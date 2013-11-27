@@ -18,6 +18,7 @@ import org.w3c.dom.NodeList;
  * @author Lipari
  */
 public class ControlloreProgetto{
+    private String method="jaccard";
     private String root=null;
     private String path_dom1=null;
     private String path_dom2=null;
@@ -313,5 +314,8 @@ public class ControlloreProgetto{
     }
     public Requirement getReq(int n){
         return reqs.getReq(n);
+    }
+    public String getMethod(){
+        return method;
     }
 }

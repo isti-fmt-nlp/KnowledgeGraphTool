@@ -12,31 +12,34 @@ import java.io.*;
 public class CallPyScript {
     private static BufferedReader input;
     
-    static public int analisi(String pathScript){
-       String os=System.getProperty("os.name").toLowerCase();
-            try
-            {
-                ControlloreProgetto cp=ControlloreProgetto.getInstance();
-                File pathLib=new File("../conceptLinkNetwork");
-                String pathRoot=cp.getSource();
-                pathRoot.replaceAll(" ", File.pathSeparator);
-                System.out.println(pathRoot);
-                Runtime rt = Runtime.getRuntime();
-                Process pr=null;
-                if(os.indexOf("win")>=0){
-                     System.out.println(os);
-                     pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath());                
-                     System.out.println(("cmd /c cd ../conceptLinkNetwork/ & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()));
-                }
+    static public int analisiScript(String method){
+        File f=new File("./src/py/Analisi.py");
+        String pathScript="";
+        try {
+            pathScript = f.getCanonicalPath();
+        } catch (IOException ex) { }
+        String os=System.getProperty("os.name").toLowerCase();
+        try{
+            ControlloreProgetto cp=ControlloreProgetto.getInstance();
+            File pathLib=new File("../conceptLinkNetwork");
+            String pathRoot=cp.getSource();
+            System.out.println(pathRoot);
+            Runtime rt = Runtime.getRuntime();
+            Process pr=null;
+            if(os.indexOf("win")>=0){
+                System.out.println(os);
+                pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath()+" "+method);                
+                System.out.println(("cmd /c cd ../conceptLinkNetwork/ & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()+" "+method));
+            }
                 
                  if(os.indexOf("mac")>=0){
                     System.out.println(os);
-                    pr = rt.exec("python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
+                    pr = rt.exec("python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath()+" "+method,null,new File("../conceptLinkNetwork"));
                 }
                 //Da provare
                 if(os.indexOf("nix")>=0){
                     System.out.println(os);
-                     pr = rt.exec("python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath(),null,new File("../conceptLinkNetwork"));
+                     pr = rt.exec("python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath()+" "+method,null,new File("../conceptLinkNetwork"));
                 }
               
            input=new BufferedReader(new InputStreamReader(pr.getInputStream()));

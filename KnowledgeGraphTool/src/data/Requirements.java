@@ -58,6 +58,8 @@ public class Requirements {
                     String domain2=overlap;
                     System.out.println("____ANALYSIS____:\n"+domain1+"\nDomain2:"+domain2);
                     overlap=readerJ.readLine();
+                    System.out.println(overlap);
+                    overlap=readerJ.readLine();
                     ind=0;
                     n=reqList.size();
                     for(int i=0;i<n;i++) {

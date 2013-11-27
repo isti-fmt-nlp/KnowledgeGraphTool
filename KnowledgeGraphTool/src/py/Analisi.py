@@ -7,23 +7,25 @@ from ProgressBar import progressBar
 from pygraph.classes.digraph import digraph
 sys.path.insert(1, sys.argv[2])
 sys.path.insert(1, sys.argv[2]+'irutils')
-from irutils.TextFilter import TextFilter
+## from irutils.TextFilter import TextFilter
 from SentenceNetCreator import SentenceNetCreator
 from SentenceNetVisitor import SentenceNetVisitor
 from os import listdir
 from os.path import isfile, join
+from DistanceEvaluator import DistanceEvaluator
 
 pathdom1=sys.argv[1] + '/Domain1/'
 pathdom2=sys.argv[1] + '/Domain2/'
 pathreq=sys.argv[1] + '/Requirements/'
 pathres=sys.argv[1] + '/Result/'
+method=sys.argv[3]
 
 fp1 = [ (pathdom1 + f) for f in listdir(pathdom1) if isfile(join(pathdom1,f)) ]
 fp2 = [ (pathdom2 + f) for f in listdir(pathdom2) if isfile(join(pathdom2,f)) ]
-bar=progressBar()
-progress=0.0;
-bar.setPercent(int(progress))
-terms_filter = TextFilter()
+
+##terms_filter = TextFilter()
+evaluator=DistanceEvaluator()
+
 EDGE_START_WEIGHT = 1.0
 OCCURRENCES_POS = 0 # the tuple representing the number of occurrences is the first attribute (position 0) for each edge
 OCCURRENCES_VALUE_POS = 1 # the value of the number of occurrences is in position 1 in the tuple ('occurrences', <occurrences_number>)
@@ -46,14 +48,41 @@ req_file=open(path_file_req,"r")
 reqs= req_file.readlines()
 req_file.close()
 #print reqs
-nreq=len(reqs)*2+2
-ind=1
-overlap=0
+
 overlap_file = open(pathres+"domain_overlap.txt","w")
 domain1 = [(f) for f in listdir(pathdom1) if isfile(join(pathdom1,f))]
 domain2 = [(f) for f in listdir(pathdom2) if isfile(join(pathdom2,f))]
-domains='Domain1:' + ", ".join(domain1) + '\nDomain2:' + ", ".join(domain2) + ' \n'
+domains='Domain1:' + ", ".join(domain1) + '\nDomain2:' + ", ".join(domain2) + ' \nMethod:'+method+'\n'
 overlap_file.write(domains)
+
+if method == 'jaccard' :
+        bar=progressBar()
+        progress=0.0;
+        bar.setPercent(int(progress))
+        ind=1
+        nreq=len(reqs)+2
+        overlap=0
+        for req in reqs:
+                overlap, subgraph1, subgraph2 = evaluator.jaccard_evaluator(req,s1,s2,v1,v2)
+                SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:10] + '-dom1.gv', subgraph1)
+                SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:10] + '-dom2.gv', subgraph2)
+                r='Overlap:R%d-%s...\n%.10f\n'%(ind,req[0:20],overlap)
+                overlap_file.write(r)
+                ind+=1
+                progress+=1
+                x=float(progress/nreq)
+                bar.setPercent(int(x*100))
+        s1.write_graph(pathres + 'Graph-dom1.gv')
+        progress+=1
+        x=float(progress/nreq)
+        bar.setPercent(int(x*100))
+        s2.write_graph(pathres + 'Graph-dom2.gv')
+        progress+=1
+        x=float(progress/nreq)
+        bar.setPercent(int(x*100))
+overlap_file.close()
+        
+'''
 #Ciclo creazione e salvataggio sotto grafi cammini + jaccard
 for req in reqs:
         progress+=1
@@ -80,12 +109,13 @@ for req in reqs:
         path_subgraph1=' '.join(current_subgraph.nodes())
 	path_subgraph2=' '.join(current_subgraph2.nodes())
 	overlap= SentenceNetCreator.evaluate_jaccard(s1,path_subgraph1,path_subgraph2,filtered_sent)
-        r='R%d Domain Overlap\n%.10f\n'%(ind,jac)
+        r='R%d Domain Overlap\n%.10f\n'%(ind,overlap)
         overlap_file.write(r)
         ind+=1
         progress+=1
         x=float(progress/nreq)
         bar.setPercent(int(x*100))
+        
 overlap_file.close()
 s1.write_graph(pathres + 'Graph-dom1.gv')
 progress+=1
@@ -95,3 +125,4 @@ s2.write_graph(pathres + 'Graph-dom2.gv')
 progress+=1
 x=float(progress/nreq)
 bar.setPercent(int(x*100))
+'''
