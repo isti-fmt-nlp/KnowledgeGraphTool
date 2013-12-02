@@ -4,7 +4,7 @@
  */
 package guiListener;
 
-import controllers.ControlloreProgetto;
+import controllers.ProjectController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -19,11 +19,11 @@ import javax.swing.filechooser.FileView;
  *
  * @author Lipari
  */
-public class RemoveDominio extends Observable implements ActionListener{
-    private ControlloreProgetto cp=ControlloreProgetto.getInstance();
-    private String dom;
-    public RemoveDominio(String dom){
-    this.dom=dom;
+public class RemoveDocuments extends Observable implements ActionListener{
+    private ProjectController cp=ProjectController.getInstance();
+    private String sub;
+    public RemoveDocuments(String sub){
+    this.sub=sub;
     }
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -40,16 +40,15 @@ public class RemoveDominio extends Observable implements ActionListener{
              }
              else{
                  cp.eliminaRisultati();
-                 cp.setAnalysis(false);
              }
          }
-         FileNameExtensionFilter filter = new FileNameExtensionFilter("Solo Txt e Pdf", "txt", "pdf");
-         String domain=null;
-         if(dom.equals(cp.DOM1))
-             domain=File.separator+"Domain1";
-         if(dom.equals(cp.DOM2))
-             domain=File.separator+"Domain2";
-         final File  dirToLock = new File(cp.getSource()+domain);
+         FileNameExtensionFilter filter = new FileNameExtensionFilter("Only Txt and Pdf", "txt", "pdf");
+         String subject=null;
+         if(sub.equals(cp.SUB1))
+             subject=File.separator+"1Subject";
+         if(sub.equals(cp.SUB2))
+             subject=File.separator+"2Subject";
+         final File  dirToLock = new File(cp.getSource()+subject);
          JFileChooser fileChooser = new JFileChooser(dirToLock);
          fileChooser.setFileView(new FileView() {
                 @Override
@@ -59,18 +58,18 @@ public class RemoveDominio extends Observable implements ActionListener{
          });
          fileChooser.setAcceptAllFileFilterUsed(false);
          fileChooser.setFileFilter(filter);
-         fileChooser.setDialogTitle("Seleziona File");
+         fileChooser.setDialogTitle("Select Files");
          fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
          fileChooser.setMultiSelectionEnabled(true);
-         fileChooser.setApproveButtonText("Elimina");
+         fileChooser.setApproveButtonText("Delete");
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                      System.out.println("Cartella selezionata: "+fileChooser.getSelectedFile());
+                      System.out.println("Choosen Directory: "+fileChooser.getSelectedFile());
                       for(File f:fileChooser.getSelectedFiles())
-                        cp.eliminaDocumento(dom, f.getName());
+                        cp.eliminaDocumento(sub, f.getName());
                       this.setChanged();
                       this.notifyObservers();
                    }else{
-                   System.out.println("Operazione annullata");
+                   System.out.println("Operation aborted");
                }
     }
     

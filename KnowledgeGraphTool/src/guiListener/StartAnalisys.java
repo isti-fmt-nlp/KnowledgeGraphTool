@@ -4,7 +4,7 @@
  */
 package guiListener;
 
-import controllers.ControlloreProgetto;
+import controllers.ProjectController;
 import kgtUtility.CallPyScript;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +17,12 @@ import javax.swing.JOptionPane;
  *
  * @author Peppe
  */
-public class AvviaAnalisi extends Observable implements ActionListener{
+public class StartAnalisys extends Observable implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        ControlloreProgetto cp=ControlloreProgetto.getInstance();
-        if(ControlloreProgetto.getInstance().analysisCompleted()){
+        ProjectController cp=ProjectController.getInstance();
+        if(ProjectController.getInstance().analysisCompleted()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
              int dialogResult = JOptionPane.showConfirmDialog (null, "Result exists. Do you want to save them?","Warning",dialogButton);
              if(dialogResult == JOptionPane.NO_OPTION){
@@ -38,7 +38,8 @@ public class AvviaAnalisi extends Observable implements ActionListener{
         this.setChanged();
         this.notifyObservers("analysis");
         cp.setAnalysis(false);
-        if(CallPyScript.analisiScript(cp.getMethod())==0){
+        if(CallPyScript.analisiScript(cp.getMethod(),"nopriority")==0){
+        // if(CallPyScript.analisiScript(cp.getMethod(),"priority")==0){
             cp.loadAnalysis(cp.getSource());
             this.setChanged();
             this.notifyObservers();

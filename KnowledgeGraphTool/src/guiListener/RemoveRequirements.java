@@ -4,7 +4,7 @@
  */
 package guiListener;
 
-import controllers.ControlloreProgetto;
+import controllers.ProjectController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -19,7 +19,7 @@ public class RemoveRequirements extends Observable implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        ControlloreProgetto cp=ControlloreProgetto.getInstance();
+        ProjectController cp=ProjectController.getInstance();
          if(cp.analysisCompleted()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
              int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to save the analysis results before removing?","Warning",dialogButton);

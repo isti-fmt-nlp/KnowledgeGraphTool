@@ -4,14 +4,14 @@
  */
 package Test;
 
-import controllers.ControlloreProgetto;
+import controllers.ProjectController;
 /**
  *
  * @author Lipari
  */
 public class TestControlloreProgetto {
     public static void main(String[] args) {
-        ControlloreProgetto cp=ControlloreProgetto.getInstance();
+        ProjectController cp=ProjectController.getInstance();
         cp.creaProgetto("C:/Users/Lipari/Documents/Prova", "Progetto1");
         System.out.println(cp.apriProgetto(cp.getSource())); 
         cp.chiudiProgetto();

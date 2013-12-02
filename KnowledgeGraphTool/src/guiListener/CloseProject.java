@@ -4,7 +4,7 @@
  */
 package guiListener;
 
-import controllers.ControlloreProgetto;
+import controllers.ProjectController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -13,8 +13,8 @@ import java.util.Observable;
  *
  * @author Peppe
  */
-public class ChiudiProgetto extends Observable implements ActionListener{
-    ControlloreProgetto cp=ControlloreProgetto.getInstance();
+public class CloseProject extends Observable implements ActionListener{
+    ProjectController cp=ProjectController.getInstance();
     @Override
     public void actionPerformed(ActionEvent ae) {
              cp.chiudiProgetto();

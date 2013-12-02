@@ -4,13 +4,11 @@
  */
 package kgtUtility;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
@@ -126,8 +124,7 @@ public class ConvertPdftoTxt{
             
             String s = new String(
                             new PDFTextStripper().getText(
-                                    new PDDocument(pp.getDocument())).getBytes(),"UTF-8");
-                        
+                                    new PDDocument(pp.getDocument())).getBytes(),"UTF-8");  
             return s;
         }
         catch (FileNotFoundException e)

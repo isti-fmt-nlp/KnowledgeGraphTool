@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class RendererCelleTabella extends DefaultTableCellRenderer {
+public class KgtRendererTabelCell extends DefaultTableCellRenderer {
 	ArrayList<Integer> alertRows = new ArrayList<Integer>();
-	public RendererCelleTabella(){
+	public KgtRendererTabelCell(){
 		super();
 	}
 	public void setAlert(int row){

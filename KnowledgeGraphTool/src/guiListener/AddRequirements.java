@@ -4,30 +4,25 @@
  */
 package guiListener;
 
-import controllers.ControlloreProgetto;
+import controllers.ProjectController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Observable;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Peppe
  */
-public class AggiungiDominio extends Observable implements ActionListener{
-    private ControlloreProgetto cp=ControlloreProgetto.getInstance();
-    private String dom;
-    public AggiungiDominio(String dom){
-    this.dom=dom;
-    }
-    @Override
+public class AddRequirements extends Observable implements ActionListener{
+   private ProjectController cp=ProjectController.getInstance();
+   @Override
     public void actionPerformed(ActionEvent ae) {
-         FileNameExtensionFilter filter = new FileNameExtensionFilter("Only Txt e Pdf", "txt", "pdf");
-           if(cp.analysisCompleted()){
+         FileNameExtensionFilter filter = new FileNameExtensionFilter("only Txt", "txt");
+          if(cp.analysisCompleted()){
              int dialogButton = JOptionPane.YES_NO_OPTION;
              int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to save the analysis results before adding?","Warning",dialogButton);
              if(dialogResult == JOptionPane.YES_OPTION){
@@ -46,15 +41,16 @@ public class AggiungiDominio extends Observable implements ActionListener{
          JFileChooser fileChooser = new JFileChooser();
          fileChooser.setAcceptAllFileFilterUsed(false);
          fileChooser.setFileFilter(filter);
-         fileChooser.setDialogTitle("Selezionat File");
+         fileChooser.setDialogTitle("Select File");
          fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                      cp.aggiungiDocumento(dom,fileChooser.getSelectedFile().getAbsolutePath());
+                      if(cp.aggiungiRequisiti(fileChooser.getSelectedFile().getAbsolutePath()));
                       this.setChanged();
                       this.notifyObservers();
                    }else{
-                   System.out.println("Operation Aborted");
+                   System.out.println("Operation aborted");
                }
     }
+
     
 }

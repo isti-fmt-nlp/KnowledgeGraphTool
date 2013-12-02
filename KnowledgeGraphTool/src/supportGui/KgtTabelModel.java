@@ -2,9 +2,9 @@ package supportGui;
 
 import javax.swing.table.DefaultTableModel;
 
-public class ModelloTabella extends DefaultTableModel{
+public class KgtTabelModel extends DefaultTableModel{
 	
-	public ModelloTabella(){
+	public KgtTabelModel(){
 		super();
 	}
 	@Override

@@ -17,27 +17,27 @@ import org.w3c.dom.NodeList;
  *
  * @author Lipari
  */
-public class ControlloreProgetto{
+public class ProjectController{
     private String method="jaccard";
     private String root=null;
-    private String path_dom1=null;
-    private String path_dom2=null;
+    private String path_sub1=null;
+    private String path_sub2=null;
     private String path_reqs=null;
     private String path_res=null;
     private String path_oldRes=null;
     private Requirements reqs=new Requirements();
     private boolean analysis=false;
-    private static ControlloreProgetto cP=null; //riferimento all' istanza
-    public final String DOM1="dominio_1";
-    public final String DOM2="dominio_2";
+    private static ProjectController cP=null; //riferimento all' istanza
+    public final String SUB1="subject_1";
+    public final String SUB2="subject_2";
     /**Costruttore 
      
     */
-    private ControlloreProgetto(){
+    private ProjectController(){
     }
-    public static ControlloreProgetto getInstance(){
+    public static ProjectController getInstance(){
             if(cP==null)
-                        cP = new ControlloreProgetto();
+                        cP = new ProjectController();
              return cP;
         }
    
@@ -55,15 +55,15 @@ public class ControlloreProgetto{
         f=new File(path+"/"+nomeProgetto);
         f.mkdir();
         root=f.getPath();
-        new File(root+File.separator+"Domain1").mkdir();
-        new File(root+File.separator+"Domain2").mkdir();
+        new File(root+File.separator+"1Subject").mkdir();
+        new File(root+File.separator+"2Subject").mkdir();
         new File(root+File.separator+"Requirements").mkdir();
         new File(root+File.separator+"Result").mkdir();
         new File(root+File.separator+"Old Result").mkdir();
         
         KgtXml.creaProjectXML(root,nomeProgetto);
-        path_dom1=root+File.separator+"Domain1";
-        path_dom2=root+File.separator+"Domain2";
+        path_sub1=root+File.separator+"1Subject";
+        path_sub2=root+File.separator+"2Subject";
         path_reqs=root+File.separator+"Requirements";
         path_res=root+File.separator+"Result";
         path_oldRes=root+File.separator+"Old Result";
@@ -99,10 +99,10 @@ public class ControlloreProgetto{
                             return pce.getMessage();}
                 }
                root=path;
-               if(name.equals("Domain1"))
-                   path_dom1=root+File.separator+"Domain1";
-               if(name.equals("Domain2"))
-                   path_dom2=root+File.separator+"Domain2";
+               if(name.equals("1Subject"))
+                   path_sub1=root+File.separator+"1Subject";
+               if(name.equals("2Subject"))
+                   path_sub2=root+File.separator+"2Subject";
                if(name.equals("Result"))
                    path_res=root+File.separator+"Result";
                if(name.equals("Requirements"))
@@ -111,12 +111,12 @@ public class ControlloreProgetto{
                    path_oldRes=root+File.separator+"Old Result";
            }
         if(exist==true){
-            if(path_dom1==null){
-               new File(root+File.separator+"Domain1").mkdir();
-               path_dom1=root+File.separator+"Domain1";}
-            if(path_dom2==null){
-                new File(root+File.separator+"Domain2").mkdir();
-                path_dom2=root+File.separator+"Domain2";}
+            if(path_sub1==null){
+               new File(root+File.separator+"1Subject").mkdir();
+               path_sub1=root+File.separator+"1Subject";}
+            if(path_sub2==null){
+                new File(root+File.separator+"2Subject").mkdir();
+                path_sub2=root+File.separator+"2Subject";}
             if(path_res==null){
                 new File(root+File.separator+"Result").mkdir();
                 path_res=root+File.separator+"Result";}
@@ -147,8 +147,8 @@ public class ControlloreProgetto{
 
     public void chiudiProgetto() {
         root=null;
-        path_dom1=null;
-        path_dom2=null;
+        path_sub1=null;
+        path_sub2=null;
         path_reqs=null;
         path_res=null;
         path_oldRes=null;
@@ -157,14 +157,14 @@ public class ControlloreProgetto{
     }
 
 
-    public boolean aggiungiDocumento(String dom,String path){
+    public boolean aggiungiDocumento(String sub,String path){
         try {
-             if(dom.equals(DOM1))
-                return KgtFile.copiaFile(path,path_dom1);
+             if(sub.equals(SUB1))
+                return KgtFile.copiaFile(path,path_sub1);
                 
                 
-            if(dom.equals(DOM2))
-                return KgtFile.copiaFile(path,path_dom2);
+            if(sub.equals(SUB2))
+                return KgtFile.copiaFile(path,path_sub2);
             
             } catch (IOException ex) {}
               return false;
@@ -197,14 +197,14 @@ public class ControlloreProgetto{
         return false;
     } 
    
-   public boolean eliminaDocumento(String dom,String name){
+   public boolean eliminaDocumento(String doc,String name){
         boolean ok=false;
         if(name.length()==0)
             return false;
-        if(dom.equals(DOM1))
-            ok=new File(path_dom1+File.separator+name).delete();
-        if(dom.equals(DOM2))
-            ok=new File(path_dom2+File.separator+name).delete();
+        if(doc.equals(SUB1))
+            ok=new File(path_sub1+File.separator+name).delete();
+        if(doc.equals(SUB2))
+            ok=new File(path_sub2+File.separator+name).delete();
         return ok;
     }
     public void eliminaRisultati(){
@@ -248,12 +248,12 @@ public class ControlloreProgetto{
              System.out.println(load.getAbsolutePath());
              for(File f: load.listFiles()){
                  System.out.println(f.getName());
-                 if(!f.getName().equals("domain_overlap.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
+                 if(!f.getName().equals("knowledge_overlap.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
                      eliminaRequisito();
                      KgtFile.copiaFile(f.getAbsolutePath(),path_reqs );
                      reqs.loadReqs(root);
                  }else{
-                     if(f.getName().equals("domain_overlap.txt")){
+                     if(f.getName().equals("knowledge_overlap.txt")){
                          setAnalysis(true);
                      }
                      KgtFile.copiaFile(f.getAbsolutePath(), path_res);}
@@ -266,9 +266,9 @@ public class ControlloreProgetto{
         File req=new File(path_reqs);    
         if(Requirements()){
            for(File f:req.listFiles()){
-               if(f.delete())
-                   reqs.clearReq();
+               f.delete();
            }
+           reqs.clearReq();
         }
         return !Requirements();
     }
@@ -279,9 +279,9 @@ public class ControlloreProgetto{
             return false;
     }
     public boolean isReady(){
-        if(new File(path_dom1).listFiles().length==0)
+        if(new File(path_sub1).listFiles().length==0)
             return false;
-        if(new File(path_dom2).listFiles().length==0)
+        if(new File(path_sub2).listFiles().length==0)
                     return false;
         if(new File(path_reqs).listFiles().length!=1)
                     return false;

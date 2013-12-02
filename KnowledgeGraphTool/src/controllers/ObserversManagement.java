@@ -5,23 +5,21 @@ import gui.MenuBar;
 import gui.ProjectTree;
 import gui.ReqBox;
 import gui.ReqPanel;
-import guiListener.AggiungiDominio;
-import guiListener.AggiungiRequisiti;
-import guiListener.ApriProgetto;
-import guiListener.AvviaAnalisi;
-import guiListener.ChiudiProgetto;
+import guiListener.AddDocuments;
+import guiListener.AddRequirements;
+import guiListener.OpenProject;
+import guiListener.StartAnalisys;
+import guiListener.CloseProject;
 import guiListener.OverlapTreeLeafSelection;
 import guiListener.LoadAnalysis;
 import supportGui.FileSelectorModel;
-import guiListener.NuovoProgetto;
-import guiListener.RemoveDominio;
+import guiListener.NewProject;
+import guiListener.RemoveDocuments;
 import guiListener.RemoveRequirements;
-import supportGui.RendererCelleTabella;
+import supportGui.KgtRendererTabelCell;
 import guiListener.ThresholdChange;
-import guiListener.VisualizzaRequisito;
+import guiListener.ShowRequirements;
 import java.awt.Cursor;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
@@ -31,14 +29,14 @@ import javax.swing.JTable;
  *
  * @author Lipari
  */
-public class GestoreObserver implements Observer{
+public class ObserversManagement implements Observer{
     private JFrame main=null;
     private MenuBar menuBar;
     private ProjectTree projectTree;
     private ReqBox reqBox;
     private ReqPanel reqPanel;
     
-    public GestoreObserver(JFrame main,MenuBar menuBar,ProjectTree projectTree,ReqBox reqBox,ReqPanel reqPanel){
+    public ObserversManagement(JFrame main,MenuBar menuBar,ProjectTree projectTree,ReqBox reqBox,ReqPanel reqPanel){
         this.main=main;
         this.menuBar=menuBar;
         this.projectTree=projectTree;
@@ -56,9 +54,9 @@ public class GestoreObserver implements Observer{
 
     @Override
     public void update(Observable o, Object o1) {
-        ControlloreProgetto cp=ControlloreProgetto.getInstance();
+        ProjectController cp=ProjectController.getInstance();
         
-        if(o.getClass().equals(VisualizzaRequisito.class))
+        if(o.getClass().equals(ShowRequirements.class))
             reqBox.getTextBox().setText((String)o1);
         
         if(o.getClass().equals(OverlapTreeLeafSelection.class)){
@@ -67,7 +65,7 @@ public class GestoreObserver implements Observer{
         
         if(o.getClass().equals(ThresholdChange.class)){
             JTable t=reqPanel.getTable();
-            RendererCelleTabella rc=(RendererCelleTabella)t.getCellRenderer(0, 0);
+            KgtRendererTabelCell rc=(KgtRendererTabelCell)t.getCellRenderer(0, 0);
             for(int i=0;i<t.getRowCount();i++){
                 if(t.getValueAt(i, 1)==0)
                     rc.removeAlert(i);
@@ -80,7 +78,7 @@ public class GestoreObserver implements Observer{
 		t.repaint();
             }
         }
-        if(o.getClass().equals(ApriProgetto.class)||o.getClass().equals(NuovoProgetto.class)){
+        if(o.getClass().equals(OpenProject.class)||o.getClass().equals(NewProject.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
             projectTree.enablePopUp(true);
@@ -95,7 +93,7 @@ public class GestoreObserver implements Observer{
             menuBar.enableSave(true);
             reqPanel.viewReqs(cp.getSource());
         }
-        if(o.getClass().equals(ChiudiProgetto.class)){
+        if(o.getClass().equals(CloseProject.class)){
             projectTree.getTree().setModel(null);
             projectTree.enablePopUp(false);
             reqPanel.clearRows();
@@ -104,14 +102,14 @@ public class GestoreObserver implements Observer{
             menuBar.enableThreshold(false);
             menuBar.setThreshold(0);
         }
-        if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(RemoveDominio.class)){
+        if(o.getClass().equals(AddDocuments.class)||o.getClass().equals(RemoveDocuments.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
             menuBar.enableAnalisi(cp.isReady());
             menuBar.enableThreshold(cp.analysisCompleted());
         }
        
-        if(o.getClass().equals(AggiungiRequisiti.class)||o.getClass().equals(RemoveRequirements.class)){
+        if(o.getClass().equals(AddRequirements.class)||o.getClass().equals(RemoveRequirements.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
             reqPanel.viewReqs(cp.getSource());
@@ -133,7 +131,7 @@ public class GestoreObserver implements Observer{
             }
             reqPanel.viewReqs(cp.getSource());
         }
-        if(o.getClass().equals(AvviaAnalisi.class)){
+        if(o.getClass().equals(StartAnalisys.class)){
             if(o1==null){
                 main.setEnabled(true);
                 main.setVisible(true);

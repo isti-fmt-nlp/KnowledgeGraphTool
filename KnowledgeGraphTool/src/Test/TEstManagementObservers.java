@@ -3,17 +3,17 @@
  * and open the template in the editor.
  */
 package Test;
-import controllers.ControlloreProgetto;
-import guiListener.AggiungiDominio;
-import guiListener.AggiungiRequisiti;
-import guiListener.ApriProgetto;
-import guiListener.AvviaAnalisi;
-import guiListener.ChiudiProgetto;
+import controllers.ProjectController;
+import guiListener.AddDocuments;
+import guiListener.AddRequirements;
+import guiListener.OpenProject;
+import guiListener.StartAnalisys;
+import guiListener.CloseProject;
 import supportGui.FileSelectorModel;
-import supportGui.RendererCelleTabella;
+import supportGui.KgtRendererTabelCell;
 import guiListener.ThresholdChange;
-import guiListener.VisualizzaRequisito;
-import guiListener.NuovoProgetto;
+import guiListener.ShowRequirements;
+import guiListener.NewProject;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JTable;
@@ -21,11 +21,11 @@ import javax.swing.JTable;
  *
  * @author Lipari
  */
-public class ControlloreObserver extends javax.swing.JFrame implements Observer {
+public class TEstManagementObservers extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form ProveFrame
      */
-    public ControlloreObserver() {
+    public TEstManagementObservers() {
         initComponents();
         /*Initializie Observer*/
         Observable[] obs=menuBar1.getObservable();
@@ -98,20 +98,20 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ControlloreObserver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TEstManagementObservers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ControlloreObserver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TEstManagementObservers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ControlloreObserver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TEstManagementObservers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ControlloreObserver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TEstManagementObservers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ControlloreObserver().setVisible(true);
+                new TEstManagementObservers().setVisible(true);
             }
         });
     }
@@ -124,12 +124,12 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
 
     @Override
     public void update(Observable o, Object o1) {
-            ControlloreProgetto cp=ControlloreProgetto.getInstance();
-            if(o.getClass().equals(VisualizzaRequisito.class))
+            ProjectController cp=ProjectController.getInstance();
+            if(o.getClass().equals(ShowRequirements.class))
                 reqBox1.getTextBox().setText((String)o1);
             if(o.getClass().equals(ThresholdChange.class)){
 			JTable t=reqPanel1.getTable();
-			RendererCelleTabella rc=(RendererCelleTabella)t.getCellRenderer(0, 0);
+			KgtRendererTabelCell rc=(KgtRendererTabelCell)t.getCellRenderer(0, 0);
 			for(int i=0;i<t.getRowCount();i++){
 				if((Float)t.getValueAt(i, 1)<=(Float)o1)
 					rc.setAlert(i);
@@ -138,7 +138,7 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
 				t.repaint();
 				}
             }
-            if(o.getClass().equals(ApriProgetto.class)||o.getClass().equals(NuovoProgetto.class)){
+            if(o.getClass().equals(OpenProject.class)||o.getClass().equals(NewProject.class)){
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());
                 projectTree1.getTree().setModel(fs);
                 menuBar1.setMenuItemsEnable(true);
@@ -149,18 +149,18 @@ public class ControlloreObserver extends javax.swing.JFrame implements Observer 
                 }
                 reqPanel1.viewReqs(cp.getSource());
             }
-            if(o.getClass().equals(ChiudiProgetto.class)){
+            if(o.getClass().equals(CloseProject.class)){
                 projectTree1.getTree().setModel(null);
                 menuBar1.setMenuItemsEnable(false);
                 menuBar1.enableAnalisi(false);
                 menuBar1.enableThreshold(false);
             }
-             if(o.getClass().equals(AggiungiDominio.class)||o.getClass().equals(AggiungiRequisiti.class)){
+             if(o.getClass().equals(AddDocuments.class)||o.getClass().equals(AddRequirements.class)){
                 FileSelectorModel fs=new FileSelectorModel(cp.getSource());
                 projectTree1.getTree().setModel(fs);
                 menuBar1.enableAnalisi(cp.isReady());
              }
-             if(o.getClass().equals(AvviaAnalisi.class)){
+             if(o.getClass().equals(StartAnalisys.class)){
                  if(o1==null){
                  menuBar1.enableSave(cp.analysisCompleted());
                  reqPanel1.viewReqs(cp.getSource());

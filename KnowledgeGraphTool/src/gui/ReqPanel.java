@@ -1,12 +1,12 @@
 package gui;
 
-import controllers.ControlloreProgetto;
-import supportGui.ModelloTabella;
-import supportGui.RendererCelleTabella;
+import controllers.ProjectController;
+import supportGui.KgtTabelModel;
+import supportGui.KgtRendererTabelCell;
 import javax.swing.JPanel;
 import supportGui.ButtonColumn;
 import guiListener.OpenGraph;
-import guiListener.VisualizzaRequisito;
+import guiListener.ShowRequirements;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Dimension;
@@ -18,11 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class ReqPanel extends JPanel{
-	private ModelloTabella tm=new ModelloTabella();
+	private KgtTabelModel tm=new KgtTabelModel();
 	private JTable table;
-	private RendererCelleTabella rc=new RendererCelleTabella();
-	private VisualizzaRequisito vr;
-        private ControlloreProgetto cp=ControlloreProgetto.getInstance();
+	private KgtRendererTabelCell rc=new KgtRendererTabelCell();
+	private ShowRequirements vr;
+        private ProjectController cp=ProjectController.getInstance();
         private OpenGraph open;
 
 	public ReqPanel() {
@@ -43,14 +43,14 @@ public class ReqPanel extends JPanel{
 		table.setFillsViewportHeight(true);
                 table.setModel(tm);
 		tm.addColumn("Requirements");
-		tm.addColumn("Domain Overlap");
+		tm.addColumn("Knowledge Overlap");
                 tm.addColumn("Graph");
 		table.getColumn("Requirements").setCellRenderer(rc);
-		table.getColumn("Domain Overlap").setCellRenderer(rc);
+		table.getColumn("Knowledge Overlap").setCellRenderer(rc);
                 table.getColumn("Graph").setMaxWidth(50);
                 table.setRowHeight(19);
                 scrollPane.setViewportView(table);
-                vr=new VisualizzaRequisito(cp.getReqs());
+                vr=new ShowRequirements(cp.getReqs());
                 table.getSelectionModel().addListSelectionListener(vr);
 		setLayout(groupLayout);
 	}

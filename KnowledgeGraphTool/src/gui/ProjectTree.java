@@ -1,9 +1,9 @@
 package gui;
 
-import guiListener.AggiungiDominio;
-import guiListener.AggiungiRequisiti;
+import guiListener.AddDocuments;
+import guiListener.AddRequirements;
 import guiListener.OverlapTreeLeafSelection;
-import guiListener.RemoveDominio;
+import guiListener.RemoveDocuments;
 import guiListener.RemoveRequirements;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -21,19 +21,19 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 public class ProjectTree extends JPanel{
 	private JTree tree = null;
-        private AggiungiDominio addDom1=new AggiungiDominio("dominio_1");
-        private AggiungiDominio addDom2=new AggiungiDominio("dominio_2");
-        private AggiungiRequisiti addReq=new AggiungiRequisiti();
-        private RemoveDominio remDom1=new RemoveDominio("dominio_1");
-        private RemoveDominio remDom2=new RemoveDominio("dominio_2");
+        private AddDocuments addDoc1=new AddDocuments("subject_1");
+        private AddDocuments addDoc2=new AddDocuments("subject_2");
+        private AddRequirements addReq=new AddRequirements();
+        private RemoveDocuments remDoc1=new RemoveDocuments("subject_1");
+        private RemoveDocuments remDoc2=new RemoveDocuments("subject_2");
         private RemoveRequirements remReq=new RemoveRequirements();
         private OverlapTreeLeafSelection js;
         private JPopupMenu popupMenu;
-        JMenuItem mntmAddFileDomain;
-        JMenuItem mntmAddFileDomain_1;
+        JMenuItem mntmAddFileSubject;
+        JMenuItem mntmAddFileSubject_1;
         JMenuItem mntmAddFileRequirments;
-        JMenuItem mntmRemoveFileDomain;
-        JMenuItem mntmRemoveFileDomain_1;
+        JMenuItem mntmRemoveFileSubject;
+        JMenuItem mntmRemoveFileSubject_1;
         JMenuItem mntmRemoveRequirements;
 	public ProjectTree() {
 		
@@ -47,27 +47,27 @@ public class ProjectTree extends JPanel{
                 popupMenu = new JPopupMenu();
                 addPopup(tree, popupMenu);
                 
-                mntmAddFileDomain = new JMenuItem("Add Domain1 file");
-                popupMenu.add(mntmAddFileDomain);
-                mntmAddFileDomain.addActionListener(addDom1);
+                mntmAddFileSubject = new JMenuItem("Add Subject1 file");
+                popupMenu.add(mntmAddFileSubject);
+                mntmAddFileSubject.addActionListener(addDoc1);
                 
-                mntmAddFileDomain_1 = new JMenuItem("Add Domain2 file");
-                popupMenu.add(mntmAddFileDomain_1);
-                mntmAddFileDomain_1.addActionListener(addDom2);
+                mntmAddFileSubject_1 = new JMenuItem("Add Subject2 file");
+                popupMenu.add(mntmAddFileSubject_1);
+                mntmAddFileSubject_1.addActionListener(addDoc2);
 
                 
                 mntmAddFileRequirments = new JMenuItem("Add Requirements");
                 popupMenu.add(mntmAddFileRequirments);
                 mntmAddFileRequirments.addActionListener(addReq);
                 
-                mntmRemoveFileDomain = new JMenuItem("Remove Domain1 file");
-                popupMenu.add(mntmRemoveFileDomain);
-                mntmRemoveFileDomain.addActionListener(remDom1);
+                mntmRemoveFileSubject = new JMenuItem("Remove Subject1 file");
+                popupMenu.add(mntmRemoveFileSubject);
+                mntmRemoveFileSubject.addActionListener(remDoc1);
                 
                 
-                mntmRemoveFileDomain_1 = new JMenuItem("Remove Domain2 file");
-                popupMenu.add(mntmRemoveFileDomain_1);
-                mntmRemoveFileDomain_1.addActionListener(remDom2);
+                mntmRemoveFileSubject_1 = new JMenuItem("Remove Subject2 file");
+                popupMenu.add(mntmRemoveFileSubject_1);
+                mntmRemoveFileSubject_1.addActionListener(remDoc2);
                 
                 mntmRemoveRequirements = new JMenuItem("Remove Requirements");
                 popupMenu.add(mntmRemoveRequirements);
@@ -101,10 +101,10 @@ public class ProjectTree extends JPanel{
 	}
         public void enablePopUp(boolean t){
 		popupMenu.setEnabled(t);
-                mntmAddFileDomain.setEnabled(t);
-                mntmAddFileDomain_1.setEnabled(t);
-                mntmRemoveFileDomain.setEnabled(t);
-                mntmRemoveFileDomain_1.setEnabled(t);
+                mntmAddFileSubject.setEnabled(t);
+                mntmAddFileSubject_1.setEnabled(t);
+                mntmRemoveFileSubject.setEnabled(t);
+                mntmRemoveFileSubject_1.setEnabled(t);
                 mntmAddFileRequirments.setEnabled(t);
                 mntmRemoveRequirements.setEnabled(t);
          }
@@ -130,6 +130,6 @@ public class ProjectTree extends JPanel{
 		});
 	}
         public Observable[] getObservable(){
-            return new Observable[]{addDom1,addDom2,addReq,remDom1,remDom2,remReq,js};
+            return new Observable[]{addDoc1,addDoc2,addReq,remDoc1,remDoc2,remReq,js};
         }
 }

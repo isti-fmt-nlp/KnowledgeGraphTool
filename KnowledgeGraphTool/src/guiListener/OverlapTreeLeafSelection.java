@@ -35,7 +35,7 @@ public class OverlapTreeLeafSelection extends Observable implements TreeSelectio
             return;
 
         if (tree.getModel().isLeaf(node)) {
-            if(node.getName().equals("domain_overlap.txt")){
+            if(node.getName().equals("knowledge_overlap.txt")){
                 BufferedReader in = null;
                 try {
                     in = new BufferedReader(new FileReader(node));

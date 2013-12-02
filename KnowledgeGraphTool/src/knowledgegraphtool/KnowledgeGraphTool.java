@@ -4,7 +4,7 @@
  */
 package knowledgegraphtool;
 
-import controllers.GestoreObserver;
+import controllers.ObserversManagement;
 import java.io.File;
 import java.util.Observable;
 import javax.swing.ImageIcon;
@@ -21,7 +21,7 @@ public class KnowledgeGraphTool extends JFrame {
      */
     public KnowledgeGraphTool() {
         initComponents();
-        GestoreObserver go=new GestoreObserver(this,menuBar1,projectTree1,reqBox1,reqPanel1);
+        ObserversManagement go=new ObserversManagement(this,menuBar1,projectTree1,reqBox1,reqPanel1);
         Observable[] obs=menuBar1.getObservable();
         go.addObservables(obs);
         go.addObservable(reqPanel1.getObservable());

@@ -43,7 +43,7 @@ public class Requirements {
 		String[]pathGraph=new String[files.length-1];
 		int ind=0;
 		for(File file : files){
-			if(file.getName().equals("domain_overlap.txt"))
+			if(file.getName().equals("knowledge_overlap.txt"))
                             path_overlap=file.getAbsolutePath();
 			if(file.getName().startsWith("R")){
                             pathGraph[ind++]=file.getAbsolutePath();
@@ -53,10 +53,10 @@ public class Requirements {
 		try {
                     readerJ = new BufferedReader(new FileReader(path_overlap));
                     overlap=readerJ.readLine();
-                    String domain1=overlap;
+                    String subject1=overlap;
                     overlap=readerJ.readLine();
-                    String domain2=overlap;
-                    System.out.println("____ANALYSIS____:\n"+domain1+"\nDomain2:"+domain2);
+                    String subject2=overlap;
+                    System.out.println("____ANALYSIS____:\n1Subject:"+subject1+"\n2Subject:"+subject2);
                     overlap=readerJ.readLine();
                     System.out.println(overlap);
                     overlap=readerJ.readLine();

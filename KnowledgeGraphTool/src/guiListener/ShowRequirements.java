@@ -14,9 +14,9 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Peppe
  */
-public class VisualizzaRequisito extends Observable implements ListSelectionListener{
+public class ShowRequirements extends Observable implements ListSelectionListener{
     Requirements r;
-    public VisualizzaRequisito(Requirements r){
+    public ShowRequirements(Requirements r){
         this.r=r;
     }
     @Override
