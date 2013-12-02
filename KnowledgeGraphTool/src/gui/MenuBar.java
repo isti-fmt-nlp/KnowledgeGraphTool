@@ -3,14 +3,14 @@ package gui;
 import guiListener.AddDocuments;
 import guiListener.AddRequirements;
 import guiListener.OpenProject;
-import guiListener.StartAnalisys;
+import guiListener.StartAnalysis;
 import guiListener.CloseProject;
 import guiListener.LoadAnalysis;
 import supportGui.FloatSlider;
 import guiListener.NewProject;
 import guiListener.RemoveDocuments;
 import guiListener.RemoveRequirements;
-import guiListener.SaveAnalisys;
+import guiListener.SaveAnalysis;
 
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
@@ -39,7 +39,7 @@ public class MenuBar extends JPanel {
 
 	private FloatSlider floatSlider;
         private OpenProject apriAction=new OpenProject();
-        private StartAnalisys analisi=new StartAnalisys();
+        private StartAnalysis analisi=new StartAnalysis();
         private NewProject nuovoAction=new NewProject();
         private CloseProject chiudiAction=new CloseProject();
         private AddDocuments addSub1=new AddDocuments("subject_1");
@@ -128,7 +128,7 @@ public class MenuBar extends JPanel {
 		
 		JMenuItem mntmSalvaAnalisi = new JMenuItem("Save Analysis");
                 mnSalva.add(mntmSalvaAnalisi);
-		SaveAnalisys save=new SaveAnalisys();
+		SaveAnalysis save=new SaveAnalysis();
                 mntmSalvaAnalisi.addActionListener(save);
                 mntmSalvaAnalisi.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
 

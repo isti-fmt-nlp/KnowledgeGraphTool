@@ -8,7 +8,7 @@ import gui.ReqPanel;
 import guiListener.AddDocuments;
 import guiListener.AddRequirements;
 import guiListener.OpenProject;
-import guiListener.StartAnalisys;
+import guiListener.StartAnalysis;
 import guiListener.CloseProject;
 import guiListener.OverlapTreeLeafSelection;
 import guiListener.LoadAnalysis;
@@ -131,7 +131,7 @@ public class ObserversManagement implements Observer{
             }
             reqPanel.viewReqs(cp.getSource());
         }
-        if(o.getClass().equals(StartAnalisys.class)){
+        if(o.getClass().equals(StartAnalysis.class)){
             if(o1==null){
                 main.setEnabled(true);
                 main.setVisible(true);

@@ -7,7 +7,7 @@ import controllers.ProjectController;
 import guiListener.AddDocuments;
 import guiListener.AddRequirements;
 import guiListener.OpenProject;
-import guiListener.StartAnalisys;
+import guiListener.StartAnalysis;
 import guiListener.CloseProject;
 import supportGui.FileSelectorModel;
 import supportGui.KgtRendererTabelCell;
@@ -160,7 +160,7 @@ public class TEstManagementObservers extends javax.swing.JFrame implements Obser
                 projectTree1.getTree().setModel(fs);
                 menuBar1.enableAnalisi(cp.isReady());
              }
-             if(o.getClass().equals(StartAnalisys.class)){
+             if(o.getClass().equals(StartAnalysis.class)){
                  if(o1==null){
                  menuBar1.enableSave(cp.analysisCompleted());
                  reqPanel1.viewReqs(cp.getSource());

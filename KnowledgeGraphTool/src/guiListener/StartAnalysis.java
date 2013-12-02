@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Peppe
  */
-public class StartAnalisys extends Observable implements ActionListener{
+public class StartAnalysis extends Observable implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {

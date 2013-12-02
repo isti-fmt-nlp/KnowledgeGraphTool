@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author Lipari
  */
-public class SaveAnalisys extends Observable implements ActionListener{
+public class SaveAnalysis extends Observable implements ActionListener{
     
 
     @Override
