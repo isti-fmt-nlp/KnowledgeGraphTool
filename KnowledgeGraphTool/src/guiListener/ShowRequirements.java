@@ -28,9 +28,11 @@ public class ShowRequirements extends Observable implements ListSelectionListene
                 int minIndex = lsm.getMinSelectionIndex();
                 int maxIndex = lsm.getMaxSelectionIndex();
                 for (int i = minIndex; i <= maxIndex; i++) {
-                    if (lsm.isSelectedIndex(i)) {
-                    req=r.getReq(i).getReq();
+                    if (lsm.isSelectedIndex(i)&& r.getSize()!=0) {
+                        req=r.getReq(i).getReq();
                     }
+                    if(r.getSize()==0)
+                        req="";
                 } 
             }
          this.setChanged();
