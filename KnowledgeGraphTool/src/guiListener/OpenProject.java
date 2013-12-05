@@ -37,7 +37,7 @@ public class OpenProject extends Observable implements ActionListener{
          //mostra la finestra per scegliere la cartella
          //restituisce l'intero JFileChooser.APPROVE_OPTION solo se si ha premuto su "Apri"
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                      if(cp.apriProgetto(fileChooser.getSelectedFile().getAbsolutePath()).equals("progetto_inesistente")){
+                      if(cp.openProject(fileChooser.getSelectedFile().getAbsolutePath()).equals("progetto_inesistente")){
                           JOptionPane.showMessageDialog(null,"Folder is not a project");
                           return;
                       }

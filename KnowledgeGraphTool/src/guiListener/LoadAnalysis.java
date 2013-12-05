@@ -34,12 +34,12 @@ public class LoadAnalysis extends Observable implements ActionListener{
                 JOptionPane.showMessageDialog(null, "Save Fail!");
                 return;
                 }else{
-                    cp.salvaRisultati(nameDir);
+                    cp.saveResults(nameDir);
                  }
          }
         }
-         cp.eliminaRisultati();
-         cp.eliminaRequisito();
+         cp.deleteResults();
+         cp.deleteRequirements();
          final File  dirToLock = new File(cp.getSource()+File.separator+"Old Result");
          JFileChooser fileChooser = new JFileChooser(dirToLock);
          fileChooser.setFileView(new FileView() {

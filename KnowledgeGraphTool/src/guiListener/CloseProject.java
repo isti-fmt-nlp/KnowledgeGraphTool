@@ -17,7 +17,7 @@ public class CloseProject extends Observable implements ActionListener{
     ProjectController cp=ProjectController.getInstance();
     @Override
     public void actionPerformed(ActionEvent ae) {
-             cp.chiudiProgetto();
+             cp.closeProject();
              this.setChanged();
              this.notifyObservers();
     }

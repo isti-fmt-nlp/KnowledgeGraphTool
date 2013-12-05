@@ -20,6 +20,11 @@ public class Requirement {
 		pathGraphD1=pathD1;
 		pathGraphD2=pathD2;
 	}
+        public void clearVal(){
+            this.val=0;
+            pathGraphD1=null;
+            pathGraphD2=null;
+        }
 	public void setVal(float val){
 		this.val=val;
 	}

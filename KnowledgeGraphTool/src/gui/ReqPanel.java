@@ -61,6 +61,7 @@ public class ReqPanel extends JPanel{
             }
         }
 	public void viewReqs(String path){
+                ImageIcon view=null;
                 clearRows();
                 if(!cp.Requirements()){
                     return;
@@ -68,6 +69,8 @@ public class ReqPanel extends JPanel{
                 open=new OpenGraph(cp.getReqs());
                 if(cp.analysisCompleted()){
                     new ButtonColumn(table, (Action) open,2);
+                    view=new ImageIcon(new File("src"+File.separator+"icon"+File.separator+"graph2.png").getAbsolutePath());
+
                 }
                 else{
                     table.getColumn("Graph").setCellEditor(null);
@@ -75,11 +78,10 @@ public class ReqPanel extends JPanel{
                 }
                 String txt;
 		float overlap;
-                ImageIcon view=new ImageIcon(new File("src"+File.separator+"icon"+File.separator+"graph2.png").getAbsolutePath());
                 for(int i=0;i<cp.getNReqs();i++){
 			txt=cp.getReq(i).getReq();
                         overlap=cp.getReq(i).getVal();
-                        if(overlap>=0)
+                        if(overlap>=0 && cp.analysisCompleted())
                             tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,overlap,view});
                         else{
                             tm.addRow(new Object[]{"R"+(i+1)+"-"+txt,0});

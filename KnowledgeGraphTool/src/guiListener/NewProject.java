@@ -41,7 +41,7 @@ public class NewProject extends Observable implements ActionListener{
          //mostra la finestra per scegliere la cartella
          //restituisce l'intero JFileChooser.APPROVE_OPTION solo se si ha premuto su "Apri"
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                      cp.creaProgetto(fileChooser.getSelectedFile().getAbsolutePath(),nprogetto);
+                      cp.createProject(fileChooser.getSelectedFile().getAbsolutePath(),nprogetto);
                       this.setChanged();
                       this.notifyObservers();
          }

@@ -27,7 +27,7 @@ public class SaveAnalysis extends Observable implements ActionListener{
         if(nameDir==null || nameDir.isEmpty())
              JOptionPane.showMessageDialog(null, "Save Fail!");
         else{
-           cp.salvaRisultati(nameDir);
+           cp.saveResults(nameDir);
            this.setChanged();
            this.notifyObservers();
         }

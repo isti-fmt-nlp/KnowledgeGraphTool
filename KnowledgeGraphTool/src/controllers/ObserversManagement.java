@@ -105,6 +105,7 @@ public class ObserversManagement implements Observer{
         if(o.getClass().equals(AddDocuments.class)||o.getClass().equals(RemoveDocuments.class)){
             FileSelectorModel fs=new FileSelectorModel(cp.getSource());
             projectTree.getTree().setModel(fs);
+            reqPanel.viewReqs(cp.getSource()); 
             menuBar.enableAnalisi(cp.isReady());
             menuBar.enableThreshold(cp.analysisCompleted());
         }

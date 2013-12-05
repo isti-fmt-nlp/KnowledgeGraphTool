@@ -36,11 +36,11 @@ public class AddDocuments extends Observable implements ActionListener{
                  String nameDir = JOptionPane.showInputDialog(null, "Insert save dir name","Result-"+c.get(Calendar.DATE)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
                  if(nameDir==null || nameDir.isEmpty())
                  return;
-                 cp.salvaCancRisultati(nameDir);
+                 cp.saveAndDeleteResults(nameDir);
                  cp.setAnalysis(false);
              }
              else{
-                 cp.eliminaRisultati();
+                 cp.deleteResults();
                  cp.setAnalysis(false);
              }
          }
@@ -54,12 +54,14 @@ public class AddDocuments extends Observable implements ActionListener{
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             for(File f:fileChooser.getSelectedFiles()){
                 f.getName();
-                cp.aggiungiDocumento(subject,f.getAbsolutePath());
+                cp.addDocument(subject,f.getAbsolutePath());
             }
             this.setChanged();
             this.notifyObservers();
          }else{
             System.out.println("Operation Aborted");
+            this.setChanged();
+            this.notifyObservers();
           }
     }
     

@@ -30,11 +30,11 @@ public class AddRequirements extends Observable implements ActionListener{
                  String nameDir = JOptionPane.showInputDialog(null, "Insert save dir name","Result-"+c.get(Calendar.DATE)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
                  if(nameDir==null || nameDir.isEmpty())
                  return;
-                 cp.salvaCancRisultati(nameDir);
+                 cp.saveAndDeleteResults(nameDir);
                  cp.setAnalysis(false);
              }
              else{
-                 cp.eliminaRisultati();
+                 cp.deleteResults();
                  cp.setAnalysis(false);
              }
          }
@@ -44,7 +44,7 @@ public class AddRequirements extends Observable implements ActionListener{
          fileChooser.setDialogTitle("Select File");
          fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                      if(cp.aggiungiRequisiti(fileChooser.getSelectedFile().getAbsolutePath()));
+                      if(cp.addRequirements(fileChooser.getSelectedFile().getAbsolutePath()));
                       this.setChanged();
                       this.notifyObservers();
                    }else{

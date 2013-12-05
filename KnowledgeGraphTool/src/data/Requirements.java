@@ -80,6 +80,11 @@ public class Requirements {
 	public void clearReq(){
             reqList.clear();
 	}
+        public void clearVal(){
+            for(int i=0; i<reqList.size();i++)
+                reqList.get(i).clearVal();
+        }
+        
 	public Requirement getReq(int n){
 		if(n>=reqList.size())
 			return null;

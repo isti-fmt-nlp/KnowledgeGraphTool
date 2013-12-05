@@ -49,7 +49,7 @@ public class ProjectController{
      * @return root Directory Root del progetto, null se non è riuscito a creare
      * il progetto
      */
-    public String creaProgetto(String path,String nomeProgetto){
+    public String createProject(String path,String nomeProgetto){
         reqs.clearReq();
         File f;
         f=new File(path+"/"+nomeProgetto);
@@ -71,7 +71,7 @@ public class ProjectController{
 
         return root;
     }
-    public String apriProgetto(String path){
+    public String openProject(String path){
         if(root!=null)
             return "progetto_esistente";
         if(path==null)
@@ -136,7 +136,7 @@ public class ProjectController{
             return "progetto_aperto";
         }
         else
-            chiudiProgetto();
+            closeProject();
             return "progetto_inesistente";
    }
        
@@ -145,7 +145,7 @@ public class ProjectController{
         return root;
     }
 
-    public void chiudiProgetto() {
+    public void closeProject() {
         root=null;
         path_sub1=null;
         path_sub2=null;
@@ -157,7 +157,7 @@ public class ProjectController{
     }
 
 
-    public boolean aggiungiDocumento(String sub,String path){
+    public boolean addDocument(String sub,String path){
         try {
              if(sub.equals(SUB1))
                 return KgtFile.copiaFile(path,path_sub1);
@@ -169,7 +169,7 @@ public class ProjectController{
             } catch (IOException ex) {}
               return false;
     }
-    public boolean aggiungiRisultato(String path){
+    public boolean addResult(String path){
             try {
             return KgtFile.copiaFile(path,path_res);
             } catch (IOException ex) {
@@ -182,7 +182,7 @@ public class ProjectController{
        else
             return false;
    }
-   public boolean aggiungiRequisiti(String path){
+   public boolean addRequirements(String path){
         File req=new File(path_reqs);
         if(Requirements())
             return false;
@@ -197,7 +197,7 @@ public class ProjectController{
         return false;
     } 
    
-   public boolean eliminaDocumento(String doc,String name){
+   public boolean deleteDocument(String doc,String name){
         boolean ok=false;
         if(name.length()==0)
             return false;
@@ -207,14 +207,15 @@ public class ProjectController{
             ok=new File(path_sub2+File.separator+name).delete();
         return ok;
     }
-    public void eliminaRisultati(){
+    public void deleteResults(){
     File ris=new File(path_res);
     for(File f: ris.listFiles())
         f.delete();
+    reqs.clearVal();
     setAnalysis(false);
     }
     
-    public void salvaCancRisultati(String dirName){
+    public void saveAndDeleteResults(String dirName){
          File ris=new File(path_res);
          File req=new File(path_reqs);
          File oldris=new File(path_oldRes+File.separator+dirName);
@@ -226,10 +227,11 @@ public class ProjectController{
          }
          KgtFile.copiaFile(req.listFiles()[0].getAbsolutePath(), oldris.getAbsolutePath());
          } catch (IOException ex){}
+         reqs.clearVal();
          setAnalysis(false);
      }
     
-     public void salvaRisultati(String dirName){
+     public void saveResults(String dirName){
          File ris=new File(path_res);
          File req=new File(path_reqs);
          File oldris=new File(path_oldRes+File.separator+dirName);
@@ -249,7 +251,7 @@ public class ProjectController{
              for(File f: load.listFiles()){
                  System.out.println(f.getName());
                  if(!f.getName().equals("knowledge_overlap.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
-                     eliminaRequisito();
+                     deleteRequirements();
                      KgtFile.copiaFile(f.getAbsolutePath(),path_reqs );
                      reqs.loadReqs(root);
                  }else{
@@ -262,7 +264,7 @@ public class ProjectController{
                  reqs.loadAnalysis(root);
          }catch (IOException ex) {}
       }
-    public boolean eliminaRequisito(){
+    public boolean deleteRequirements(){
         File req=new File(path_reqs);    
         if(Requirements()){
            for(File f:req.listFiles()){

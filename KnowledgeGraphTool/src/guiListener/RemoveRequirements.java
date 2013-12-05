@@ -28,13 +28,13 @@ public class RemoveRequirements extends Observable implements ActionListener{
                  String nameDir = JOptionPane.showInputDialog(null, "Insert save dir name","Result-"+c.get(Calendar.DATE)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
                  if(nameDir==null || nameDir.isEmpty())
                  return;
-                 cp.salvaCancRisultati(nameDir);
+                 cp.saveAndDeleteResults(nameDir);
              }
              else{
-                 cp.eliminaRisultati();
+                 cp.deleteResults();
              }
          }
-         if(cp.eliminaRequisito()){
+         if(cp.deleteRequirements()){
             this.setChanged();
             this.notifyObservers();
            }

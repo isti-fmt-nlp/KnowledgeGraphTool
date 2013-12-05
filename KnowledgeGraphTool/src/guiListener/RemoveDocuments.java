@@ -35,11 +35,11 @@ public class RemoveDocuments extends Observable implements ActionListener{
                     String nameDir = JOptionPane.showInputDialog(null, "Insert save dir name","Result-"+c.get(Calendar.DATE)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
                     if(nameDir==null || nameDir.isEmpty())
                         return;
-                    cp.salvaCancRisultati(nameDir);
+                    cp.saveAndDeleteResults(nameDir);
                     cp.setAnalysis(false);
              }
              else{
-                 cp.eliminaRisultati();
+                 cp.deleteResults();
              }
          }
          FileNameExtensionFilter filter = new FileNameExtensionFilter("Only Txt and Pdf", "txt", "pdf");
@@ -65,11 +65,13 @@ public class RemoveDocuments extends Observable implements ActionListener{
          if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
                       System.out.println("Choosen Directory: "+fileChooser.getSelectedFile());
                       for(File f:fileChooser.getSelectedFiles())
-                        cp.eliminaDocumento(sub, f.getName());
+                        cp.deleteDocument(sub, f.getName());
                       this.setChanged();
                       this.notifyObservers();
                    }else{
                    System.out.println("Operation aborted");
+                   this.setChanged();
+                   this.notifyObservers();
                }
     }
     
