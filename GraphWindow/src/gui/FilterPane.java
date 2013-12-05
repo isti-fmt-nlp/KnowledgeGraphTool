@@ -11,6 +11,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import supportGui.FilterDecimalSlider;
 import guiListener.ApplyFilter;
+import guiListener.FindNodeName;
 import guiListener.ShowHide;
 import guiListener.SubGraph;
 import java.util.Observable;
@@ -26,8 +27,9 @@ public class FilterPane extends JPanel {
         private SubGraph sg=new SubGraph();
 	private ApplyFilter af;
         private ShowHide sh=new ShowHide();
+        private FindNodeName fnn=new FindNodeName();
          public Observable[] getObservable(){
-            return new Observable[]{sg,sh};
+            return new Observable[]{sg,sh,af,fnn};
         }
 	/**
 	 * Create the panel.
@@ -73,6 +75,10 @@ public class FilterPane extends JPanel {
 		
 		JToggleButton tglbtnNomiNodi = new JToggleButton("Hide Labels");
                 tglbtnNomiNodi.addActionListener(sh);
+		
+                
+		JButton btnFindNode = new JButton("Find Node");
+                btnFindNode.addActionListener(fnn);
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
@@ -83,7 +89,9 @@ public class FilterPane extends JPanel {
 					.addComponent(btnSottoGrafo, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 					.addGap(20)
 					.addComponent(btnapplica, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(154, Short.MAX_VALUE))
+					.addGap(20)
+					.addComponent(btnFindNode, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
@@ -92,8 +100,9 @@ public class FilterPane extends JPanel {
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSottoGrafo, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnapplica, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(tglbtnNomiNodi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(0, 0, Short.MAX_VALUE))
+						.addComponent(tglbtnNomiNodi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnFindNode, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addGap(0, 3, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
 		

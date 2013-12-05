@@ -129,9 +129,10 @@ for req in reqs:
                 overlap, subgraph1, subgraph2 = evaluator.jaccard_evaluator(req,s1,s2,v1,v2)
         else:
                 overlap, subgraph1, subgraph2 = evaluator.jaccard_evaluator(req,s1,s2,v1,v2)
-        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:20] + '-Subject1.gv', subgraph1)
-        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:20] + '-Subject2.gv', subgraph2)
-        r='Overlap:R%d-%s...\n%.10f\n'%(ind,req[0:30],overlap)
+        
+        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:20].replace("/","-") + '-Subject1.gv', subgraph1)
+        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:20].replace("/","-") + '-Subject2.gv', subgraph2)
+        r='Overlap:R%d-%s\n%.10f\n'%(ind,req[0:30],overlap)
         overlap_file.write(r)
         ind+=1
         progress+=1

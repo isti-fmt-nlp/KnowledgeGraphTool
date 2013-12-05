@@ -64,9 +64,11 @@ public class Requirements {
                     n=reqList.size();
                     for(int i=0;i<n;i++) {
                         if(overlap!=null){
-                        overlap=readerJ.readLine();
-                        reqList.get(i).fill(pathGraph[ind++],pathGraph[ind++],Float.parseFloat(overlap));
-                        overlap=readerJ.readLine();
+                            overlap=readerJ.readLine();
+                            while(overlap.isEmpty())
+                                overlap=readerJ.readLine();
+                            reqList.get(i).fill(pathGraph[ind++],pathGraph[ind++],Float.parseFloat(overlap));
+                            overlap=readerJ.readLine();
                         }
                     }
                     readerJ.close();
