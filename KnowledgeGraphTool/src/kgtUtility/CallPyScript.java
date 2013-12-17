@@ -11,6 +11,44 @@ import java.io.*;
  */
 public class CallPyScript {
     private static BufferedReader input;
+    static public int domainAnalysis(String pathDoc){
+        File f=new File("./src/py/DomainPreAnalysis.py");
+        String pathScript="";
+        try {
+            pathScript = f.getCanonicalPath();
+        }catch (IOException ex) { }
+        String os=System.getProperty("os.name").toLowerCase();
+        try{
+            ProjectController cp=ProjectController.getInstance();
+            File pathLib=new File("../conceptLinkNetwork");
+            String pathRoot=cp.getSource();
+            Runtime rt = Runtime.getRuntime();
+            Process pr=null;
+            if(os.indexOf("win")>=0){
+                System.out.println(os);
+                pr = rt.exec("cmd /c cd ../conceptLinkNetwork & python "+pathScript+" \""+pathRoot+"\" "+pathLib.getCanonicalPath()+" "+pathDoc);                
+                System.out.println(("cmd /c cd ../conceptLinkNetwork/ & python "+pathScript+" "+pathRoot+" "+pathLib.getCanonicalPath()+" "+pathDoc));
+            }
+            if(os.indexOf("mac")>=0){
+                //todo
+            }
+            if(os.indexOf("nix")>=0){
+                //todo
+            }
+            input=new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            String line=null;
+            while((line=input.readLine()) != null) {
+                System.out.println(line);
+            }
+            int exitVal = pr.waitFor();
+            System.out.println("Exited with error code "+exitVal);
+            return exitVal;
+        }catch(Exception e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
+        return 1;
+    }
     
     static public int analisiScript(String method,String priority){
         File f=new File("./src/py/Analisi.py");

@@ -2,7 +2,7 @@ package gui;
 
 import guiListener.AddDocuments;
 import guiListener.AddRequirements;
-import guiListener.OverlapTreeLeafSelection;
+import guiListener.ResultTreeLeafSelection;
 import guiListener.RemoveDocuments;
 import guiListener.RemoveRequirements;
 import javax.swing.JPanel;
@@ -27,7 +27,7 @@ public class ProjectTree extends JPanel{
         private RemoveDocuments remDoc1=new RemoveDocuments("subject_1");
         private RemoveDocuments remDoc2=new RemoveDocuments("subject_2");
         private RemoveRequirements remReq=new RemoveRequirements();
-        private OverlapTreeLeafSelection js;
+        private ResultTreeLeafSelection js;
         private JPopupMenu popupMenu;
         JMenuItem mntmAddFileSubject;
         JMenuItem mntmAddFileSubject_1;
@@ -90,7 +90,7 @@ public class ProjectTree extends JPanel{
 		);
 		setLayout(groupLayout);
                 enablePopUp(false);
-                js=new OverlapTreeLeafSelection(tree);
+                js=new ResultTreeLeafSelection(tree);
                 tree.addTreeSelectionListener(js);
                 DefaultTreeCellRenderer dtcr=new DefaultTreeCellRenderer();
                 dtcr.setLeafIcon(null);

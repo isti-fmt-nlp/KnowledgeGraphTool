@@ -10,7 +10,8 @@ import guiListener.AddRequirements;
 import guiListener.OpenProject;
 import guiListener.StartAnalysis;
 import guiListener.CloseProject;
-import guiListener.OverlapTreeLeafSelection;
+import guiListener.DomainAnalysis;
+import guiListener.ResultTreeLeafSelection;
 import guiListener.LoadAnalysis;
 import supportGui.FileSelectorModel;
 import guiListener.NewProject;
@@ -20,6 +21,7 @@ import supportGui.KgtRendererTabelCell;
 import guiListener.ThresholdChange;
 import guiListener.ShowRequirements;
 import java.awt.Cursor;
+import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
@@ -59,7 +61,7 @@ public class ObserversManagement implements Observer{
         if(o.getClass().equals(ShowRequirements.class))
             reqBox.getTextBox().setText((String)o1);
         
-        if(o.getClass().equals(OverlapTreeLeafSelection.class)){
+        if(o.getClass().equals(ResultTreeLeafSelection.class)){
            reqBox.getTextBox().setText((String)o1);
         }
         
@@ -155,6 +157,11 @@ public class ObserversManagement implements Observer{
                     main.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 }
             }
+        }
+        if(o.getClass().equals(DomainAnalysis.class)){
+            FileSelectorModel fs=new FileSelectorModel(cp.getSource());
+            projectTree.getTree().setModel(fs);
+            Toolkit.getDefaultToolkit().beep(); 
         }
     }
 }

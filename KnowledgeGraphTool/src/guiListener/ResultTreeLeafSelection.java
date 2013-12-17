@@ -20,9 +20,9 @@ import supportGui.FileNode;
  *
  * @author Lipari
  */
-public class OverlapTreeLeafSelection extends Observable implements TreeSelectionListener{
+public class ResultTreeLeafSelection extends Observable implements TreeSelectionListener{
     private JTree tree;
-    public OverlapTreeLeafSelection(JTree tree){
+    public ResultTreeLeafSelection(JTree tree){
         this.tree=tree;
     }
 
@@ -35,7 +35,7 @@ public class OverlapTreeLeafSelection extends Observable implements TreeSelectio
             return;
 
         if (tree.getModel().isLeaf(node)) {
-            if(node.getName().equals("knowledge_overlap.txt")){
+            if(node.getName().equals("knowledge_overlap.txt")|| node.getName().equals("understand.txt")){
                 BufferedReader in = null;
                 try {
                     in = new BufferedReader(new FileReader(node));
@@ -45,14 +45,14 @@ public class OverlapTreeLeafSelection extends Observable implements TreeSelectio
                     line = in.readLine();
                     }
                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(OverlapTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ResultTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(OverlapTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ResultTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                 try {
                     in.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(OverlapTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ResultTreeLeafSelection.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
                 this.setChanged();

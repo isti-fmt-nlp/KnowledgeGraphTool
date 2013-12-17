@@ -5,6 +5,7 @@ import guiListener.AddRequirements;
 import guiListener.OpenProject;
 import guiListener.StartAnalysis;
 import guiListener.CloseProject;
+import guiListener.DomainAnalysis;
 import guiListener.LoadAnalysis;
 import supportGui.FloatSlider;
 import guiListener.NewProject;
@@ -34,6 +35,7 @@ public class MenuBar extends JPanel {
         private JMenuItem mntmAggiungiSubject1;
         private JMenuItem mntmAggiungiSubject2;
         private JMenuItem mntmChiudiProgetto;
+        private JMenuItem mntmDomainAnalysis;
         private JMenu mnSalva;
         private JButton btnNewButton;
 
@@ -47,6 +49,7 @@ public class MenuBar extends JPanel {
         private RemoveDocuments remSub2=new RemoveDocuments("subject_2");
         private RemoveRequirements remReq=new RemoveRequirements();
         private AddDocuments addSub2=new AddDocuments("subject_2");
+        private DomainAnalysis preAnalysis=new DomainAnalysis();
         private AddRequirements addReq=new AddRequirements();
         private LoadAnalysis la=new LoadAnalysis();
         JMenuItem mntmRemoveFileSubject;
@@ -121,6 +124,10 @@ public class MenuBar extends JPanel {
                 mntmRemoveRequirements.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
                 mntmRemoveRequirements.addActionListener(remReq);
                 
+                mntmDomainAnalysis=new JMenuItem("Domain Analysis");
+                mnProgetto.add(mntmDomainAnalysis);
+                mntmDomainAnalysis.addActionListener(preAnalysis);
+                
                 mnSalva = new JMenu("Save/Load");
                 mnSalva.setEnabled(false);
                 menuBar.add(mnSalva);
@@ -175,7 +182,7 @@ public class MenuBar extends JPanel {
 	}
 	
 	public Observable [] getObservable(){
-                Observable [] obs={(Observable)floatSlider.getChangeListener() , (Observable)apriAction,chiudiAction,nuovoAction,addSub1,addSub2,addReq,analisi,la};
+                Observable [] obs={(Observable)floatSlider.getChangeListener() , (Observable)apriAction,chiudiAction,nuovoAction,addSub1,addSub2,addReq,analisi,la,preAnalysis};
                 return obs;
 	}
         public void setMenuItemsEnable(boolean t){
@@ -186,6 +193,7 @@ public class MenuBar extends JPanel {
             mntmRemoveFileSubject.setEnabled(t);
             mntmRemoveFileSubject_1.setEnabled(t);
             mntmRemoveRequirements.setEnabled(t);
+            mntmDomainAnalysis.setEnabled(t);
        }
        public void setMenuAddRequirementsEnable(boolean t){
             mntmAggiungiRequisiti.setEnabled(t);
@@ -195,7 +203,8 @@ public class MenuBar extends JPanel {
        
        public void enableAnalisi(boolean t){
             btnNewButton.setEnabled(t);
-       }
+            mntmDomainAnalysis.setEnabled(t);
+        }
        public void enableThreshold(boolean t){
             floatSlider.getFloatSlider().setEnabled(t);
        }
