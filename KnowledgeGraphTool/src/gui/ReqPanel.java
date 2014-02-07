@@ -81,10 +81,14 @@ public class ReqPanel extends JPanel{
                 for(int i=0;i<cp.getNReqs();i++){
 			txt=cp.getReq(i).getReq();
                         overlap=cp.getReq(i).getVal();
-                        if(overlap>=0 && cp.analysisCompleted())
+                        if(overlap>=0 && cp.analysisCompleted()&& cp.getReq(i).getPathD1()!=null)
                             tm.addRow(new Object[]{"R"+(i+1)+"-"+txt ,overlap,view});
                         else{
-                            tm.addRow(new Object[]{"R"+(i+1)+"-"+txt,0});
+                            if(cp.getReq(i).getVal()==0)
+                                tm.addRow(new Object[]{"R"+(i+1)+"-"+txt,0});
+                            else
+                                tm.addRow(new Object[]{"R"+(i+1)+"-"+txt,overlap});
+
                         }
 		}
 	}

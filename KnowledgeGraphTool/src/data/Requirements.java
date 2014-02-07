@@ -40,7 +40,10 @@ public class Requirements {
 		int n;
                 String path_overlap="";
 		File[] files=new File(root+File.separator+"Result").listFiles();
-		String[]pathGraph=new String[files.length-1];
+		int nfiles=files.length;
+                String[]pathGraph=null;
+                if(nfiles>2)
+                    pathGraph=new String[nfiles-1];
 		int ind=0;
 		for(File file : files){
 			if(file.getName().equals("knowledge_overlap.txt"))
@@ -67,7 +70,10 @@ public class Requirements {
                             overlap=readerJ.readLine();
                             while(overlap.isEmpty())
                                 overlap=readerJ.readLine();
-                            reqList.get(i).fill(pathGraph[ind++],pathGraph[ind++],Float.parseFloat(overlap));
+                            if(pathGraph!=null)
+                                reqList.get(i).fill(pathGraph[ind++],pathGraph[ind++],Float.parseFloat(overlap));
+                            else
+                                reqList.get(i).setVal(Float.parseFloat(overlap));
                             overlap=readerJ.readLine();
                         }
                     }

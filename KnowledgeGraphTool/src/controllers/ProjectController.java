@@ -59,14 +59,14 @@ public class ProjectController{
         new File(root+File.separator+"2Subject").mkdir();
         new File(root+File.separator+"Requirements").mkdir();
         new File(root+File.separator+"Result").mkdir();
-        new File(root+File.separator+"Old Result").mkdir();
+        new File(root+File.separator+"Saved Result").mkdir();
         
         KgtXml.creaProjectXML(root,nomeProgetto);
         path_sub1=root+File.separator+"1Subject";
         path_sub2=root+File.separator+"2Subject";
         path_reqs=root+File.separator+"Requirements";
         path_res=root+File.separator+"Result";
-        path_oldRes=root+File.separator+"Old Result";
+        path_oldRes=root+File.separator+"Saved Result";
         analysis=false;
 
         return root;
@@ -107,8 +107,8 @@ public class ProjectController{
                    path_res=root+File.separator+"Result";
                if(name.equals("Requirements"))
                    path_reqs=root+File.separator+"Requirements";
-               if(name.equals("Old Result"))
-                   path_oldRes=root+File.separator+"Old Result";
+               if(name.equals("Saved Result"))
+                   path_oldRes=root+File.separator+"Saved Result";
            }
         if(exist==true){
             if(path_sub1==null){
@@ -124,9 +124,9 @@ public class ProjectController{
                 new File(root+File.separator+"Requirements").mkdir();
                 path_reqs=root+File.separator+"Requirements";}
             if(path_oldRes==null){
-                new File(root+File.separator+"Old Result").mkdir();
-                path_oldRes=root+File.separator+"Old Result";}
-            if(new File(path_res).listFiles().length!=0)
+                new File(root+File.separator+"Saved Result").mkdir();
+                path_oldRes=root+File.separator+"Saved Result";}
+            if(new File(path_res).listFiles().length>1)
                 analysis=true;
             if(new File(path_reqs).listFiles().length!=0){
                 reqs.loadReqs(root);
@@ -250,7 +250,7 @@ public class ProjectController{
              System.out.println(load.getAbsolutePath());
              for(File f: load.listFiles()){
                  System.out.println(f.getName());
-                 if(!f.getName().equals("knowledge_overlap.txt") && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
+                 if(!f.getName().equals("knowledge_overlap.txt")&& !f.getName().equals("understand.txt")  && f.getName().substring(f.getName().length()-4,f.getName().length()).equals(".txt")){
                      deleteRequirements();
                      KgtFile.copiaFile(f.getAbsolutePath(),path_reqs );
                      reqs.loadReqs(root);

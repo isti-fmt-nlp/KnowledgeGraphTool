@@ -33,7 +33,7 @@ public class KgtFile {
           if(name.substring(name.lastIndexOf('.'),name.length()).equalsIgnoreCase(".pdf")){
               ConvertPdftoTxt c=new ConvertPdftoTxt(origine, destinazione);
               c.convertFile();
-              System.out.println("conversion1");
+              System.out.println("conversion!");
               return true;
           }
            dest=new File(destinazione+File.separator+name);

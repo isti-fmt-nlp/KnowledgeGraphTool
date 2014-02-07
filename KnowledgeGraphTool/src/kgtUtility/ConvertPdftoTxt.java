@@ -125,6 +125,7 @@ public class ConvertPdftoTxt{
             String s = new String(
                             new PDFTextStripper().getText(
                                     new PDDocument(pp.getDocument())).getBytes(),"UTF-8");  
+            pp.getDocument().close();
             return s;
         }
         catch (FileNotFoundException e)

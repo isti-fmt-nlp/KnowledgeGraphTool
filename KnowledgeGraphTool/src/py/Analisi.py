@@ -55,12 +55,12 @@ fp2 = [ (pathsub2 + f) for f in listdir(pathsub2) if isfile(join(pathsub2,f)) ]
 path_file_req=pathreq + listdir(pathreq)[0]
 #print path_file_req
 req_file=open(path_file_req,"r")
-reqs= req_file.readlines()
+reqs = req_file.readlines()
 req_file.close()
 #print reqs
 
 nreq=len(reqs)+4
-
+print nreq
 ##terms_filter = TextFilter()
 evaluator=DistanceEvaluators()
 
@@ -129,21 +129,24 @@ for req in reqs:
                 overlap, subgraph1, subgraph2 = evaluator.jaccard_evaluator(req,s1,s2,v1,v2)
         else:
                 overlap, subgraph1, subgraph2 = evaluator.jaccard_evaluator(req,s1,s2,v1,v2)
-        
-        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:20].replace("/","-") + '-Subject1.gv', subgraph1)
-        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ req[0:20].replace("/","-") + '-Subject2.gv', subgraph2)
+        shortreq = req[0:20].replace("/", "-")
+        shortreq = shortreq.replace("\\", "-")
+        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ shortreq + '-Subject1.gv', subgraph1)
+        SentenceNetCreator.write_subgraph(pathres + 'R%d-'%(ind)+ shortreq + '-Subject2.gv', subgraph2)
         r='Overlap:R%d-%s\n%.10f\n'%(ind,req[0:30],overlap)
         overlap_file.write(r)
         ind+=1
         progress+=1
         x=float(progress/nreq)
         bar.setPercent(int(x*100))
+        del subgraph1
+        del subgraph2
 overlap_file.close()
-s1.write_graph(pathres + 'Graph-KnowledgeSubject1.gv')
+#s1.write_graph(pathres + 'Graph-KnowledgeSubject1.gv')
 progress+=1
 x=float(progress/nreq)
 bar.setPercent(int(x*100))
-s2.write_graph(pathres + 'Graph-KnowledgeSubject2.gv')
+#s2.write_graph(pathres + 'Graph-KnowledgeSubject2.gv')
 progress+=1
 x=float(progress/nreq)
 bar.setPercent(int(x*100))

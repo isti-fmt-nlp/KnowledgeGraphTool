@@ -40,7 +40,7 @@ public class LoadAnalysis extends Observable implements ActionListener{
         }
          cp.deleteResults();
          cp.deleteRequirements();
-         final File  dirToLock = new File(cp.getSource()+File.separator+"Old Result");
+         final File  dirToLock = new File(cp.getSource()+File.separator+"Saved Result");
          JFileChooser fileChooser = new JFileChooser(dirToLock);
          fileChooser.setFileView(new FileView() {
                 @Override

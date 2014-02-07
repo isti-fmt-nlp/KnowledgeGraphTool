@@ -35,7 +35,7 @@ new_terms2 = 0
 req_file=open(requirements_doc,"r")
 reqs= req_file.readlines()
 req_file.close()
-#print reqs
+print len(reqs)
 result_understand=open(pathres + "understand.txt","w")
 sub1_terms = []
 sub2_terms = []
@@ -83,7 +83,7 @@ for requirement in reqs:
         
 sub1_degree=(requirements_terms - new_terms1)/ requirements_terms
 sub2_degree=(requirements_terms - new_terms2)/ requirements_terms
-result_understand.write('Subject1 understandable degree:%.10f\n'%(sub1_degree))
+result_understand.write('\nSubject1 understandable degree:%.10f\n'%(sub1_degree))
 result_understand.write('Subject2 understandable degree:%.10f\n'%(sub2_degree))
 result_understand.close()
 

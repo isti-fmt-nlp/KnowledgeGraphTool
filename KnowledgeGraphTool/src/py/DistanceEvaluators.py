@@ -26,18 +26,17 @@ class DistanceEvaluators(object):
         path2, path_weight2 = sentence_visitor2.search_A_star(filtered_sent)
         path1_tokens = nltk.word_tokenize(path1)
 	path2_tokens = nltk.word_tokenize(path2)
-	
         current_subgraph1 = digraph()
         current_subgraph2 = digraph()
-
+        
         for index, term in enumerate(path1_tokens):
             subgraph1_req = sentence_net1.get_connected_subgraph(term)
             current_subgraph1 = sentence_net1.get_merged_subgraph(current_subgraph1,subgraph1_req)
-            
+            del subgraph1_req
         for index, term in enumerate(path2_tokens):
             subgraph2_req = sentence_net2.get_connected_subgraph(term)
             current_subgraph2 = sentence_net2.get_merged_subgraph(current_subgraph2,subgraph2_req)
-
+            del subgraph2_req
         """
         evaluate the jaccard distance but deletes the words that are contained in filtered_sent
         """
