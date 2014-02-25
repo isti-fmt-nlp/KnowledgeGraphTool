@@ -4,16 +4,16 @@
 	
 	<target name="graph">
 		<ant dir="GraphWindow" target="jar"/>
-		<copy todir="KnowledgeGraphTool/lib" overwrite="true">
+		<copy todir="PragmaticAmbiguityDetectorGUI/lib" overwrite="true">
 			<fileset dir="GraphWindow/dist" includes="**"/>
 		</copy>
 	</target>
 	
 	<target name="runknowledge">
-		<ant dir="KnowledgeGraphTool" target="run"/>
+		<ant dir="PragmaticAmbiguityDetectorGUI" target="run"/>
 	</target>
 	
 	<target name="jarknowledge">
-		<ant dir="KnowledgeGraphTool" target="jar"/>
+		<ant dir="PragmaticAmbiguityDetectorGUI" target="jar"/>
 	</target>
 </project>

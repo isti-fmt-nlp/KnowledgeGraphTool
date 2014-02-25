@@ -69,7 +69,7 @@ public class ObserversManagement implements Observer{
             JTable t=reqPanel.getTable();
             KgtRendererTabelCell rc=(KgtRendererTabelCell)t.getCellRenderer(0, 0);
             for(int i=0;i<t.getRowCount();i++){
-                if(t.getValueAt(i, 1)==0)
+                if((Float)t.getValueAt(i, 1)==0)
                     rc.removeAlert(i);
                 else{
                     if((Float)t.getValueAt(i, 1)<=(Float)o1)

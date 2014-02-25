@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package knowledgegraphtool;
+package pragmaticAmbigutyDetectorGUI;
 
 import controllers.ObserversManagement;
 import java.io.File;
@@ -14,12 +14,12 @@ import javax.swing.JFrame;
  *
  * @author Lipari
  */
-public class KnowledgeGraphTool extends JFrame {
+public class PragmaticAmbiguityDetectorGUI extends JFrame {
 
     /**
      * Creates new form KnowledgeGraphTool
      */
-    public KnowledgeGraphTool() {
+    public PragmaticAmbiguityDetectorGUI() {
         initComponents();
         ObserversManagement go=new ObserversManagement(this,menuBar1,projectTree1,reqBox1,reqPanel1);
         Observable[] obs=menuBar1.getObservable();
@@ -45,8 +45,8 @@ public class KnowledgeGraphTool extends JFrame {
         reqPanel1 = new gui.ReqPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("knowledgegraphtool/Bundle"); // NOI18N
-        setTitle(bundle.getString("KnowledgeGraphTool.title")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("pragmaticAmbigutyDetectorGUI/Bundle"); // NOI18N
+        setTitle(bundle.getString("PragmaticAmbiguityDetectorGUI.title")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,20 +95,20 @@ public class KnowledgeGraphTool extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(KnowledgeGraphTool.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PragmaticAmbiguityDetectorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(KnowledgeGraphTool.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PragmaticAmbiguityDetectorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(KnowledgeGraphTool.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PragmaticAmbiguityDetectorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(KnowledgeGraphTool.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PragmaticAmbiguityDetectorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new KnowledgeGraphTool().setVisible(true);
+                new PragmaticAmbiguityDetectorGUI().setVisible(true);
             }
         });
     }
