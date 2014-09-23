@@ -1,4 +1,4 @@
-<project name="BuildKnowledgeGraphTool" basedir="." default="alljar">
+<project name="BuildKnowledgeGraphTool" basedir="." default="allrun">
 	<target name="allrun" depends="graph,runknowledge"/>
 	<target name="alljar" depends="graph,jarknowledge"/>
 	
